@@ -1,7 +1,4 @@
-import b2p.state.bitboard.bitset.BitSetPositions;
-import b2p.state.bitboard.bitset.BitSetStartingBoard;
-import b2p.state.bitboard.bitset.BitSetState;
-import b2p.state.bitboard.bitset.BitSetUtils;
+import b2p.state.bitboard.bitset.*;
 
 import java.util.BitSet;
 

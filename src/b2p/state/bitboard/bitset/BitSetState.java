@@ -17,6 +17,9 @@ public class BitSetState implements IState {
     private BitSet whitePawns;
     private BitSet king;
 
+    // Board state
+    private BitSet board;
+
     //
     private Turn turn;
 
@@ -28,6 +31,11 @@ public class BitSetState implements IState {
         this.blackPawns = blackPawns;
         this.whitePawns = whitePawns;
         this.king = king;
+        this.board = new BitSet(boardDimension);
+
+        board.or(blackPawns);
+        board.or(whitePawns);
+        board.or(king);
     }
 
     public BitSetState() {
@@ -51,6 +59,12 @@ public class BitSetState implements IState {
     }
     //endregion
 
+    //region bitset getters
+    public BitSet getBoard() {
+        return board;
+    }
+    //endregion
+
     //region Win conditions
     @Override
     public boolean isWinningState() {
@@ -65,7 +79,7 @@ public class BitSetState implements IState {
     @Override
     public boolean whiteHasWon() {
         BitSet mask = BitSetUtils.copy(king);
-        mask.and(BitSetPositions.escape);
+        mask.and(BitSetPosition.escape);
         return mask.cardinality() == 1;
     }
     //endregion
@@ -73,16 +87,41 @@ public class BitSetState implements IState {
     //region Move-related functions
     @Override
     public void performMove(IAction action) {
-
+        BitSetPosition from = BitSetPosition.valueOf(action.getFrom());
+        BitSetPosition to = BitSetPosition.valueOf(action.getFrom());
+        performMove(from.ordinal(), to.ordinal());
     }
 
     @Override
     public void performMove(int from, int to) {
 
+        // It's easier to handle blacks, as there's no king
+        if (turn == Turn.BLACK) {
+            blackPawns.clear(from);
+            blackPawns.set(to);
+            //TODO: CHECK CAPTURES
+            turn = Turn.WHITE;
+            return;
+        }
+
+        // Check whether it's the king moving or not
+        if (king.get(from)) {
+            king.clear(from);
+            king.set(to);
+        } else {
+            whitePawns.clear(from);
+            whitePawns.set(to);
+        }
+
+        //TODO: CHECK CAPTURES
+        turn = Turn.BLACK;
+
     }
 
     @Override
     public void undoMove(IAction action) {
+
+
 
     }
 

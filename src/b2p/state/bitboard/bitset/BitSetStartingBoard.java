@@ -2,22 +2,22 @@ package b2p.state.bitboard.bitset;
 
 import java.util.BitSet;
 
-import static b2p.state.bitboard.bitset.BitSetPositions.*;
+import static b2p.state.bitboard.bitset.BitSetPosition.*;
 
 public class BitSetStartingBoard {
 
     //region Starting boards
     private static final int[] blackStartingBoard = {
 
-                        D1, E1, F1,
-                            E2,
+                                                            D1.ordinal(),   E1.ordinal(),   F1.ordinal(),
+                                                                            E2.ordinal(),
 
-            A4,                             I4,
-            A5, B5,                     H5, I5,
-            A6,                             I6,
+            A4.ordinal(),                                                                                                                   I4.ordinal(),
+            A5.ordinal(),   B5.ordinal(),                                                                                   H5.ordinal(),   I5.ordinal(),
+            A6.ordinal(),                                                                                                                   I6.ordinal(),
 
-                            E8,
-                        D9, E9, F9
+                                                                            E8.ordinal(),
+                                                            D9.ordinal(),   E9.ordinal(),   F9.ordinal()
 
     };
 
@@ -25,11 +25,11 @@ public class BitSetStartingBoard {
 
 
 
-                            E3,
-                            E4,
-                    C5, D5,     F5, G5,
-                            E6,
-                            E7,
+                                                                            E3.ordinal(),
+                                                                            E4.ordinal(),
+                                            C5.ordinal(),   D5.ordinal(),                   F5.ordinal(),   G5.ordinal(),
+                                                                            E6.ordinal(),
+                                                                            E7.ordinal(),
 
 
 
@@ -41,7 +41,7 @@ public class BitSetStartingBoard {
 
 
 
-                            E5
+                                                                            E5.ordinal()
 
 
 
