@@ -37,43 +37,53 @@ public class BitSetState implements IState {
                 BitSetStartingBoard.whiteStartingBitSet,
                 BitSetStartingBoard.kingStartingBitSet
         );
+    }
 
-
+    //region Turn getter and setter
+    @Override
+    public Turn getTurn() {
+        return this.turn;
     }
 
     @Override
-    public void move(IAction action) {
-
+    public void setTurn(Turn turn) {
+        this.turn = turn;
     }
+    //endregion
 
-    @Override
-    public void move(int from, int to) {
-
-    }
-
-    @Override
-    public void unmove(IAction action) {
-
-    }
-
-    @Override
-    public int getHeuristicValue() {
-        return 0;
-    }
-
+    //region Win conditions
     @Override
     public boolean isWinningState() {
-        return hasBlackWon() || hasWhiteWon();
+        return blackHasWon() || whiteHasWon();
     }
 
     @Override
-    public boolean hasBlackWon() {
-        return false;
+    public boolean blackHasWon() {
+        return king.isEmpty();
     }
 
     @Override
-    public boolean hasWhiteWon() {
-        return false;
+    public boolean whiteHasWon() {
+        BitSet mask = BitSetUtils.copy(king);
+        mask.and(BitSetPositions.escape);
+        return mask.cardinality() == 1;
+    }
+    //endregion
+
+    //region Move-related functions
+    @Override
+    public void performMove(IAction action) {
+
+    }
+
+    @Override
+    public void performMove(int from, int to) {
+
+    }
+
+    @Override
+    public void undoMove(IAction action) {
+
     }
 
     @Override
@@ -82,22 +92,23 @@ public class BitSetState implements IState {
     }
 
     @Override
-    public Turn getTurn() {
+    public List<IAction> getKingMoves() {
         return null;
     }
+    //endregion
 
+    //region Heuristics-related functions
+    @Override
+    public int getHeuristicValue() {
+        return 0;
+    }
+    //endregion
+
+    // Utility functions
     @Override
     public IState clone() {
         return new BitSetState(this.turn, this.blackPawns, this.whitePawns, this.king);
     }
+    //
 
-    @Override
-    public void setTurn(Turn turn) {
-
-    }
-
-    @Override
-    public List<IAction> getKingMoves() {
-        return null;
-    }
 }
