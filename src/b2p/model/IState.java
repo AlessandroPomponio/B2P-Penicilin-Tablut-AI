@@ -15,10 +15,10 @@ public interface IState {
 
     // Move-related functions
     void performMove(IAction action);
+    void performMove(String from, String to);
     void performMove(int from, int to);
-    void undoMove(IAction action);
-    List<IAction> getCurrentMoves();
-    List<IAction> getKingMoves();
+    List<IAction> getAvailablePawnMoves();
+    List<IAction> getAvailableKingMoves();
 
     // Heuristics-related functions
     int getHeuristicValue();

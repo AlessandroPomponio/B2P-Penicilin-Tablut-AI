@@ -23,9 +23,6 @@ public class BitSetState implements IState {
     //
     private Turn turn;
 
-    // There are special areas on the board
-    private BitSet camps;
-
     public BitSetState(Turn turn, BitSet blackPawns, BitSet whitePawns, BitSet king) {
         this.turn = turn;
         this.blackPawns = blackPawns;
@@ -47,37 +44,6 @@ public class BitSetState implements IState {
         );
     }
 
-    //region Turn getter and setter
-    @Override
-    public Turn getTurn() {
-        return this.turn;
-    }
-
-    @Override
-    public void setTurn(Turn turn) {
-        this.turn = turn;
-    }
-    //endregion
-
-    //region bitset getters
-
-    public BitSet getBlackPawns() {
-        return blackPawns;
-    }
-
-    public BitSet getWhitePawns() {
-        return whitePawns;
-    }
-
-    public BitSet getKing() {
-        return king;
-    }
-
-    public BitSet getBoard() {
-        return board;
-    }
-    //endregion
-
     //region Win conditions
     @Override
     public boolean isWinningState() {
@@ -91,9 +57,7 @@ public class BitSetState implements IState {
 
     @Override
     public boolean whiteHasWon() {
-        BitSet mask = BitSetUtils.copy(king);
-        mask.and(BitSetPosition.escape);
-        return mask.cardinality() == 1;
+        return king.intersects(BitSetPosition.escape);
     }
     //endregion
 
@@ -106,50 +70,71 @@ public class BitSetState implements IState {
     }
 
     @Override
+    public void performMove(String from, String to) {
+        BitSetPosition pFrom = BitSetPosition.valueOf(from);
+        BitSetPosition pTo = BitSetPosition.valueOf(to);
+        performMove(pFrom.ordinal(), pTo.ordinal());
+    }
+
+    @Override
     public void performMove(int from, int to) {
 
+        if (turn == Turn.BLACK) {
+
+            // Move the pawn
+            blackPawns.clear(from);
+            blackPawns.set(to);
+
+            // Check for captures
+            BitSet captures = BitSetMove.getCapturedPawns(from, to, this);
+
+            // Update board
+            king.xor(captures);
+            whitePawns.xor(captures);
+            board.xor(captures);
+            board.clear(from);
+            board.set(to);
+
+            // Next up: white player
+            turn = Turn.WHITE;
+            return;
+
+        }
+
+        // Move the pawn
+        if (king.get(from)) {
+
+            king.clear(from);
+            king.set(to);
+
+        } else {
+
+            whitePawns.clear(from);
+            whitePawns.set(to);
+
+        }
+
+        // Check for captures
+        BitSet captures = BitSetMove.getCapturedPawns(from, to, this);
+
+        //Update the baord
+        blackPawns.xor(captures);
+        board.xor(captures);
         board.clear(from);
         board.set(to);
 
-        // It's easier to handle blacks, as there's no king
-        if (turn == Turn.BLACK) {
-            blackPawns.clear(from);
-            blackPawns.set(to);
-            //TODO: CHECK CAPTURES
-            turn = Turn.WHITE;
-            //TODO: UPDATE BOARD
-            return;
-        }
-
-        // Check whether it's the king moving or not
-        if (king.get(from)) {
-            king.clear(from);
-            king.set(to);
-        } else {
-            whitePawns.clear(from);
-            whitePawns.set(to);
-        }
-
-        //TODO: CHECK CAPTURES
-        //TODO: UPDATE BOARD
+        // Next up: black player
         turn = Turn.BLACK;
 
     }
 
     @Override
-    public void undoMove(IAction action) {
-
-
-
-    }
-
-    @Override
-    public List<IAction> getCurrentMoves() {
+    public List<IAction> getAvailablePawnMoves() {
         return null;
     }
 
     @Override
-    public List<IAction> getKingMoves() {
+    public List<IAction> getAvailableKingMoves() {
         return null;
     }
     //endregion
@@ -167,5 +152,28 @@ public class BitSetState implements IState {
         return new BitSetState(this.turn, this.blackPawns, this.whitePawns, this.king);
     }
     //
+
+    //region Getters and setters
+    public BitSet getBlackPawns() { return blackPawns; }
+
+    public BitSet getWhitePawns() { return whitePawns; }
+
+    public BitSet getKing() { return king; }
+
+    public BitSet getBoard() {
+        return board;
+    }
+
+    @Override
+    public Turn getTurn() {
+        return this.turn;
+    }
+
+    @Override
+    public void setTurn(Turn turn) {
+        this.turn = turn;
+    }
+    //endregion
+
 
 }
