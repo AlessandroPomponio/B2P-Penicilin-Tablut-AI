@@ -80,6 +80,34 @@ public enum BitSetPosition {
                                                             D9.ordinal(),   E9.ordinal(),   F9.ordinal()
 
     };
+
+    private static final int[] kingSpecialCells = {
+
+
+
+
+                                                                            E4.ordinal(),
+                                                            D5.ordinal(),   E5.ordinal(),   F5.ordinal(),
+                                                                            E6.ordinal(),
+
+
+
+
+    };
+
+    private static final int[] kingSpecialCaptureCells = {
+
+
+
+                                                                            E3.ordinal(),
+                                                                            E4.ordinal(),
+                                            C5.ordinal(),   D5.ordinal(),                   F5.ordinal(),   G5.ordinal(),
+                                                                            E6.ordinal(),
+                                                                            E7.ordinal(),
+
+
+
+    };
     //endregion
 
     //region Special BitSets
@@ -87,6 +115,8 @@ public enum BitSetPosition {
     public static final BitSet escape = BitSetUtils.newFromPositions(escapeCells);
     public static final BitSet castle = BitSetUtils.newFromPositions(castleCells);
     public static final BitSet obstacles = BitSetUtils.newFromPositions(obstacleCells);
+    public static final BitSet specialKingCells = BitSetUtils.newFromPositions(kingSpecialCells);
+    public static final BitSet specialCaptureCells = BitSetUtils.newFromPositions(kingSpecialCaptureCells);
     //endregion
 
 }
