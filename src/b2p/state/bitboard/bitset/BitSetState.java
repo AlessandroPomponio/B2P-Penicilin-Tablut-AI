@@ -70,6 +70,13 @@ public class BitSetState implements IState {
     }
 
     @Override
+    public void performMove(String from, String to) {
+        BitSetPosition pFrom = BitSetPosition.valueOf(from);
+        BitSetPosition pTo = BitSetPosition.valueOf(to);
+        performMove(pFrom.ordinal(), pTo.ordinal());
+    }
+
+    @Override
     public void performMove(int from, int to) {
 
         if (turn == Turn.BLACK) {
@@ -109,6 +116,8 @@ public class BitSetState implements IState {
 
         // Check for captures
         BitSet captures = BitSetMove.getCapturedPawns(from, to, this);
+
+        //Update the baord
         blackPawns.xor(captures);
         board.xor(captures);
         board.clear(from);
@@ -120,19 +129,12 @@ public class BitSetState implements IState {
     }
 
     @Override
-    public void undoMove(IAction action) {
-
-
-
-    }
-
-    @Override
-    public List<IAction> getCurrentMoves() {
+    public List<IAction> getAvailablePawnMoves() {
         return null;
     }
 
     @Override
-    public List<IAction> getKingMoves() {
+    public List<IAction> getAvailableKingMoves() {
         return null;
     }
     //endregion
