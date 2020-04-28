@@ -66,12 +66,27 @@ public enum BitSetPosition {
 
 
     };
+
+    private static final int[] obstacleCells = {
+
+                                                            D1.ordinal(),   E1.ordinal(),   F1.ordinal(),
+                                                                            E2.ordinal(),
+
+            A4.ordinal(),                                                                                                                   I4.ordinal(),
+            A5.ordinal(),   B5.ordinal(),                                   E5.ordinal(),                                   H5.ordinal(),   I5.ordinal(),
+            A6.ordinal(),                                                                                                                   I6.ordinal(),
+
+                                                                            E8.ordinal(),
+                                                            D9.ordinal(),   E9.ordinal(),   F9.ordinal()
+
+    };
     //endregion
 
     //region Special BitSets
     public static final BitSet camps = BitSetUtils.newFromPositions(campCells);
     public static final BitSet escape = BitSetUtils.newFromPositions(escapeCells);
     public static final BitSet castle = BitSetUtils.newFromPositions(castleCells);
+    public static final BitSet obstacles = BitSetUtils.newFromPositions(obstacleCells);
     //endregion
 
 }

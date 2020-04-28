@@ -135,7 +135,7 @@ public class BitSetMove {
            if (oneUpCell > 8) {
 
                int twoUpCell = oneUpCell - 9;
-               if (whites.get(twoUpCell) || twoUpCell == BitSetPosition.E5.ordinal() || BitSetPosition.camps.get(twoUpCell)) {
+               if (whites.get(twoUpCell) || BitSetPosition.obstacles.get(twoUpCell)) {
                    captured.set(oneUpCell);
                }
 
@@ -157,7 +157,7 @@ public class BitSetMove {
             if (oneLeftCell % 9 != 0) {
 
                 int twoLeftCell = oneLeftCell - 1;
-                if (whites.get(twoLeftCell) || twoLeftCell == BitSetPosition.E5.ordinal() || BitSetPosition.camps.get(twoLeftCell)) {
+                if (whites.get(twoLeftCell) || BitSetPosition.obstacles.get(twoLeftCell)) {
                     captured.set(oneLeftCell);
                 }
 
@@ -179,7 +179,7 @@ public class BitSetMove {
             if (oneDownCell < BitSetState.boardDimension - 8) {
 
                 int twoDownCell = oneDownCell + 9;
-                if (whites.get(twoDownCell) || twoDownCell == BitSetPosition.E5.ordinal() || BitSetPosition.camps.get(twoDownCell)) {
+                if (whites.get(twoDownCell) || BitSetPosition.obstacles.get(twoDownCell)) {
                     captured.set(oneDownCell);
                 }
 
@@ -201,7 +201,7 @@ public class BitSetMove {
             if (oneRightCell % 9 != 8) {
 
                 int twoRightCell = oneRightCell + 1;
-                if (whites.get(twoRightCell) || twoRightCell == BitSetPosition.E5.ordinal() || BitSetPosition.camps.get(twoRightCell)) {
+                if (whites.get(twoRightCell) || BitSetPosition.obstacles.get(twoRightCell)) {
                     captured.set(oneRightCell);
                 }
 
