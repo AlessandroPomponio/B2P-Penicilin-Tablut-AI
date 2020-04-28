@@ -118,25 +118,36 @@ public class BitSetMove {
         BitSet whites = (BitSet) state.getWhitePawns().clone();
         whites.or(king);
 
+        // Normal captures
+        BitSet captures = getNormalCaptures(to, blacks, whites);
+
         //
         BitSet specialCaptures = new BitSet(BitSetState.boardDimension);
+        blacks.set(to);
 
         // Check if the king needs a special capture
-        king.and(BitSetPosition.specialKingCells);
-        if (!king.isEmpty()) {
+        if (king.intersects(BitSetPosition.specialKingCells)) {
 
-            BitSet specialBlacks = (BitSet) blacks.clone();
-            specialBlacks.and(BitSetPosition.specialCaptureCells);
-            if (!specialBlacks.isEmpty()) {
-                //TODO: CONTROLLARE SPECIAL CAPTURES
+            // If the king is in the castle, he must be
+            // surrounded by 4 black soldiers
+            if (king.intersects(BitSetPosition.castle)) {
+
+                if (blacks.intersects(BitSetPosition.kingSurrounded))
+                    specialCaptures.set(BitSetPosition.E5.ordinal());
+
+            } else  {
+
+                if (blacks.intersects(BitSetPosition.kingInE4Surrounded) ||
+                    blacks.intersects(BitSetPosition.kingInD5Surrounded) ||
+                    blacks.intersects(BitSetPosition.kingInE6Surrounded) ||
+                    blacks.intersects(BitSetPosition.kingInF5Surrounded))
+                    specialCaptures.set(king.nextSetBit(0));
+
             }
 
         }
 
-        // Normal captures
-        BitSet captures = getNormalCaptures(to, blacks, whites);
         captures.or(specialCaptures);
-
         return captures;
 
     }

@@ -95,15 +95,60 @@ public enum BitSetPosition {
 
     };
 
-    private static final int[] kingSpecialCaptureCells = {
+    private static final int[] kingSurroundedCells = {
 
+
+
+                                                                            E4.ordinal(),
+                                                            D5.ordinal(),                   F5.ordinal(),
+                                                                            E6.ordinal(),
+
+
+
+    };
+
+    private static final int[] kingInE4SurroundedCells = {
 
 
                                                                             E3.ordinal(),
-                                                                            E4.ordinal(),
-                                            C5.ordinal(),   D5.ordinal(),                   F5.ordinal(),   G5.ordinal(),
-                                                                            E6.ordinal(),
+                                                            D4.ordinal(),                   F4.ordinal(),
+
+
+
+
+
+    };
+
+    private static final int[] kingInD5SurroundedCells = {
+
+
+
+                                                            D4.ordinal(),
+                                            C5.ordinal(),
+                                                            D6.ordinal(),
+
+
+
+    };
+
+    private static final int[] kingInE6SurroundedCells = {
+
+
+
+                                                            D6.ordinal(),                   F6.ordinal(),
                                                                             E7.ordinal(),
+
+
+
+    };
+
+    private static final int[] kingInF5SurroundedCells = {
+
+
+
+                                                                                            F4.ordinal(),
+                                                                                                               G5.ordinal(),
+                                                                                            F6.ordinal(),
 
 
 
@@ -116,7 +161,11 @@ public enum BitSetPosition {
     public static final BitSet castle = BitSetUtils.newFromPositions(castleCells);
     public static final BitSet obstacles = BitSetUtils.newFromPositions(obstacleCells);
     public static final BitSet specialKingCells = BitSetUtils.newFromPositions(kingSpecialCells);
-    public static final BitSet specialCaptureCells = BitSetUtils.newFromPositions(kingSpecialCaptureCells);
+    public static final BitSet kingSurrounded = BitSetUtils.newFromPositions(kingSurroundedCells);
+    public static final BitSet kingInE4Surrounded = BitSetUtils.newFromPositions(kingInE4SurroundedCells);
+    public static final BitSet kingInD5Surrounded = BitSetUtils.newFromPositions(kingInD5SurroundedCells);
+    public static final BitSet kingInE6Surrounded = BitSetUtils.newFromPositions(kingInE6SurroundedCells);
+    public static final BitSet kingInF5Surrounded = BitSetUtils.newFromPositions(kingInF5SurroundedCells);
     //endregion
 
 }
