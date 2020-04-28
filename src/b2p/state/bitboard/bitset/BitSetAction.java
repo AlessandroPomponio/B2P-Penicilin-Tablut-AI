@@ -30,4 +30,12 @@ public class BitSetAction implements IAction {
         return this.turn;
     }
 
+    @Override
+    public String toString() {
+        return "BitSetAction{" +
+                "from='" + from + '\'' +
+                ", to='" + to + '\'' +
+                ", turn=" + turn +
+                '}';
+    }
 }
