@@ -99,6 +99,120 @@ public class BitSetMove {
 
     }
 
+    public static BitSet getCapturedPawns(int from, int to, BitSetState state) {
 
+        if (state.getTurn() == Turn.BLACK)
+            return getCapturesForBlack(from, to, state);
+
+        return getCapturesForWhite(from, to, state);
+
+    }
+
+    private static BitSet getCapturesForBlack(int from, int to, BitSetState state) {
+        BitSet captured = new BitSet(BitSetState.boardDimension);
+        return captured;
+    }
+
+    private static BitSet getCapturesForWhite(int from, int to, BitSetState state) {
+
+        BitSet blacks = (BitSet) state.getBlackPawns().clone();
+        BitSet whites = (BitSet) state.getWhitePawns().clone();
+        whites.or(state.getKing());
+        whites.clear(from);
+
+        //
+        BitSet captured = new BitSet(BitSetState.boardDimension);
+
+        //Check UP
+        int oneUpCell = to - 9;
+        if (oneUpCell > 0 && blacks.get(oneUpCell)) {
+
+           // If the black pawn isn't in the first row
+           // to be captured it can:
+           //   - have a white pawn above
+           //   - have the castle above
+           //   - be inside of a camp
+           if (oneUpCell > 8) {
+
+               int twoUpCell = oneUpCell - 9;
+               if (whites.get(twoUpCell) || twoUpCell == BitSetPosition.E5.ordinal() || BitSetPosition.camps.get(twoUpCell)) {
+                   captured.set(oneUpCell);
+               }
+
+           } else if (BitSetPosition.camps.get(oneUpCell)) {
+                captured.set(oneUpCell);
+           }
+
+        }
+
+        //Check LEFT
+        int oneLeftCell = to - 1;
+        if (oneLeftCell > 0 && blacks.get(oneLeftCell)) {
+
+            // If the black pawn isn't in the first column
+            // to be captured it can:
+            //   - have a white pawn on the left
+            //   - have the castle on the left
+            //   - be inside of a camp
+            if (oneLeftCell % 9 != 0) {
+
+                int twoLeftCell = oneLeftCell - 1;
+                if (whites.get(twoLeftCell) || twoLeftCell == BitSetPosition.E5.ordinal() || BitSetPosition.camps.get(twoLeftCell)) {
+                    captured.set(oneLeftCell);
+                }
+
+            } else if (BitSetPosition.camps.get(oneLeftCell)) {
+                captured.set(oneLeftCell);
+            }
+
+        }
+
+        //Check DOWN
+        int oneDownCell = to + 9;
+        if (oneDownCell < BitSetState.boardDimension && blacks.get(oneDownCell)) {
+
+            // If the black pawn isn't in the last row
+            // to be captured it can:
+            //   - have a white pawn below
+            //   - have the castle below
+            //   - be inside of a camp
+            if (oneDownCell < BitSetState.boardDimension - 8) {
+
+                int twoDownCell = oneDownCell + 9;
+                if (whites.get(twoDownCell) || twoDownCell == BitSetPosition.E5.ordinal() || BitSetPosition.camps.get(twoDownCell)) {
+                    captured.set(oneDownCell);
+                }
+
+            } else if (BitSetPosition.camps.get(oneDownCell)) {
+                captured.set(oneDownCell);
+            }
+
+        }
+
+        //Check RIGHT
+        int oneRightCell = to + 1;
+        if (oneRightCell > 0 && blacks.get(oneRightCell)) {
+
+            // If the black pawn isn't in the last column
+            // to be captured it can:
+            //   - have a white pawn on the right
+            //   - have the castle on the right
+            //   - be inside of a camp
+            if (oneRightCell % 9 != 8) {
+
+                int twoRightCell = oneRightCell + 1;
+                if (whites.get(twoRightCell) || twoRightCell == BitSetPosition.E5.ordinal() || BitSetPosition.camps.get(twoRightCell)) {
+                    captured.set(oneRightCell);
+                }
+
+            } else if (BitSetPosition.camps.get(oneRightCell)) {
+                captured.set(oneRightCell);
+            }
+
+        }
+
+        return captured;
+
+    }
 
 }

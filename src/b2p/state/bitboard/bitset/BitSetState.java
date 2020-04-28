@@ -60,6 +60,19 @@ public class BitSetState implements IState {
     //endregion
 
     //region bitset getters
+
+    public BitSet getBlackPawns() {
+        return blackPawns;
+    }
+
+    public BitSet getWhitePawns() {
+        return whitePawns;
+    }
+
+    public BitSet getKing() {
+        return king;
+    }
+
     public BitSet getBoard() {
         return board;
     }
@@ -101,6 +114,7 @@ public class BitSetState implements IState {
             blackPawns.set(to);
             //TODO: CHECK CAPTURES
             turn = Turn.WHITE;
+            //TODO: UPDATE BOARD
             return;
         }
 
@@ -114,6 +128,7 @@ public class BitSetState implements IState {
         }
 
         //TODO: CHECK CAPTURES
+        //TODO: UPDATE BOARD
         turn = Turn.BLACK;
 
     }

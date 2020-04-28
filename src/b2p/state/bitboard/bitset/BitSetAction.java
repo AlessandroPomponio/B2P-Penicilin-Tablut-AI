@@ -38,4 +38,5 @@ public class BitSetAction implements IAction {
                 ", turn=" + turn +
                 '}';
     }
+
 }
