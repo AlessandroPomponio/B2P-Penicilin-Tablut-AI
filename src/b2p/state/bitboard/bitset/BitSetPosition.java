@@ -26,7 +26,6 @@ public enum BitSetPosition {
 
     //region Special boards
     private static final int[] campCells = {
-
                                                             D1.ordinal(),   E1.ordinal(),   F1.ordinal(),
                                                                             E2.ordinal(),
 
@@ -36,11 +35,9 @@ public enum BitSetPosition {
 
                                                                             E8.ordinal(),
                                                             D9.ordinal(),   E9.ordinal(),   F9.ordinal()
-
     };
 
     private static final int[] escapeCells = {
-
                             B1.ordinal(),   C1.ordinal(),                                                   G1.ordinal(),   H1.ordinal(),
             A2.ordinal(),                                                                                                                   I2.ordinal(),
             A3.ordinal(),                                                                                                                   I3.ordinal(),
@@ -50,11 +47,9 @@ public enum BitSetPosition {
             A7.ordinal(),                                                                                                                   I7.ordinal(),
             A8.ordinal(),                                                                                                                   I8.ordinal(),
                             B9.ordinal(),   C9.ordinal(),                                                   G9.ordinal(),   H9.ordinal()
-
     };
 
     private static final int[] castleCells = {
-
 
 
 
@@ -64,11 +59,9 @@ public enum BitSetPosition {
 
 
 
-
     };
 
     private static final int[] obstacleCells = {
-
                                                             D1.ordinal(),   E1.ordinal(),   F1.ordinal(),
                                                                             E2.ordinal(),
 
@@ -78,18 +71,15 @@ public enum BitSetPosition {
 
                                                                             E8.ordinal(),
                                                             D9.ordinal(),   E9.ordinal(),   F9.ordinal()
-
     };
 
     private static final int[] kingSpecialCells = {
 
 
 
-
                                                                             E4.ordinal(),
                                                             D5.ordinal(),   E5.ordinal(),   F5.ordinal(),
                                                                             E6.ordinal(),
-
 
 
 
@@ -135,9 +125,10 @@ public enum BitSetPosition {
 
 
 
+
+
                                                             D6.ordinal(),                   F6.ordinal(),
                                                                             E7.ordinal(),
-
 
 
     };
