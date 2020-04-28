@@ -9,7 +9,9 @@ public class BitSetMove {
 
     public static ArrayList<BitSetAction> getMovesForPawn(int pawnPosition, BitSetState state) {
 
-        ArrayList<BitSetAction> moves = new ArrayList<>();
+        // 16 is the maximum amount of moves we can possibly have:
+        // it ensures no further allocations are needed
+        ArrayList<BitSetAction> moves = new ArrayList<>(16);
         BitSetPosition from = BitSetPosition.values()[pawnPosition];
 
         //
@@ -61,7 +63,10 @@ public class BitSetMove {
 
         // Left: check only if the pawn isn't on column A
         if (pawnPosition % 9 != 0) {
-            for (int cell = pawnPosition - 1; cell > 0 && cell % 9 != 0; cell--) {
+
+            // Make sure we don't end up out of the board
+            // or one row above in column I
+            for (int cell = pawnPosition - 1; cell >= 0 && cell % 9 != 8; cell--) {
 
                 // When we find a forbidden cell, we can stop
                 if (forbiddenCells.get(cell))
@@ -70,11 +75,15 @@ public class BitSetMove {
                 moves.add(new BitSetAction(from.getName(), BitSetPosition.values()[cell].getName(), state.getTurn()));
 
             }
+
         }
 
         // Right: check only if the pawn isn't on column I
-        if (pawnPosition % 8 != 0) {
-            for (int cell = pawnPosition + 1; cell < BitSetState.boardDimension && cell % 8 != 0; cell++) {
+        if (pawnPosition % 9 != 8) {
+
+            // Make sure we don't end up out of the board
+            // or one row below in column A
+            for (int cell = pawnPosition + 1; cell < BitSetState.boardDimension && cell % 9 != 0; cell++) {
 
                 // When we find a forbidden cell, we can stop
                 if (forbiddenCells.get(cell))
@@ -83,6 +92,7 @@ public class BitSetMove {
                 moves.add(new BitSetAction(from.getName(), BitSetPosition.values()[cell].getName(), state.getTurn()));
 
             }
+
         }
 
         return moves;
