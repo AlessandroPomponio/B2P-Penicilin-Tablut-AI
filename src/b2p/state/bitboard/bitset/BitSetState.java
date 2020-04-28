@@ -23,9 +23,6 @@ public class BitSetState implements IState {
     //
     private Turn turn;
 
-    // There are special areas on the board
-    private BitSet camps;
-
     public BitSetState(Turn turn, BitSet blackPawns, BitSet whitePawns, BitSet king) {
         this.turn = turn;
         this.blackPawns = blackPawns;
@@ -75,30 +72,49 @@ public class BitSetState implements IState {
     @Override
     public void performMove(int from, int to) {
 
+        if (turn == Turn.BLACK) {
+
+            // Move the pawn
+            blackPawns.clear(from);
+            blackPawns.set(to);
+
+            // Check for captures
+            BitSet captures = BitSetMove.getCapturedPawns(from, to, this);
+
+            // Update board
+            king.xor(captures);
+            whitePawns.xor(captures);
+            board.xor(captures);
+            board.clear(from);
+            board.set(to);
+
+            // Next up: white player
+            turn = Turn.WHITE;
+            return;
+
+        }
+
+        // Move the pawn
+        if (king.get(from)) {
+
+            king.clear(from);
+            king.set(to);
+
+        } else {
+
+            whitePawns.clear(from);
+            whitePawns.set(to);
+
+        }
+
+        // Check for captures
+        BitSet captures = BitSetMove.getCapturedPawns(from, to, this);
+        blackPawns.xor(captures);
+        board.xor(captures);
         board.clear(from);
         board.set(to);
 
-        // It's easier to handle blacks, as there's no king
-        if (turn == Turn.BLACK) {
-            blackPawns.clear(from);
-            blackPawns.set(to);
-            //TODO: CHECK CAPTURES
-            turn = Turn.WHITE;
-            //TODO: UPDATE BOARD
-            return;
-        }
-
-        // Check whether it's the king moving or not
-        if (king.get(from)) {
-            king.clear(from);
-            king.set(to);
-        } else {
-            whitePawns.clear(from);
-            whitePawns.set(to);
-        }
-
-        //TODO: CHECK CAPTURES
-        //TODO: UPDATE BOARD
+        // Next up: black player
         turn = Turn.BLACK;
 
     }
