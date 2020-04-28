@@ -47,37 +47,6 @@ public class BitSetState implements IState {
         );
     }
 
-    //region Turn getter and setter
-    @Override
-    public Turn getTurn() {
-        return this.turn;
-    }
-
-    @Override
-    public void setTurn(Turn turn) {
-        this.turn = turn;
-    }
-    //endregion
-
-    //region bitset getters
-
-    public BitSet getBlackPawns() {
-        return blackPawns;
-    }
-
-    public BitSet getWhitePawns() {
-        return whitePawns;
-    }
-
-    public BitSet getKing() {
-        return king;
-    }
-
-    public BitSet getBoard() {
-        return board;
-    }
-    //endregion
-
     //region Win conditions
     @Override
     public boolean isWinningState() {
@@ -91,9 +60,7 @@ public class BitSetState implements IState {
 
     @Override
     public boolean whiteHasWon() {
-        BitSet mask = BitSetUtils.copy(king);
-        mask.and(BitSetPosition.escape);
-        return mask.cardinality() == 1;
+        return king.intersects(BitSetPosition.escape);
     }
     //endregion
 
@@ -167,5 +134,28 @@ public class BitSetState implements IState {
         return new BitSetState(this.turn, this.blackPawns, this.whitePawns, this.king);
     }
     //
+
+    //region Getters and setters
+    public BitSet getBlackPawns() { return blackPawns; }
+
+    public BitSet getWhitePawns() { return whitePawns; }
+
+    public BitSet getKing() { return king; }
+
+    public BitSet getBoard() {
+        return board;
+    }
+
+    @Override
+    public Turn getTurn() {
+        return this.turn;
+    }
+
+    @Override
+    public void setTurn(Turn turn) {
+        this.turn = turn;
+    }
+    //endregion
+
 
 }
