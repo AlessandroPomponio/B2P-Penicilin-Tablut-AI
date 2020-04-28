@@ -256,8 +256,6 @@ public class BitSetMove {
         }
 
         return captured;
-
-
     }
 
 }
