@@ -108,6 +108,9 @@ public class BitSetState implements IState {
     @Override
     public void performMove(int from, int to) {
 
+        board.clear(from);
+        board.set(to);
+
         // It's easier to handle blacks, as there's no king
         if (turn == Turn.BLACK) {
             blackPawns.clear(from);
