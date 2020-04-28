@@ -109,8 +109,36 @@ public class BitSetMove {
     }
 
     private static BitSet getCapturesForBlack(int from, int to, BitSetState state) {
-        BitSet captured = new BitSet(BitSetState.boardDimension);
-        return captured;
+
+        //
+        BitSet blacks = (BitSet) state.getBlackPawns().clone();
+        blacks.clear(from);
+
+        BitSet king = (BitSet) state.getKing().clone();
+        BitSet whites = (BitSet) state.getWhitePawns().clone();
+        whites.or(king);
+
+        //
+        BitSet specialCaptures = new BitSet(BitSetState.boardDimension);
+
+        // Check if the king needs a special capture
+        king.and(BitSetPosition.specialKingCells);
+        if (!king.isEmpty()) {
+
+            BitSet specialBlacks = (BitSet) blacks.clone();
+            specialBlacks.and(BitSetPosition.specialCaptureCells);
+            if (!specialBlacks.isEmpty()) {
+                //TODO: CONTROLLARE SPECIAL CAPTURES
+            }
+
+        }
+
+        // Normal captures
+        BitSet captures = getNormalCaptures(to, blacks, whites);
+        captures.or(specialCaptures);
+
+        return captures;
+
     }
 
     private static BitSet getCapturesForWhite(int from, int to, BitSetState state) {
@@ -120,44 +148,49 @@ public class BitSetMove {
         whites.or(state.getKing());
         whites.clear(from);
 
-        //
+        return getNormalCaptures(to, whites, blacks);
+
+    }
+
+    private static BitSet getNormalCaptures(int position, BitSet attack, BitSet defense) {
+
         BitSet captured = new BitSet(BitSetState.boardDimension);
 
         //Check UP
-        int oneUpCell = to - 9;
-        if (oneUpCell > 0 && blacks.get(oneUpCell)) {
+        int oneUpCell = position - 9;
+        if (oneUpCell > 0 && defense.get(oneUpCell)) {
 
-           // If the black pawn isn't in the first row
-           // to be captured it can:
-           //   - have a white pawn above
-           //   - have the castle above
-           //   - be inside of a camp
-           if (oneUpCell > 8) {
+            // If the defense pawn isn't in the first row
+            // to be captured it can:
+            //   - have an attack pawn above
+            //   - have the castle above
+            //   - be inside of a camp
+            if (oneUpCell > 8) {
 
-               int twoUpCell = oneUpCell - 9;
-               if (whites.get(twoUpCell) || BitSetPosition.obstacles.get(twoUpCell)) {
-                   captured.set(oneUpCell);
-               }
+                int twoUpCell = oneUpCell - 9;
+                if (attack.get(twoUpCell) || BitSetPosition.obstacles.get(twoUpCell)) {
+                    captured.set(oneUpCell);
+                }
 
-           } else if (BitSetPosition.camps.get(oneUpCell)) {
+            } else if (BitSetPosition.camps.get(oneUpCell)) {
                 captured.set(oneUpCell);
-           }
+            }
 
         }
 
         //Check LEFT
-        int oneLeftCell = to - 1;
-        if (oneLeftCell > 0 && blacks.get(oneLeftCell)) {
+        int oneLeftCell = position - 1;
+        if (oneLeftCell > 0 && defense.get(oneLeftCell)) {
 
-            // If the black pawn isn't in the first column
+            // If the defense pawn isn't in the first column
             // to be captured it can:
-            //   - have a white pawn on the left
+            //   - have an attack pawn on the left
             //   - have the castle on the left
             //   - be inside of a camp
             if (oneLeftCell % 9 != 0) {
 
                 int twoLeftCell = oneLeftCell - 1;
-                if (whites.get(twoLeftCell) || BitSetPosition.obstacles.get(twoLeftCell)) {
+                if (attack.get(twoLeftCell) || BitSetPosition.obstacles.get(twoLeftCell)) {
                     captured.set(oneLeftCell);
                 }
 
@@ -168,18 +201,18 @@ public class BitSetMove {
         }
 
         //Check DOWN
-        int oneDownCell = to + 9;
-        if (oneDownCell < BitSetState.boardDimension && blacks.get(oneDownCell)) {
+        int oneDownCell = position + 9;
+        if (oneDownCell < BitSetState.boardDimension && defense.get(oneDownCell)) {
 
-            // If the black pawn isn't in the last row
+            // If the defense pawn isn't in the last row
             // to be captured it can:
-            //   - have a white pawn below
+            //   - have an attack pawn below
             //   - have the castle below
             //   - be inside of a camp
             if (oneDownCell < BitSetState.boardDimension - 8) {
 
                 int twoDownCell = oneDownCell + 9;
-                if (whites.get(twoDownCell) || BitSetPosition.obstacles.get(twoDownCell)) {
+                if (attack.get(twoDownCell) || BitSetPosition.obstacles.get(twoDownCell)) {
                     captured.set(oneDownCell);
                 }
 
@@ -190,18 +223,18 @@ public class BitSetMove {
         }
 
         //Check RIGHT
-        int oneRightCell = to + 1;
-        if (oneRightCell > 0 && blacks.get(oneRightCell)) {
+        int oneRightCell = position + 1;
+        if (oneRightCell > 0 && defense.get(oneRightCell)) {
 
-            // If the black pawn isn't in the last column
+            // If the defense pawn isn't in the last column
             // to be captured it can:
-            //   - have a white pawn on the right
+            //   - have an attack pawn on the right
             //   - have the castle on the right
             //   - be inside of a camp
             if (oneRightCell % 9 != 8) {
 
                 int twoRightCell = oneRightCell + 1;
-                if (whites.get(twoRightCell) || BitSetPosition.obstacles.get(twoRightCell)) {
+                if (attack.get(twoRightCell) || BitSetPosition.obstacles.get(twoRightCell)) {
                     captured.set(oneRightCell);
                 }
 
@@ -212,6 +245,7 @@ public class BitSetMove {
         }
 
         return captured;
+
 
     }
 

@@ -35,11 +35,15 @@ public class main {
 
 
         BitSetState startingState = new BitSetState();
+        startingState.setTurn(Turn.BLACK);
+        startingState.performMove(BitSetPosition.F1.ordinal(), BitSetPosition.F4.ordinal());
+        startingState.setTurn(Turn.BLACK);
+
         System.out.println("StartingState:");
         System.out.println(BitSetUtils.toBitString(startingState.getBoard()));
 
         long startTime = System.nanoTime();
-        BitSet captures = BitSetMove.getCapturedPawns(BitSetPosition.E7.ordinal(), BitSetPosition.I7.ordinal(), startingState);
+        BitSet captures = BitSetMove.getCapturedPawns(BitSetPosition.D1.ordinal(), BitSetPosition.D4.ordinal(), startingState);
         long endTime = System.nanoTime();
         System.out.println("Captures:");
         System.out.println(BitSetUtils.toBitString(captures));
