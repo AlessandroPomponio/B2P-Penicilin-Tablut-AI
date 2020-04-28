@@ -14,6 +14,17 @@ public class BitSetUtils {
 
     }
 
+    public static BitSet newFromPositions(BitSetPosition[] positions) {
+
+        int[] p = new int[positions.length];
+        for (int i = 0; i < positions.length; i++) {
+            p[i] = positions[i].ordinal();
+        }
+
+        return BitSetUtils.newFromPositions(p);
+
+    }
+
     public static String toByteString(BitSet bitSet) {
 
         StringBuilder builder = new StringBuilder();
