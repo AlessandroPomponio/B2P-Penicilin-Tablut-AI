@@ -49,7 +49,7 @@
                 <pathelement location="${build.dir}/jar/B2P - Tablut AI.jar" />
             </classpath>
             <batchtest fork="no">
-                <zipfileset src="${build.dir}/jar/B2P - Tablut AI.jar" includes="**/*Test.class" />
+                <zipfileset src="${build.dir}/jar/B2P - Tablut AI.jar" includes="**/test/*Test.class" />
             </batchtest>
 
         </junit>
