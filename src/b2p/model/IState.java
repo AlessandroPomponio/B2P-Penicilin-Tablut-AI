@@ -1,6 +1,8 @@
 package b2p.model;
 
-import java.util.List;
+import b2p.state.bitboard.bitset.BitSetAction;
+
+import java.util.ArrayList;
 
 public interface IState {
 
@@ -15,10 +17,10 @@ public interface IState {
 
     // Move-related functions
     void performMove(IAction action);
+    void performMove(String from, String to);
     void performMove(int from, int to);
-    void undoMove(IAction action);
-    List<IAction> getCurrentMoves();
-    List<IAction> getKingMoves();
+    ArrayList<BitSetAction> getAvailablePawnMoves();
+    ArrayList<BitSetAction> getAvailableKingMoves();
 
     // Heuristics-related functions
     int getHeuristicValue();

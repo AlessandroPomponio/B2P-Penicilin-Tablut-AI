@@ -48,15 +48,12 @@ public class BitSetStartingBoard {
 
 
     };
-
     //endregion
 
     //region Starting BitSets
-
     public static final BitSet blackStartingBitSet = BitSetUtils.newFromPositions(blackStartingBoard);
     public static final BitSet whiteStartingBitSet = BitSetUtils.newFromPositions(whiteStartingBoard);
     public static final BitSet kingStartingBitSet = BitSetUtils.newFromPositions(kingStartingBoard);
-
     //endregion
 
 }

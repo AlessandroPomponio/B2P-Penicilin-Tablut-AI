@@ -183,8 +183,6 @@ public class BitSetMove {
                     captured.set(oneUpCell);
                 }
 
-            } else if (BitSetPosition.camps.get(oneUpCell)) {
-                captured.set(oneUpCell);
             }
 
         }
@@ -205,8 +203,6 @@ public class BitSetMove {
                     captured.set(oneLeftCell);
                 }
 
-            } else if (BitSetPosition.camps.get(oneLeftCell)) {
-                captured.set(oneLeftCell);
             }
 
         }
@@ -227,8 +223,6 @@ public class BitSetMove {
                     captured.set(oneDownCell);
                 }
 
-            } else if (BitSetPosition.camps.get(oneDownCell)) {
-                captured.set(oneDownCell);
             }
 
         }
@@ -249,8 +243,6 @@ public class BitSetMove {
                     captured.set(oneRightCell);
                 }
 
-            } else if (BitSetPosition.camps.get(oneRightCell)) {
-                captured.set(oneRightCell);
             }
 
         }
