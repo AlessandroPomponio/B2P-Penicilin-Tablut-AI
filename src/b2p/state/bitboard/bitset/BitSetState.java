@@ -4,8 +4,8 @@ import b2p.model.IAction;
 import b2p.model.IState;
 import b2p.model.Turn;
 
+import java.util.ArrayList;
 import java.util.BitSet;
-import java.util.List;
 
 public class BitSetState implements IState {
 
@@ -129,19 +129,40 @@ public class BitSetState implements IState {
     }
 
     @Override
-    public List<IAction> getAvailablePawnMoves() {
-        return null;
+    public ArrayList<BitSetAction> getAvailablePawnMoves() {
+
+        ArrayList<BitSetAction> moves = null;
+
+        if (turn == Turn.BLACK) {
+
+            moves = new ArrayList<>(blackPawns.cardinality() * 10);
+            for (int i = blackPawns.nextSetBit(0); i >= 0; i = blackPawns.nextSetBit(i+1)) {
+                moves.addAll(BitSetMove.getMovesForPawn(i, this));
+            }
+
+        } else {
+
+            moves = new ArrayList<>(whitePawns.cardinality() * 10);
+            for (int i = whitePawns.nextSetBit(0); i >= 0; i = whitePawns.nextSetBit(i+1)) {
+                moves.addAll(BitSetMove.getMovesForPawn(i, this));
+            }
+
+        }
+
+        return moves;
+
     }
 
     @Override
-    public List<IAction> getAvailableKingMoves() {
-        return null;
+    public ArrayList<BitSetAction> getAvailableKingMoves() {
+        return BitSetMove.getMovesForPawn(king.nextSetBit(0), this);
     }
     //endregion
 
     //region Heuristics-related functions
     @Override
     public int getHeuristicValue() {
+        //TODO: AGGIUNGERE QUALCOSA
         return 0;
     }
     //endregion
