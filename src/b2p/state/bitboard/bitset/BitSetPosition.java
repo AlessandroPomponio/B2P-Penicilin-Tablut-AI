@@ -62,15 +62,15 @@ public enum BitSetPosition {
     };
 
     private static final int[] obstacleCells = {
-                                                            D1.ordinal(),   E1.ordinal(),   F1.ordinal(),
+                                                            D1.ordinal(),                   F1.ordinal(),
                                                                             E2.ordinal(),
 
             A4.ordinal(),                                                                                                                   I4.ordinal(),
-            A5.ordinal(),   B5.ordinal(),                                   E5.ordinal(),                                   H5.ordinal(),   I5.ordinal(),
+                            B5.ordinal(),                                   E5.ordinal(),                                   H5.ordinal(),
             A6.ordinal(),                                                                                                                   I6.ordinal(),
 
                                                                             E8.ordinal(),
-                                                            D9.ordinal(),   E9.ordinal(),   F9.ordinal()
+                                                            D9.ordinal(),                   F9.ordinal()
     };
 
     private static final int[] kingSpecialCells = {
