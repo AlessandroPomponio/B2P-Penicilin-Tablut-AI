@@ -1,6 +1,8 @@
-package b2p.state.bitboard.bitset;
+package b2p.state.bitboard.bitset.test;
 
 import b2p.model.Turn;
+import b2p.state.bitboard.bitset.*;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.BitSet;
 
@@ -41,7 +43,7 @@ class BitSetMoveTest {
                 new BitSetAction("E3", "H3", Turn.WHITE),
                 new BitSetAction("E3", "I3", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E3.ordinal(), start).toArray(), wanted);
+        Assertions.assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E3.ordinal(), start).toArray(), wanted);
 
         wanted = new BitSetAction[]{
                 new BitSetAction("E4", "D4", Turn.WHITE),
