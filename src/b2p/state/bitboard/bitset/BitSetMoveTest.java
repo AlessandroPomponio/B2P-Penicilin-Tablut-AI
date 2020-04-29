@@ -13,16 +13,14 @@ class BitSetMoveTest {
      * poi ripete la stessa valutazione rispetto a tutte le direzioni. Le direzioni sono, in ordine:
      * (Sopra, Sotto, Sinistra, Destra)
      *
-     * Ancora da fare
-     *  - una in mezzo
-     *  - ai lati
      */
 
     /**
      * funzione : testGetMovesForWhitePawnsAtStart
      * testa la funzione getMovesForPawn per tutte le pedine bianche allo stato iniziale della partita
-     * L'ordine di testing comincia dalla pedina più in alto a sinitra, finisce con quella più in basso a destra
+     * L'ordine di testing comincia dalla pedina in alto a sinitra, finisce con quella in basso a destra
      */
+
     @org.junit.jupiter.api.Test
     void testGetMovesForWhitePawnsAtStart() {
 
@@ -181,17 +179,26 @@ class BitSetMoveTest {
      *
      *
      *
-     *                                                             D1.ordinal(),   E1.ordinal(),   F1.ordinal(),                    H1.ordinal(),
-     *                                                                             E2.ordinal(),                                    H2.ordinal(9,   I2.ordinal(),
-     *
-     *             A4.ordinal(),                                                                                                                    I4.ordinal(),
-     *             A5.ordinal(),   B5.ordinal(),                                                                                    H5.ordinal(),   I5.ordinal(),
-     *             A6.ordinal(),                                                                                                                    I6.ordinal(),
-     *
-     *                                                                             E8.ordinal(),
-     *                                                             D9.ordinal(),   E9.ordinal(),   F9.ordinal()
-     *
-     *     };
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   | N |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   | B | N |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
      *
      */
     @org.junit.jupiter.api.Test
@@ -205,7 +212,7 @@ class BitSetMoveTest {
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.I2,
-                        BitSetPosition.H1
+                        BitSetPosition.H1,
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
@@ -219,6 +226,170 @@ class BitSetMoveTest {
                 new BitSetAction("H2", "F2", Turn.WHITE),
         };
         assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.H2.ordinal(), current).toArray(), wanted);
+    }
+
+    /**
+     * funzione : testCastleCollision
+     * testa la funzione getMovesForPawn per verificare la collisione con il castello
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   | N |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   | B | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   | N |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.jupiter.api.Test
+    void testCastleCollision(){
+
+        BitSetAction[] wanted;
+        BitSetState current = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.G5,                              // Pedina le cui posizioni possibili sono da valutare
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.G3,
+                        BitSetPosition.G7,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        wanted = new BitSetAction[]{
+                new BitSetAction("G5", "G4", Turn.WHITE),
+                new BitSetAction("G5", "G6", Turn.WHITE),
+                new BitSetAction("G5", "F5", Turn.WHITE),
+        };
+        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(), wanted);
+    }
+
+    /**
+     * funzione : testBorderCollision
+     * testa la funzione getMovesForPawn per verificare la collisione con i bordi
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   | B |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.jupiter.api.Test
+    void testBorderCollision(){
+
+        BitSetAction[] wanted;
+        BitSetState current = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.I1,                              // Pedina le cui posizioni possibili sono da valutare
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        wanted = new BitSetAction[]{
+                new BitSetAction("I1", "I2", Turn.WHITE),
+                new BitSetAction("I1", "I3", Turn.WHITE),
+                new BitSetAction("I1", "H1", Turn.WHITE),
+                new BitSetAction("I1", "G1", Turn.WHITE),
+        };
+        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.I1.ordinal(), current).toArray(), wanted);
+    }
+
+    /**
+     * funzione : testKingCollision
+     * testa la funzione getMovesForPawn per verificare la collisione del re con castello e bordi
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   | R | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.jupiter.api.Test
+    void testKingCollisions(){
+
+        BitSetAction[] wanted;
+        BitSetState current = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.G5,
+                })
+        );
+
+        wanted = new BitSetAction[]{
+                new BitSetAction("G5", "G4", Turn.WHITE),
+                new BitSetAction("G5", "G3", Turn.WHITE),
+                new BitSetAction("G5", "G2", Turn.WHITE),
+                new BitSetAction("G5", "G1", Turn.WHITE),
+                new BitSetAction("G5", "G6", Turn.WHITE),
+                new BitSetAction("G5", "G7", Turn.WHITE),
+                new BitSetAction("G5", "G8", Turn.WHITE),
+                new BitSetAction("G5", "G9", Turn.WHITE),
+                new BitSetAction("G5", "F5", Turn.WHITE),
+        };
+        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(), wanted);
     }
 
     /**
