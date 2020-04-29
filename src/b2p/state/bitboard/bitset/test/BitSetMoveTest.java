@@ -9,7 +9,7 @@ import java.util.BitSet;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class BitSetMoveTest {
+public class BitSetMoveTest {
 
     /*
      * funzione : getMovesForPawn
@@ -26,8 +26,8 @@ class BitSetMoveTest {
      * testa la funzione getMovesForPawn per tutte le pedine bianche allo stato iniziale della partita
      * L'ordine di testing comincia dalla pedina in alto a sinitra, finisce con quella in basso a destra
      */
-    @org.junit.jupiter.api.Test
-    void testGetMovesForWhitePawnsAtStart() {
+    @org.junit.Test
+    public void testGetMovesForWhitePawnsAtStart() {
 
         BitSetState start = new BitSetState();
         BitSetAction[] wanted;
@@ -133,8 +133,8 @@ class BitSetMoveTest {
      * testa la funzione getMovesForPawn per le pedine dell'accampameno in alto
      *
      */
-    @org.junit.jupiter.api.Test
-    void testGetMovesForBlackPawnsAtStart() {
+    @org.junit.Test
+    public void testGetMovesForBlackPawnsAtStart() {
 
         BitSetState start = new BitSetState();
         BitSetAction[] wanted;
@@ -208,8 +208,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testCampCollision(){
+    @org.junit.Test
+    public void testCampCollision(){
 
         BitSetAction[] wanted;
         BitSetState current = new BitSetState(
@@ -263,8 +263,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testCastleCollision(){
+    @org.junit.Test
+    public void testCastleCollision(){
 
         BitSetAction[] wanted;
         BitSetState current = new BitSetState(
@@ -317,8 +317,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testBorderCollision(){
+    @org.junit.Test
+    public void testBorderCollision(){
 
         BitSetAction[] wanted;
         BitSetState current = new BitSetState(
@@ -371,8 +371,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testKingCollisions(){
+    @org.junit.Test
+    public void testKingCollisions(){
 
         BitSetAction[] wanted;
         BitSetState current = new BitSetState(
@@ -435,8 +435,8 @@ class BitSetMoveTest {
      * +---+---+---+---+---+---+---+---+---+
      *   A   B   C   D   E   F   G   H   I
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawnsNoCaptures() {
+    @org.junit.Test
+    public void testGetCapturedPawnsNoCaptures() {
 
         BitSet wanted;
         BitSetState current = new BitSetState(
@@ -486,8 +486,8 @@ class BitSetMoveTest {
      * +---+---+---+---+---+---+---+---+---+
      *   A   B   C   D   E   F   G   H   I
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawnsSingleCapture() {
+    @org.junit.Test
+    public void testGetCapturedPawnsSingleCapture() {
 
         BitSet wanted;
         BitSetState current = new BitSetState(
@@ -539,8 +539,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawnsDoubleCapture() {
+    @org.junit.Test
+    public void testGetCapturedPawnsDoubleCapture() {
 
         BitSet wanted;
         BitSetState current = new BitSetState(
@@ -595,8 +595,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawnsTripleCapture() {
+    @org.junit.Test
+    public void testGetCapturedPawnsTripleCapture() {
 
         BitSet wanted;
         BitSetState current = new BitSetState(
@@ -654,8 +654,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawnsCastleLegalCapture() {
+    @org.junit.Test
+    public void testGetCapturedPawnsCastleLegalCapture() {
 
         BitSet wanted;
         BitSetState current = new BitSetState(
@@ -707,8 +707,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawnsCampLegalCapture() {
+    @org.junit.Test
+    public void testGetCapturedPawnsCampLegalCapture() {
 
         BitSet wanted;
         BitSetState current = new BitSetState(
@@ -761,8 +761,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawnsCampIllegalCapture() {
+    @org.junit.Test
+    public void testGetCapturedPawnsCampIllegalCapture() {
 
         BitSet wanted;
         BitSetState current = new BitSetState(
@@ -814,8 +814,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawnsOutOfCampCapture() {
+    @org.junit.Test
+    public void testGetCapturedPawnsOutOfCampCapture() {
 
         BitSet wanted;
         BitSetState current = new BitSetState(
@@ -866,8 +866,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawnsKingInCastle() {
+    @org.junit.Test
+    public void testGetCapturedPawnsKingInCastle() {
 
         BitSet wanted;
         BitSetState current = new BitSetState(
@@ -921,8 +921,8 @@ class BitSetMoveTest {
      *   A   B   C   D   E   F   G   H   I
      *
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawnsKingOutOfCastle() {
+    @org.junit.Test
+    public void testGetCapturedPawnsKingOutOfCastle() {
 
         BitSet wanted;
         BitSetState current = new BitSetState(
