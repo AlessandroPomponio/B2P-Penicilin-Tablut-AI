@@ -1,12 +1,11 @@
 <project name="run-junit-test">
     <property name="main.build.dir" value="../build/main"/>
-    <property name="main.src.dir" value="../src/b2p/state/bitboard/bitset"/>
+    <property name="main.src.dir" value="../src/b2p/"/>
     <property name="test.build.dir" value="../build/test"/>
     <property name="test.src.dir" value="../src/b2p/state/bitboard/bitset/test"/>
 
     <path id="classpath.test">
-        <pathelement location="../lib/junit-4.12.jar"/>
-        <pathelement location="../lib/hamcrest-core-1.3.jar"/>
+        <pathelement location="../lib/*"/>
         <pathelement location="${main.build.dir}"/>
     </path>
 
