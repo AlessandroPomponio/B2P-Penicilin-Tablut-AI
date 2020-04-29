@@ -2,9 +2,13 @@ package b2p.state.bitboard.bitset;
 
 import b2p.model.Turn;
 
+import java.util.BitSet;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BitSetMoveTest {
+
     /*
      * funzione : getMovesForPawn
      *
@@ -20,7 +24,6 @@ class BitSetMoveTest {
      * testa la funzione getMovesForPawn per tutte le pedine bianche allo stato iniziale della partita
      * L'ordine di testing comincia dalla pedina in alto a sinitra, finisce con quella in basso a destra
      */
-
     @org.junit.jupiter.api.Test
     void testGetMovesForWhitePawnsAtStart() {
 
@@ -122,6 +125,7 @@ class BitSetMoveTest {
         assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E7.ordinal(), start).toArray(), wanted);
     }
 
+
     /**
      * funzione : testGetMovesForBlackPawnsAtStart
      * testa la funzione getMovesForPawn per le pedine dell'accampameno in alto
@@ -173,6 +177,7 @@ class BitSetMoveTest {
         assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E2.ordinal(), start).toArray(), wanted);
     }
 
+
     /**
      * funzione : testCampCollision
      * testa la funzione getMovesForPawn per verificare la collisione con gli accampamenti
@@ -207,12 +212,12 @@ class BitSetMoveTest {
         BitSetAction[] wanted;
         BitSetState current = new BitSetState(
                 Turn.WHITE,
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-                        BitSetPosition.H2,                              // Pedina le cui posizioni possibili sono da valutare
-                }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.I2,
                         BitSetPosition.H1,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.H2,
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
@@ -227,6 +232,7 @@ class BitSetMoveTest {
         };
         assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.H2.ordinal(), current).toArray(), wanted);
     }
+
 
     /**
      * funzione : testCastleCollision
@@ -261,12 +267,12 @@ class BitSetMoveTest {
         BitSetAction[] wanted;
         BitSetState current = new BitSetState(
                 Turn.WHITE,
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-                        BitSetPosition.G5,                              // Pedina le cui posizioni possibili sono da valutare
-                }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.G3,
                         BitSetPosition.G7,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.G5,
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
@@ -280,6 +286,7 @@ class BitSetMoveTest {
         };
         assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(), wanted);
     }
+
 
     /**
      * funzione : testBorderCollision
@@ -315,10 +322,10 @@ class BitSetMoveTest {
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-                        BitSetPosition.I1,                              // Pedina le cui posizioni possibili sono da valutare
+
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
-
+                        BitSetPosition.I1,
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
@@ -333,6 +340,7 @@ class BitSetMoveTest {
         };
         assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.I1.ordinal(), current).toArray(), wanted);
     }
+
 
     /**
      * funzione : testKingCollision
@@ -367,10 +375,10 @@ class BitSetMoveTest {
         BitSetAction[] wanted;
         BitSetState current = new BitSetState(
                 Turn.WHITE,
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
                 }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
@@ -392,13 +400,387 @@ class BitSetMoveTest {
         assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(), wanted);
     }
 
-    /**
+
+    /* funzione : testGetCapturedPawns
      * Funzione che ritorna la bitboard con le pedine che vengono mangiate facendo una determinata mossa
      * Bianco:  Funzione che fa la cattura standard dai due lati più casi limite (accampamenti, castello e ostacoli)
      * Nero:    Funzione che fa la cattura come quella dei bianchi, più le catture speciali.
      */
-    @org.junit.jupiter.api.Test
-    void testGetCapturedPawns() {
 
+    /**
+     * funzione : testGetCapturedPawnsSingleCapture
+     * testa la singola cattura di una pedina nera nella funzione getCapturedPawns.
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   | N | B |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   | B |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     */
+    @org.junit.jupiter.api.Test
+    void testGetCapturedPawnsSingleCapture() {
+
+        BitSet wanted;
+        BitSetState current = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.F3,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.G3,
+                        BitSetPosition.E4,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+                BitSetPosition.F3,
+        });
+
+        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.E4.ordinal(), BitSetPosition.E3.ordinal(), current)), BitSetUtils.toBitString(wanted));
     }
+
+
+    /**
+     * funzione : testGetCapturedPawnsNoCaptures
+     * testa che la funzione getCapturedPawns restituisca una bitmap vuota se non ci sono condizioni di accerchiamento
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   | N |   | B |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     */
+    @org.junit.jupiter.api.Test
+    void testGetCapturedPawnsNoCaptures() {
+
+        BitSet wanted;
+        BitSetState current = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.F3,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.H3,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+
+        });
+
+        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.G3.ordinal(), current)), BitSetUtils.toBitString(wanted));
+    }
+
+
+    /**
+     * funzione : testGetCapturedPawnsIllegalCampCapture
+     * testa che la funzione getCapturedPawns non catturi la pedina che si trova nell'accampamento sul bordo, considerando
+     * la cella centrale dell'accampamento come collisione
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   | B |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | N |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.jupiter.api.Test
+    void testGetCapturedPawnsIllegalCampCapture() {
+
+        BitSet wanted;
+        BitSetState current = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.I4,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.H3,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+
+        });
+
+        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.I3.ordinal(), current)), BitSetUtils.toBitString(wanted));
+    }
+
+
+    /**
+     * funzione : testGetCapturedPawnsLegalCampCapture
+     * testa che la funzione getCapturedPawns catturi una pedina nera che si trovi dentro l'accampamento quando
+     * la condizione di cattura è valida
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   | B |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | N | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   | B | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.jupiter.api.Test
+    void testGetCapturedPawnsLegalCampCapture() {
+
+        BitSet wanted;
+        BitSetState current = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.H5,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.H3,
+                        BitSetPosition.H6,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+                BitSetPosition.H5,
+        });
+
+        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.H4.ordinal(), current)), BitSetUtils.toBitString(wanted));
+    }
+
+
+    /**
+     * funzione : testGetCapturedPawnsOutOfCampCapture
+     * testa che la funzione getCapturedPawns catturi una pedina nera che si trovi fuori dall'accampamento quando
+     * la condizione di cattura è valida
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   | N | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   | B |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.jupiter.api.Test
+    void testGetCapturedPawnsOutOfCampCapture() {
+
+        BitSet wanted;
+        BitSetState current = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.G5,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.F6,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+                BitSetPosition.G5,
+        });
+
+        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.F6.ordinal(), BitSetPosition.F5.ordinal(), current)), BitSetUtils.toBitString(wanted));
+    }
+
+
+    /**
+     * funzione : testGetCapturedPawnsKingInCastle
+     * testa che la funzione getCapturedPawns catturi correttamente la pedina re quando si trova nel castello
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   | N |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   | N | R | N |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | N |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.jupiter.api.Test
+    void testGetCapturedPawnsKingInCastle() {
+
+        BitSet wanted;
+        BitSetState current = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.E4,
+                        BitSetPosition.D5,
+                        BitSetPosition.F5,
+                        BitSetPosition.E7,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.E5,
+                })
+        );
+
+        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+                BitSetPosition.E5,
+        });
+
+        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.E7.ordinal(), BitSetPosition.E6.ordinal(), current)), BitSetUtils.toBitString(wanted));
+    }
+
+
+    /**
+     * funzione : testGetCapturedPawnsKingInCastle
+     * testa che la funzione getCapturedPawns catturi correttamente la pedina re quando si trova nel castello
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | N |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   | N |   | R | N |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.jupiter.api.Test
+    void testGetCapturedPawnsKingOutOfCastle() {
+
+        BitSet wanted;
+        BitSetState current = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.E3,
+                        BitSetPosition.C4,
+                        BitSetPosition.F4,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.E4,
+                })
+        );
+
+        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+                BitSetPosition.E4,
+        });
+
+        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.C4.ordinal(), BitSetPosition.D4.ordinal(), current)), BitSetUtils.toBitString(wanted));
+    }
+
+    /*
+     * TODO:
+     *  - test per cattura legale contro il castello
+     *  - test per catture multiple con una singola mossa
+     */
 }
