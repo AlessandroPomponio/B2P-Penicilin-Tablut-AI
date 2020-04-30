@@ -43,7 +43,7 @@
     <target name="main" depends="clean,run"/>
 
     <target name="test" depends="clean-build">
-        <junit printsummary="yes" haltonfailure="no">
+        <junit printsummary="yes" haltonfailure="yes">
             <classpath refid="classpath" />
             <classpath>
                 <pathelement location="${build.dir}/jar/B2P - Tablut AI.jar" />
