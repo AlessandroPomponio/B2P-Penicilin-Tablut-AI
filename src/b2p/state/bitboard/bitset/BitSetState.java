@@ -10,20 +10,19 @@ import java.util.BitSet;
 public class BitSetState implements IState {
 
     //
-    public static final int boardDimension = 9*9;
-
-    // One bitboard per pawn type
-    private BitSet blackPawns;
-    private BitSet whitePawns;
-    private BitSet king;
-
-    // Board state
-    private BitSet board;
+    public static final int boardDimension = 9 * 9;
 
     //
     private Turn turn;
 
+    //
+    private final BitSet blackPawns;
+    private final BitSet whitePawns;
+    private final BitSet king;
+    private final BitSet board;
+
     public BitSetState(Turn turn, BitSet blackPawns, BitSet whitePawns, BitSet king) {
+
         this.turn = turn;
         this.blackPawns = blackPawns;
         this.whitePawns = whitePawns;
@@ -33,6 +32,7 @@ public class BitSetState implements IState {
         board.or(blackPawns);
         board.or(whitePawns);
         board.or(king);
+
     }
 
     public BitSetState() {
@@ -79,71 +79,56 @@ public class BitSetState implements IState {
     @Override
     public void performMove(int from, int to) {
 
+        BitSet captures;
+
         if (turn == Turn.BLACK) {
 
-            // Move the pawn
             blackPawns.clear(from);
             blackPawns.set(to);
 
-            // Check for captures
-            BitSet captures = BitSetMove.getCapturedPawns(from, to, this);
-
-            // Update board
+            captures = BitSetMove.getCapturedPawns(from, to, this);
             king.xor(captures);
             whitePawns.xor(captures);
-            board.xor(captures);
-            board.clear(from);
-            board.set(to);
-
-            // Next up: white player
             turn = Turn.WHITE;
-            return;
-
-        }
-
-        // Move the pawn
-        if (king.get(from)) {
-
-            king.clear(from);
-            king.set(to);
 
         } else {
 
-            whitePawns.clear(from);
-            whitePawns.set(to);
+            if (king.get(from)) {
+                king.clear(from);
+                king.set(to);
+            } else {
+                whitePawns.clear(from);
+                whitePawns.set(to);
+            }
+
+            captures = BitSetMove.getCapturedPawns(from, to, this);
+            blackPawns.xor(captures);
+            turn = Turn.BLACK;
 
         }
 
-        // Check for captures
-        BitSet captures = BitSetMove.getCapturedPawns(from, to, this);
-
-        //Update the baord
-        blackPawns.xor(captures);
         board.xor(captures);
         board.clear(from);
         board.set(to);
-
-        // Next up: black player
-        turn = Turn.BLACK;
 
     }
 
     @Override
     public ArrayList<BitSetAction> getAvailablePawnMoves() {
 
-        ArrayList<BitSetAction> moves = null;
+        ArrayList<BitSetAction> moves;
 
         if (turn == Turn.BLACK) {
 
             moves = new ArrayList<>(blackPawns.cardinality() * 10);
-            for (int i = blackPawns.nextSetBit(0); i >= 0; i = blackPawns.nextSetBit(i+1)) {
+            for (int i = blackPawns.nextSetBit(0); i >= 0; i = blackPawns.nextSetBit(i + 1)) {
                 moves.addAll(BitSetMove.getMovesForPawn(i, this));
             }
 
         } else {
 
             moves = new ArrayList<>(whitePawns.cardinality() * 10);
-            for (int i = whitePawns.nextSetBit(0); i >= 0; i = whitePawns.nextSetBit(i+1)) {
+            for (int i = whitePawns.nextSetBit(0); i >= 0; i = whitePawns.nextSetBit(i + 1)) {
                 moves.addAll(BitSetMove.getMovesForPawn(i, this));
             }
 
@@ -175,11 +160,17 @@ public class BitSetState implements IState {
     //
 
     //region Getters and setters
-    public BitSet getBlackPawns() { return blackPawns; }
+    public BitSet getBlackPawns() {
+        return blackPawns;
+    }
 
-    public BitSet getWhitePawns() { return whitePawns; }
+    public BitSet getWhitePawns() {
+        return whitePawns;
+    }
 
-    public BitSet getKing() { return king; }
+    public BitSet getKing() {
+        return king;
+    }
 
     public BitSet getBoard() {
         return board;
@@ -195,6 +186,5 @@ public class BitSetState implements IState {
         this.turn = turn;
     }
     //endregion
-
 
 }
