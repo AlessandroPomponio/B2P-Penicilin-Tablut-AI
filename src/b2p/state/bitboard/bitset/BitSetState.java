@@ -65,7 +65,7 @@ public class BitSetState implements IState {
     @Override
     public void performMove(IAction action) {
         BitSetPosition from = BitSetPosition.valueOf(action.getFrom());
-        BitSetPosition to = BitSetPosition.valueOf(action.getFrom());
+        BitSetPosition to = BitSetPosition.valueOf(action.getTo());
         performMove(from.ordinal(), to.ordinal());
     }
 
