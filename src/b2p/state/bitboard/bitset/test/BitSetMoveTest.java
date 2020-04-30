@@ -25,6 +25,28 @@ public class BitSetMoveTest {
      * funzione : testGetMovesForWhitePawnsAtStart
      * testa la funzione getMovesForPawn per tutte le pedine bianche allo stato iniziale della partita
      * L'ordine di testing comincia dalla pedina in alto a sinitra, finisce con quella in basso a destra
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | N | N | N |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | N |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | B |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | N |   |   |   | B |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | N | N | B | B | C | B | B | N | N |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | N |   |   |   | B |   |   |   | N |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | B |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | N |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | N | N | N |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
      */
     @org.junit.Test
     public void testGetMovesForWhitePawnsAtStart() {
@@ -43,7 +65,7 @@ public class BitSetMoveTest {
                 new BitSetAction("E3", "H3", Turn.WHITE),
                 new BitSetAction("E3", "I3", Turn.WHITE),
         };
-        Assertions.assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E3.ordinal(), start).toArray(), wanted);
+        Assertions.assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E3.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
                 new BitSetAction("E4", "D4", Turn.WHITE),
@@ -53,7 +75,7 @@ public class BitSetMoveTest {
                 new BitSetAction("E4", "G4", Turn.WHITE),
                 new BitSetAction("E4", "H4", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E4.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E4.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
                 new BitSetAction("C5", "C4", Turn.WHITE),
@@ -65,7 +87,7 @@ public class BitSetMoveTest {
                 new BitSetAction("C5", "C8", Turn.WHITE),
                 new BitSetAction("C5", "C9", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.C5.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.C5.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
                 new BitSetAction("D5", "D4", Turn.WHITE),
@@ -75,12 +97,12 @@ public class BitSetMoveTest {
                 new BitSetAction("D5", "D7", Turn.WHITE),
                 new BitSetAction("D5", "D8", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.D5.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.D5.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
 
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E5.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E5.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
                 new BitSetAction("F5", "F4", Turn.WHITE),
@@ -90,7 +112,7 @@ public class BitSetMoveTest {
                 new BitSetAction("F5", "F7", Turn.WHITE),
                 new BitSetAction("F5", "F8", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.F5.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.F5.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
                 new BitSetAction("G5", "G4", Turn.WHITE),
@@ -102,7 +124,7 @@ public class BitSetMoveTest {
                 new BitSetAction("G5", "G8", Turn.WHITE),
                 new BitSetAction("G5", "G9", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
                 new BitSetAction("E6", "D6", Turn.WHITE),
@@ -112,7 +134,7 @@ public class BitSetMoveTest {
                 new BitSetAction("E6", "G6", Turn.WHITE),
                 new BitSetAction("E6", "H6", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E6.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E6.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
                 new BitSetAction("E7", "D7", Turn.WHITE),
@@ -124,13 +146,35 @@ public class BitSetMoveTest {
                 new BitSetAction("E7", "H7", Turn.WHITE),
                 new BitSetAction("E7", "I7", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E7.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E7.ordinal(), start).toArray());
     }
 
 
     /**
      * funzione : testGetMovesForBlackPawnsAtStart
-     * testa la funzione getMovesForPawn per le pedine dell'accampameno in alto
+     * testa la funzione getMovesForPawn per le pedine nere dell'accampameno in alto
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | N | N | N |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | N |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | B |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   | B |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A | B | B | C | B | B | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   | B |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | B |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
      *
      */
     @org.junit.Test
@@ -149,12 +193,12 @@ public class BitSetMoveTest {
                 new BitSetAction("D1", "B1", Turn.BLACK),
                 new BitSetAction("D1", "A1", Turn.BLACK),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.D1.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.D1.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
 
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E1.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E1.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
                 new BitSetAction("F1", "F2", Turn.BLACK),
@@ -164,7 +208,7 @@ public class BitSetMoveTest {
                 new BitSetAction("F1", "H1", Turn.BLACK),
                 new BitSetAction("F1", "I1", Turn.BLACK),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.F1.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.F1.ordinal(), start).toArray());
 
         wanted = new BitSetAction[]{
                 new BitSetAction("E2", "D2", Turn.BLACK),
@@ -176,7 +220,7 @@ public class BitSetMoveTest {
                 new BitSetAction("E2", "H2", Turn.BLACK),
                 new BitSetAction("E2", "I2", Turn.BLACK),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.E2.ordinal(), start).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E2.ordinal(), start).toArray());
     }
 
 
@@ -232,7 +276,7 @@ public class BitSetMoveTest {
                 new BitSetAction("H2", "G2", Turn.WHITE),
                 new BitSetAction("H2", "F2", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.H2.ordinal(), current).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.H2.ordinal(), current).toArray());
     }
 
 
@@ -340,7 +384,7 @@ public class BitSetMoveTest {
                 new BitSetAction("I1", "H1", Turn.WHITE),
                 new BitSetAction("I1", "G1", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.I1.ordinal(), current).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.I1.ordinal(), current).toArray());
     }
 
 
@@ -399,7 +443,7 @@ public class BitSetMoveTest {
                 new BitSetAction("G5", "G9", Turn.WHITE),
                 new BitSetAction("G5", "F5", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(), wanted);
+        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray());
     }
 
 
@@ -456,7 +500,7 @@ public class BitSetMoveTest {
 
         });
 
-        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.G3.ordinal(), current)), BitSetUtils.toBitString(wanted));
+        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.G3.ordinal(), current)));
     }
 
 
@@ -508,7 +552,7 @@ public class BitSetMoveTest {
                 BitSetPosition.F3,
         });
 
-        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.E4.ordinal(), BitSetPosition.E3.ordinal(), current)), BitSetUtils.toBitString(wanted));
+        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.E4.ordinal(), BitSetPosition.E3.ordinal(), current)));
     }
 
 
@@ -564,7 +608,7 @@ public class BitSetMoveTest {
                 BitSetPosition.G4,
         });
 
-        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.G2.ordinal(), BitSetPosition.G3.ordinal(), current)), BitSetUtils.toBitString(wanted));
+        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.G2.ordinal(), BitSetPosition.G3.ordinal(), current)));
     }
 
 
@@ -623,7 +667,7 @@ public class BitSetMoveTest {
                 BitSetPosition.H3,
         });
 
-        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.G2.ordinal(), BitSetPosition.G3.ordinal(), current)), BitSetUtils.toBitString(wanted));
+        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.G2.ordinal(), BitSetPosition.G3.ordinal(), current)));
     }
 
 
@@ -675,7 +719,7 @@ public class BitSetMoveTest {
                 BitSetPosition.F5,
         });
 
-        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.G6.ordinal(), BitSetPosition.G5.ordinal(), current)), BitSetUtils.toBitString(wanted));
+        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.G6.ordinal(), BitSetPosition.G5.ordinal(), current)));
     }
 
 
@@ -729,7 +773,7 @@ public class BitSetMoveTest {
                 BitSetPosition.H5,
         });
 
-        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.H4.ordinal(), current)), BitSetUtils.toBitString(wanted));
+        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.H4.ordinal(), current)));
     }
 
 
@@ -782,7 +826,7 @@ public class BitSetMoveTest {
 
         });
 
-        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.I3.ordinal(), current)), BitSetUtils.toBitString(wanted));
+        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.I3.ordinal(), current)));
     }
 
 
@@ -835,7 +879,7 @@ public class BitSetMoveTest {
                 BitSetPosition.G5,
         });
 
-        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.F6.ordinal(), BitSetPosition.F5.ordinal(), current)), BitSetUtils.toBitString(wanted));
+        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.F6.ordinal(), BitSetPosition.F5.ordinal(), current)));
     }
 
 
@@ -890,7 +934,7 @@ public class BitSetMoveTest {
                 BitSetPosition.E5,
         });
 
-        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.E7.ordinal(), BitSetPosition.E6.ordinal(), current)), BitSetUtils.toBitString(wanted));
+        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.E7.ordinal(), BitSetPosition.E6.ordinal(), current)));
     }
 
 
@@ -944,7 +988,7 @@ public class BitSetMoveTest {
                 BitSetPosition.E4,
         });
 
-        assertEquals(BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.C4.ordinal(), BitSetPosition.D4.ordinal(), current)), BitSetUtils.toBitString(wanted));
+        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.C4.ordinal(), BitSetPosition.D4.ordinal(), current)));
     }
 
 }
