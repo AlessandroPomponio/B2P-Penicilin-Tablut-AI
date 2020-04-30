@@ -189,7 +189,7 @@ public class BitSetStateTest {
 
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-                        BitSetPosition.valueOf(from),
+                        BitSetPosition.D3,
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
@@ -202,7 +202,7 @@ public class BitSetStateTest {
 
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-                        BitSetPosition.valueOf(to),
+                        BitSetPosition.F3,
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
@@ -251,7 +251,7 @@ public class BitSetStateTest {
 
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-                        BitSetPosition.valueOf(from),
+                        BitSetPosition.D7,
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
@@ -264,7 +264,7 @@ public class BitSetStateTest {
 
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-                        BitSetPosition.valueOf(to),
+                        BitSetPosition.F7,
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
@@ -305,7 +305,6 @@ public class BitSetStateTest {
      */
     @org.junit.Test
     public void testPerformMoveStandard() {
-        BitSetPosition from = BitSetPosition.D3, to = BitSetPosition.F3;
 
         BitSetState fromState = new BitSetState(
                 Turn.WHITE,
@@ -313,7 +312,7 @@ public class BitSetStateTest {
 
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-                        from,
+                        BitSetPosition.D3,
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
@@ -326,15 +325,147 @@ public class BitSetStateTest {
 
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-                        to,
+                        BitSetPosition.F3,
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
                 })
         );
 
-        fromState.performMove(from.ordinal(), to.ordinal());
+        fromState.performMove(BitSetPosition.D3.ordinal(), BitSetPosition.F3.ordinal());
         assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+    }
+
+
+    /**
+     * funzione : testKingInCastleIllegalCapture
+     * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
+     * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
+     * si trova nel castello
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | N | - | - | > | N'|   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | R |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   | N |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.Test
+    public void testKingInCastleIllegalCapture() {
+
+        BitSetState fromState = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.A4,
+                        BitSetPosition.E6,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.E5,
+                })
+        );
+
+        BitSetState toState = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.E4,
+                        BitSetPosition.E6,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.E5
+                })
+        );
+        fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
+        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assert(!fromState.blackHasWon());
+    }
+
+
+    /**
+     * funzione : testKingInCastleIllegalSpecialCapture
+     * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
+     * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
+     * si trova nel castello
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | N | - | - | > | N'|   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   | N | R | N |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.Test
+    public void testKingInCastleIllegalSpecialCapture() {
+
+        BitSetState fromState = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.D5,
+                        BitSetPosition.F5,
+                        BitSetPosition.A4,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.E5,
+                })
+        );
+
+        BitSetState toState = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.E4,
+                        BitSetPosition.D5,
+                        BitSetPosition.F5,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.E5
+                })
+        );
+        fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
+        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assert(!fromState.blackHasWon());
     }
 
     /*
@@ -369,7 +500,7 @@ public class BitSetStateTest {
      *
      */
     @org.junit.Test
-    public void testWhiteWinningCondition() {
+    public void testWhiteStandardWinningCondition() {
         BitSetPosition from = BitSetPosition.D3, to = BitSetPosition.I3;
 
         BitSetState fromState = new BitSetState(
@@ -473,7 +604,7 @@ public class BitSetStateTest {
 
 
     /**
-     * funzione : testBlackNearCastleWinningCondition
+     * funzione : testKingNearCastleBlackWinningCondition
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
      * si trova in una posizione adiacente al castello
@@ -502,7 +633,7 @@ public class BitSetStateTest {
      *
      */
     @org.junit.Test
-    public void testBlackNearCastleWinningCondition() {
+    public void testKingNearCastleBlackWinningCondition() {
 
         BitSetState fromState = new BitSetState(
                 Turn.BLACK,
@@ -540,7 +671,7 @@ public class BitSetStateTest {
 
 
     /**
-     * funzione : testBlackInCastleWinningCondition
+     * funzione : testKingInCastleBlackWinningCondition
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
      * si trova nel castello
@@ -569,7 +700,7 @@ public class BitSetStateTest {
      *
      */
     @org.junit.Test
-    public void testBlackInCastleWinningCondition() {
+    public void testKingInCastleBlackWinningCondition() {
 
         BitSetState fromState = new BitSetState(
                 Turn.BLACK,
@@ -607,135 +738,4 @@ public class BitSetStateTest {
         assert(fromState.blackHasWon());
     }
 
-
-    /**
-     * funzione : testBlackInCastleIllegalStandardMove
-     * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
-     * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
-     * si trova nel castello
-     *
-     *
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   | A | A | A |   |   |   |  1
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   | A |   |   |   |   |  2
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   |   |   |   |   |   |  3
-     * +---+---+---+---+---+---+---+---+---+
-     * | N | - | - | > | N'|   |   |   | A |  4
-     * +---+---+---+---+---+---+---+---+---+
-     * | A | A |   |   | R |   |   | A | A |  5
-     * +---+---+---+---+---+---+---+---+---+
-     * | A |   |   |   | N |   |   |   | A |  6
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   |   |   |   |   |   |  7
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   | A |   |   |   |   |  8
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   | A | A | A |   |   |   |  9
-     * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
-     */
-    @org.junit.Test
-    public void testBlackInCastleIllegalStandardMove() {
-
-        BitSetState fromState = new BitSetState(
-                Turn.BLACK,
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
-                        BitSetPosition.A4,
-                        BitSetPosition.E6,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
-                        BitSetPosition.E5,
-                })
-        );
-
-        BitSetState toState = new BitSetState(
-                Turn.BLACK,
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
-                        BitSetPosition.E4,
-                        BitSetPosition.E6,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
-                        BitSetPosition.E5
-                })
-        );
-        fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
-        assert(!fromState.blackHasWon());
-    }
-
-
-    /**
-     * funzione : testBlackInCastleIllegalWinningCondition
-     * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
-     * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
-     * si trova nel castello
-     *
-     *
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   | A | A | A |   |   |   |  1
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   | A |   |   |   |   |  2
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   |   |   |   |   |   |  3
-     * +---+---+---+---+---+---+---+---+---+
-     * | N | - | - | > | N'|   |   |   | A |  4
-     * +---+---+---+---+---+---+---+---+---+
-     * | A | A |   | N | R | N |   | A | A |  5
-     * +---+---+---+---+---+---+---+---+---+
-     * | A |   |   |   |   |   |   |   | A |  6
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   |   |   |   |   |   |  7
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   | A |   |   |   |   |  8
-     * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   | A | A | A |   |   |   |  9
-     * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
-     */
-    @org.junit.Test
-    public void testBlackInCastleIllegalSpecialWinningCondition() {
-
-        BitSetState fromState = new BitSetState(
-                Turn.BLACK,
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
-                        BitSetPosition.D5,
-                        BitSetPosition.F5,
-                        BitSetPosition.A4,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
-                        BitSetPosition.E5,
-                })
-        );
-
-        BitSetState toState = new BitSetState(
-                Turn.BLACK,
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
-                        BitSetPosition.E4,
-                        BitSetPosition.D5,
-                        BitSetPosition.F5,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
-
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
-                        BitSetPosition.E5
-                })
-        );
-        fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
-        assert(!fromState.blackHasWon());
-    }
 }
