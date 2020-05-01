@@ -1,6 +1,8 @@
 package b2p.state.bitboard.bitset;
 
+import java.util.Arrays;
 import java.util.BitSet;
+import java.util.HashSet;
 
 public enum BitSetPosition {
     
@@ -158,5 +160,15 @@ public enum BitSetPosition {
     public static final BitSet kingInE6Surrounded = BitSetUtils.newFromPositions(kingInE6SurroundedCells);
     public static final BitSet kingInF5Surrounded = BitSetUtils.newFromPositions(kingInF5SurroundedCells);
     //endregion
+    
+    public static final HashSet<String> escapeHashSet = new HashSet<>(Arrays.asList(
+            "B1", "C1", "G1", "H1",
+            "A2", "I2",
+            "A3", "I3",
+
+
+            "A7", "I7",
+            "A8", "I8",
+            "B9", "C9", "G9", "H9"));
 
 }

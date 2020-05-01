@@ -247,4 +247,50 @@ public class BitSetMove {
         return captured;
     }
 
+    public static int movesNeededForKingEscape(BitSetState state) {
+        return movesNeededForKingEscape_rec(state, 1);
+    }
+
+    private static int movesNeededForKingEscape_rec(BitSetState state, int step) {
+
+        // Cutoff if we've searched already enough
+        if (step > 3)
+            return 50;
+
+        if (state.getKing().intersects(BitSetPosition.escape))
+            return step;
+
+        // King moves
+        ArrayList<BitSetAction> moves = getMovesForPawn(state.getKing().nextSetBit(0), state);
+
+        // Check if one of the escape cells is in our reach
+        for (BitSetAction move : moves) {
+            if (BitSetPosition.escapeHashSet.contains(move.getTo()))
+                return step;
+        }
+
+        // Needed for performMove
+        // This way, it'll actually move the king around
+        state.setTurn(Turn.WHITE);
+
+        // Perform iteratively all the moves the king has
+        // and check how long it takes us to get to an escape cell
+        int shortestEscape = 50;
+        for (BitSetAction move : moves) {
+
+            BitSetState newState = (BitSetState) state.clone();
+            newState.performMove(move);
+
+            int movesFromThisPosition = movesNeededForKingEscape_rec(newState, step+1);
+            if (movesFromThisPosition < shortestEscape) {
+                shortestEscape = movesFromThisPosition;
+            }
+
+        }
+
+        return shortestEscape;
+
+    }
+
+
 }
