@@ -132,6 +132,8 @@ public class BitSetState implements IState {
                 moves.addAll(BitSetMove.getMovesForPawn(i, this));
             }
 
+            moves.addAll(getAvailableKingMoves());
+
         }
 
         return moves;
@@ -147,8 +149,18 @@ public class BitSetState implements IState {
     //region Heuristics-related functions
     @Override
     public int getHeuristicValue() {
-        //TODO: AGGIUNGERE QUALCOSA
-        return 0;
+
+        int pieceDifference = 0;
+
+        if (turn == Turn.BLACK) {
+            pieceDifference =  blackPawns.cardinality() - (whitePawns.cardinality() + king.cardinality());
+        } else {
+            pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
+        }
+
+        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
+        return pieceDifference + movesToKingEscape;
+
     }
     //endregion
 
