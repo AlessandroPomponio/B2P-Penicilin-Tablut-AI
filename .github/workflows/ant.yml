@@ -19,7 +19,6 @@ jobs:
     - name: Build with Ant
       run: ant -noinput -buildfile build.xml
     - uses: actions/upload-artifact@v2
-    - name: Upload artifacts
       with:
         name: AI jar
         path: build/jar/B2P - Tablut AI.jar
