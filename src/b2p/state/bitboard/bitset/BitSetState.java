@@ -142,7 +142,15 @@ public class BitSetState implements IState {
 
     @Override
     public ArrayList<BitSetAction> getAvailableKingMoves() {
-        return BitSetMove.getMovesForPawn(king.nextSetBit(0), this);
+
+        // We need this for tests but do we need it
+        // in production?
+        int kingPosition = king.nextSetBit(0);
+        if (kingPosition == -1)
+            return new ArrayList<>();
+
+        return BitSetMove.getMovesForPawn(kingPosition, this);
+
     }
     //endregion
 
