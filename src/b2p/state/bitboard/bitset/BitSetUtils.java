@@ -1,8 +1,49 @@
 package b2p.state.bitboard.bitset;
 
+import it.unibo.ai.didattica.competition.tablut.domain.State;
+import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
+
+import java.util.Arrays;
 import java.util.BitSet;
 
 public class BitSetUtils {
+
+    public static BitSetState newFromServer(StateTablut serverState) {
+
+        State.Turn turn = serverState.getTurn();
+
+        int[] blackPawns = new int[serverState.getNumberOf(State.Pawn.BLACK)];
+        int[] whitePawns = new int[serverState.getNumberOf(State.Pawn.WHITE)];
+        int[] kingPawn = new int[serverState.getNumberOf(State.Pawn.KING)];
+
+        int blackIdx = 0, whiteIdx = 0;
+
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                switch (serverState.getBoard()[i][j]) {
+                    case BLACK:
+                        blackPawns[blackIdx++] = (9*i)+j;
+                        break;
+                    case WHITE:
+                        whitePawns[whiteIdx++] = (9*i)+j;
+                        break;
+                    case KING:
+                        kingPawn[0] = (9*i)+j;
+                }
+            }
+        }
+
+        System.out.println("Black:" + Arrays.toString(blackPawns));
+        System.out.println("White:" + Arrays.toString(whitePawns));
+        System.out.println("King:" + Arrays.toString(kingPawn));
+
+        return new BitSetState(
+                serverState.getTurn(),
+                BitSetUtils.newFromPositions(blackPawns),
+                BitSetUtils.newFromPositions(whitePawns),
+                BitSetUtils.newFromPositions(kingPawn)
+        );
+    }
 
     public static BitSet newFromPositions(int[] positions) {
 

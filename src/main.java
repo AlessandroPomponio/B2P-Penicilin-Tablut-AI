@@ -1,9 +1,6 @@
-import b2p.model.Turn;
-import b2p.search.minimax.MinMaxAlphaBeta;
-import b2p.state.bitboard.bitset.*;
+import b2p.client.B2PTablutClient;
 
-import java.util.ArrayList;
-import java.util.BitSet;
+import java.io.IOException;
 
 public class main {
 
@@ -51,13 +48,13 @@ public class main {
 //
 //        System.out.println("\n\nTook: " + (endTime-startTime));
 //
-        BitSetState s = new BitSetState();
-        MinMaxAlphaBeta m = new MinMaxAlphaBeta(60);
-        long start = System.nanoTime();
-        BitSetAction bsa = m.getBestMove(s, 12, true);
-        long end = System.nanoTime();
-        System.out.println("TEMPO: " + (end-start));
-        System.out.println(bsa);
+//        BitSetState s = new BitSetState();
+//        MinMaxAlphaBeta m = new MinMaxAlphaBeta(60);
+//        long start = System.nanoTime();
+//        BitSetAction bsa = m.getBestMove(s, 12, true);
+//        long end = System.nanoTime();
+//        System.out.println("TEMPO: " + (end-start));
+//        System.out.println(bsa);
 //
 //        BitSetState testState = new BitSetState(
 //                Turn.WHITE,
@@ -89,6 +86,13 @@ public class main {
 //        long end = System.nanoTime();
 //        System.out.println("Mosse necessarie: " + moves);
 //        System.out.println("Elapsed: " + (end-start));
+
+        try {
+            B2PTablutClient client = new B2PTablutClient("white");
+            client.run();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

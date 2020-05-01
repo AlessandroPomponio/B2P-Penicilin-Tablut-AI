@@ -1,6 +1,6 @@
 package b2p.state.bitboard.bitset;
 
-import b2p.model.Turn;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.ArrayList;
 import java.util.BitSet;

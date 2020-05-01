@@ -1,14 +1,15 @@
 package b2p.model;
 
 import b2p.state.bitboard.bitset.BitSetAction;
+import it.unibo.ai.didattica.competition.tablut.domain.State;
 
 import java.util.ArrayList;
 
 public interface IState {
 
     // Turn getters and setters
-    Turn getTurn();
-    void setTurn(Turn turn);
+    State.Turn getTurn();
+    void setTurn(State.Turn turn);
 
     // Win conditions
     boolean isWinningState();
