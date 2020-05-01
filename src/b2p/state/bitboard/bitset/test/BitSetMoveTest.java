@@ -991,4 +991,208 @@ public class BitSetMoveTest {
         assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.C4.ordinal(), BitSetPosition.D4.ordinal(), current)));
     }
 
+
+    /*
+     * function : movesNeededForKingEscape
+     */
+
+    /**
+     * funzione : testMovesNeededForKingEscapeNoMoves
+     * testa che la funzione movesNeededForKingEscape valuti correttamente il numero di mosse quando non ci sono mosse
+     * che conducono al goal
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A | N |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | N | R | N |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   | N |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.Test
+    public void testMovesNeededForKingEscapeNoMoves() {
+
+        BitSetState current = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.F2,
+                        BitSetPosition.E3,
+                        BitSetPosition.G3,
+                        BitSetPosition.F4,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.F3,
+                })
+        );
+
+        assertEquals(50, BitSetMove.movesNeededForKingEscape(current));
+    }
+
+
+    /**
+     * funzione : testMovesNeededForKingEscapeOneMove
+     * testa che la funzione movesNeededForKingEscape valuti correttamente il numero di mosse quando il re è ad una
+     * mossa dalla vittoria
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A | R |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.Test
+    public void testMovesNeededForKingEscapeOneMove() {
+
+        BitSetState current = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.F2,
+                })
+        );
+
+        assertEquals(1, BitSetMove.movesNeededForKingEscape(current));
+    }
+
+
+    /**
+     * funzione : testMovesNeededForKingEscapeTwoMoves
+     * testa che la funzione movesNeededForKingEscape valuti correttamente il numero di mosse quando il re è a due
+     * mosse dalla vittoria
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A | R1|   |   | R2|  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   | R |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.Test
+    public void testMovesNeededForKingEscapeTwoMoves() {
+
+        BitSetState current = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.F4,
+                })
+        );
+
+        assertEquals(2, BitSetMove.movesNeededForKingEscape(current));
+    }
+
+
+    /**
+     * funzione : testMovesNeededForKingEscapeThreeMoves
+     * testa che la funzione movesNeededForKingEscape valuti correttamente il numero di mosse quando il re è a tre
+     * mosse dalla vittoria
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   | R3|   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A | N |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | N | R | N |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   | N | R1|   | R2| A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C | N | N | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.Test
+    public void testMovesNeededForKingEscapeThreeMoves() {
+
+        BitSetState current = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.F2,
+                        BitSetPosition.E3,
+                        BitSetPosition.G3,
+                        BitSetPosition.E4,
+                        BitSetPosition.F5,
+                        BitSetPosition.G5,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.F3,
+                })
+        );
+
+        assertEquals(3, BitSetMove.movesNeededForKingEscape(current));
+    }
+
 }
