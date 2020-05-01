@@ -7,14 +7,23 @@ import java.util.Objects;
 
 public class BitSetAction implements IAction {
 
-    private String from;
-    private String to;
-    private Turn turn;
+    private final String from;
+    private final String to;
+    private final Turn turn;
+    private final int value;
 
     public BitSetAction(String from, String to, Turn turn) {
         this.from = from;
         this.to = to;
         this.turn = turn;
+        this.value = -1;
+    }
+
+    public BitSetAction(String from, String to, Turn turn, int value) {
+        this.from = from;
+        this.to = to;
+        this.turn = turn;
+        this.value = value;
     }
 
     @Override
@@ -30,6 +39,11 @@ public class BitSetAction implements IAction {
     @Override
     public Turn getTurn() {
         return this.turn;
+    }
+
+    @Override
+    public int getValue() {
+        return this.value;
     }
 
     @Override

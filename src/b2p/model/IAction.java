@@ -4,4 +4,5 @@ public interface IAction {
     String getFrom();
     String getTo();
     Turn getTurn();
+    int getValue();
 }
