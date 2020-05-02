@@ -30,7 +30,7 @@ public class B2PTablutClient extends TablutClient {
     }
 
     public B2PTablutClient(String player) throws UnknownHostException, IOException {
-        super(player, "B2P");
+        super(player, "B2P", 60000);
     }
 
     @Override
