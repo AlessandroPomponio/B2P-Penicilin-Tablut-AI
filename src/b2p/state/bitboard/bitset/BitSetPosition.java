@@ -146,6 +146,19 @@ public enum BitSetPosition {
 
 
     };
+
+    private static final int[] strategicBlackCells = {
+
+            C2.ordinal(),                                                       G2.ordinal(),
+            B3.ordinal(),                                                                                       H3.ordinal(),
+
+
+
+
+            B7.ordinal(),                                                                                       H7.ordinal(),
+            C8.ordinal(),                                                       G8.ordinal()
+
+    };
     //endregion
 
     //region Special BitSets
@@ -159,6 +172,7 @@ public enum BitSetPosition {
     public static final BitSet kingInD5Surrounded = BitSetUtils.newFromPositions(kingInD5SurroundedCells);
     public static final BitSet kingInE6Surrounded = BitSetUtils.newFromPositions(kingInE6SurroundedCells);
     public static final BitSet kingInF5Surrounded = BitSetUtils.newFromPositions(kingInF5SurroundedCells);
+    public static final BitSet blackStrategicCells = BitSetUtils.newFromPositions(strategicBlackCells);
     //endregion
     
     public static final HashSet<String> escapeHashSet = new HashSet<>(Arrays.asList(

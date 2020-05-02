@@ -107,9 +107,9 @@ public class BitSetState implements IState {
 
         }
 
-        board.xor(captures);
         board.clear(from);
         board.set(to);
+        board.xor(captures);
 
     }
 
@@ -158,15 +158,39 @@ public class BitSetState implements IState {
     @Override
     public int getHeuristicValue() {
 
-        int pieceDifference = 0;
-
         if (turn == Turn.BLACK) {
-            pieceDifference =  blackPawns.cardinality() - (whitePawns.cardinality() + king.cardinality());
-        } else {
-            pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
+            return blackHeuristic();
         }
 
+        return whiteHeuristic();
+
+    }
+
+    private int blackHeuristic() {
+
+        //
+        int pieceDifference =  blackPawns.cardinality() - (whitePawns.cardinality() + king.cardinality());
+
+        //
+        BitSet blacks = BitSetUtils.copy(blackPawns);
+        blacks.and(BitSetPosition.blackStrategicCells);
+        int strategicBlacks = blacks.cardinality();
+
+        //
         int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
+
+        return pieceDifference + strategicBlacks - movesToKingEscape;
+
+    }
+
+    private int whiteHeuristic() {
+
+        //
+        int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
+
+        //
+        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
+
         return pieceDifference + movesToKingEscape;
 
     }
@@ -175,7 +199,14 @@ public class BitSetState implements IState {
     // Utility functions
     @Override
     public IState clone() {
-        return new BitSetState(this.turn, this.blackPawns, this.whitePawns, this.king);
+
+        BitSet blacks = BitSetUtils.copy(this.blackPawns);
+        BitSet whites = BitSetUtils.copy(this.whitePawns);
+        BitSet king = BitSetUtils.copy(this.king);
+        Turn turn = this.turn;
+
+        return new BitSetState(turn, blacks, whites, king);
+
     }
     //
 
