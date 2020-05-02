@@ -1,11 +1,12 @@
 package b2p.state.bitboard.bitset;
 
+import aima.core.agent.Action;
 import b2p.model.IAction;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.Objects;
 
-public class BitSetAction implements IAction {
+public class BitSetAction implements IAction, Action {
 
     private final String from;
     private final String to;
@@ -68,5 +69,10 @@ public class BitSetAction implements IAction {
     @Override
     public int hashCode() {
         return Objects.hash(from, to, turn);
+    }
+
+    @Override
+    public boolean isNoOp() {
+        return false;
     }
 }
