@@ -26,18 +26,27 @@ public class B2PTablutClient extends TablutClient {
 
     public B2PTablutClient(String player, String name, int timeout, String ipAddress) throws UnknownHostException, IOException {
         super(player, name, timeout, ipAddress);
+        this.timeout = timeout;
     }
 
     public B2PTablutClient(String player, int timeout, String ipAddress) throws UnknownHostException, IOException {
         super(player, "B2P", timeout, ipAddress);
+        this.timeout = timeout;
     }
 
     public B2PTablutClient(String player, String ipAddress) throws UnknownHostException, IOException {
         super(player, "B2P", 60000, ipAddress);
+        this.timeout = 60000;
     }
 
     public B2PTablutClient(String player) throws UnknownHostException, IOException {
         super(player, "B2P", 60000);
+        this.timeout = 60000;
+    }
+
+    public B2PTablutClient(String player, int timeout) throws UnknownHostException, IOException {
+        super(player, "B2P", timeout);
+        this.timeout = timeout;
     }
 
     @Override
@@ -97,13 +106,14 @@ public class B2PTablutClient extends TablutClient {
                     new BitSetStepCostFunction()
             );
 */
+
             if (this.getPlayer().equals(State.Turn.WHITE)) {
                 /** TURNO BIANCO **/
                 if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
 
                     long curMillis = System.currentTimeMillis();
                     try {
-                        long millis = 60000 - (System.currentTimeMillis() - curMillis);
+                        long millis = timeout - (System.currentTimeMillis() - curMillis);
 /*
                         while (millis > 3000) {
                             curMillis = System.currentTimeMillis();
@@ -155,7 +165,7 @@ public class B2PTablutClient extends TablutClient {
 
                     long curMillis = System.currentTimeMillis();
                     try {
-                        long millis = 60000 - (System.currentTimeMillis() - curMillis);
+                        long millis = timeout - (System.currentTimeMillis() - curMillis);
 /*
                     while (millis > 3000) {
                         curMillis = System.currentTimeMillis();
