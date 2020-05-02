@@ -3,6 +3,7 @@ package b2p.state.bitboard.bitset.aima;
 import aima.core.search.adversarial.Game;
 import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
+import b2p.state.bitboard.bitset.BitSetUtils;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.ArrayList;
@@ -42,8 +43,17 @@ public class TablutGame implements Game<BitSetState, BitSetAction, Turn> {
 
     @Override
     public double getUtility(BitSetState bitSetState, Turn turn) {
-        if(bitSetState.getTurn() != turn)
+        if(bitSetState.getTurn() != turn) {
+            System.out.println("ILLEGAL ARGUMENT");
+            System.out.println("EXPECTED TURN: " + turn + " HAD: " + bitSetState.getTurn());
+            System.out.println("BLACK:");
+            System.out.println(BitSetUtils.toBitString(bitSetState.getBlackPawns()));
+            System.out.println("WHITE:");
+            System.out.println(BitSetUtils.toBitString(bitSetState.getWhitePawns()));
+            System.out.println("KING:");
+            System.out.println(BitSetUtils.toBitString(bitSetState.getKing()));
             throw new IllegalArgumentException();
+        }
         return bitSetState.getHeuristicValue();
     }
 }
