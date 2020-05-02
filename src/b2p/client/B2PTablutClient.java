@@ -56,8 +56,17 @@ public class B2PTablutClient extends TablutClient {
 
         // Algoritmo di ricerca
         Problem problem;
-        IterativeDeepeningAlphaBetaSearch search = new IterativeDeepeningAlphaBetaSearch(new TablutGame(),Integer.MIN_VALUE, Integer.MAX_VALUE, 10);
-        SearchAgent agent;
+        IterativeDeepeningAlphaBetaSearch search = new IterativeDeepeningAlphaBetaSearch(new TablutGame(), Integer.MIN_VALUE, Integer.MAX_VALUE, 10);
+
+        /***************************************************************************************************************
+         * Ponendo il timeout a pochi secondi e debuggando (facendo quindi scadere il tempo limite), la funzione ritorna
+         * un valore corretto, per cui di per sè restituisce correttamente una mossa. Non debuggando, invece, si arriva
+         * ad uno stato impossibile. Perchè?
+         * - Errore di impostazione di valori minimi e massimi?
+         * - Errore di impostazione di qualche funzione implementata in TablutGame?
+         * - La funzione dev'essere chiamata in un'altra maniera?
+         * Serve ulteriore debug.
+         **************************************************************************************************************/
 
         System.out.println("You are player " + this.getPlayer().toString() + "!");
 
@@ -79,7 +88,7 @@ public class B2PTablutClient extends TablutClient {
             state = BitSetUtils.newFromServer((StateTablut) serverState);
             System.out.println("STATO CONVERTITO:\n" + BitSetUtils.toBitString(state.getBoard()));
 //          tieChecker.addState(bitboardState);
-
+/*
             problem = new Problem(
                     state,
                     new BitSetActionsFunction(),
@@ -87,15 +96,15 @@ public class B2PTablutClient extends TablutClient {
                     new BitSetGoalTest(),
                     new BitSetStepCostFunction()
             );
-
+*/
             if (this.getPlayer().equals(State.Turn.WHITE)) {
                 /** TURNO BIANCO **/
                 if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
 
                     long curMillis = System.currentTimeMillis();
                     try {
-                        agent = new SearchAgent(problem, (SearchForActions) search);
                         long millis = 60000 - (System.currentTimeMillis() - curMillis);
+/*
                         while (millis > 3000) {
                             curMillis = System.currentTimeMillis();
                             try {
@@ -107,10 +116,11 @@ public class B2PTablutClient extends TablutClient {
                             millis -= System.currentTimeMillis() - curMillis;
 
                         }
+*/
 
+                        BitSetAction bestMove = (BitSetAction) search.makeDecision(state);
+                        millis -= System.currentTimeMillis() - curMillis;
                         System.out.println("Thread time duration: " + millis);
-
-                        BitSetAction bestMove = (BitSetAction) agent.getActions().get(0);
 
                         System.out.println("Chosen move: " + bestMove.toString());
                         // Create move readible from the server
@@ -145,23 +155,24 @@ public class B2PTablutClient extends TablutClient {
 
                     long curMillis = System.currentTimeMillis();
                     try {
-                        agent = new SearchAgent(problem, (SearchForActions) search);
                         long millis = 60000 - (System.currentTimeMillis() - curMillis);
-                        while (millis > 3000) {
-                            curMillis = System.currentTimeMillis();
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                System.out.println("Shouldn't happen...");
-                                e.printStackTrace();
-                            }
-                            millis -= System.currentTimeMillis() - curMillis;
-
+/*
+                    while (millis > 3000) {
+                        curMillis = System.currentTimeMillis();
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException e) {
+                            System.out.println("Shouldn't happen...");
+                            e.printStackTrace();
                         }
+                        millis -= System.currentTimeMillis() - curMillis;
 
+                    }
+*/
+
+                        BitSetAction bestMove = (BitSetAction) search.makeDecision(state);
+                        millis -= System.currentTimeMillis() - curMillis;
                         System.out.println("Thread time duration: " + millis);
-
-                        BitSetAction bestMove = (BitSetAction) agent.getActions().get(0);
 
                         System.out.println("Chosen move: " + bestMove.toString());
                         // Create move readible from the server

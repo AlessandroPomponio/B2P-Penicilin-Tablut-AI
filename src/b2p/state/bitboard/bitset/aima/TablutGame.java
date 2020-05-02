@@ -3,12 +3,12 @@ package b2p.state.bitboard.bitset.aima;
 import aima.core.search.adversarial.Game;
 import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
-import it.unibo.ai.didattica.competition.tablut.domain.State;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TablutGame implements Game<BitSetState, BitSetAction, State.Turn> {
+public class TablutGame implements Game<BitSetState, BitSetAction, Turn> {
 
     @Override
     public BitSetState getInitialState() {
@@ -16,12 +16,12 @@ public class TablutGame implements Game<BitSetState, BitSetAction, State.Turn> {
     }
 
     @Override
-    public State.Turn[] getPlayers() {
-        return State.Turn.values();
+    public Turn[] getPlayers() {
+        return new Turn[] {Turn.WHITE, Turn.BLACK};
     }
 
     @Override
-    public State.Turn getPlayer(BitSetState bitSetState) {
+    public Turn getPlayer(BitSetState bitSetState) {
         return bitSetState.getTurn();
     }
 
@@ -29,10 +29,6 @@ public class TablutGame implements Game<BitSetState, BitSetAction, State.Turn> {
     public List<BitSetAction> getActions(BitSetState bitSetState) {
         return bitSetState.getAvailablePawnMoves();
     }
-
-    /*
-    TODO: verificare l'esattezza delle funzioni getResult, isTerminal e getUtility
-     */
 
     @Override
     public BitSetState getResult(BitSetState bitSetState, BitSetAction bitSetAction) {
@@ -45,7 +41,9 @@ public class TablutGame implements Game<BitSetState, BitSetAction, State.Turn> {
     }
 
     @Override
-    public double getUtility(BitSetState bitSetState, State.Turn turn) {
-        return new BitSetHeuristicFunction().h(bitSetState);
+    public double getUtility(BitSetState bitSetState, Turn turn) {
+        if(bitSetState.getTurn() != turn)
+            throw new IllegalArgumentException();
+        return bitSetState.getHeuristicValue();
     }
 }
