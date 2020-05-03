@@ -19,7 +19,7 @@
 
     <target name="compile">
         <mkdir dir="${classes.dir}"/>
-        <javac destdir="${classes.dir}" classpathref="classpath">
+        <javac destdir="${classes.dir}" classpathref="classpath" encoding="UTF-16">
             <src path="${src.dir}"/>
             <src path="${galassi.dir}"/>
         </javac>
