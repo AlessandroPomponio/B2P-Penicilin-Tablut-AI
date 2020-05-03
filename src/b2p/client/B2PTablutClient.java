@@ -59,18 +59,7 @@ public class B2PTablutClient extends TablutClient {
 
         // Algoritmo di ricerca
         Problem problem;
-        IterativeDeepeningAlphaBetaSearch search = new IterativeDeepeningAlphaBetaSearch(new TablutGame(), Integer.MIN_VALUE, Integer.MAX_VALUE, 15);
-
-        /***************************************************************************************************************
-         * Ponendo il timeout a pochi secondi e debuggando (facendo quindi scadere il tempo limite), la funzione ritorna
-         * un valore corretto, per cui di per sè restituisce correttamente una mossa. Non debuggando, invece, si arriva
-         * ad uno stato impossibile. Perchè?
-         * - Errore di impostazione di valori minimi e massimi?
-         * - Errore di impostazione di qualche funzione implementata in TablutGame?
-         * - La funzione dev'essere chiamata in un'altra maniera?
-         * Serve ulteriore debug.
-         **************************************************************************************************************/
-
+        IterativeDeepeningAlphaBetaSearch search = new IterativeDeepeningAlphaBetaSearch(new TablutGame(), Integer.MIN_VALUE, Integer.MAX_VALUE, 2);
         System.out.println("You are player " + this.getPlayer().toString() + "!");
 
         while (true) {
