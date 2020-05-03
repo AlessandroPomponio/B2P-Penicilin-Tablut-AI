@@ -65,7 +65,7 @@ public class B2PTablutClient extends TablutClient {
 
         // Algoritmo di ricerca
         Problem problem;
-        IterativeDeepeningAlphaBetaSearch search = new IterativeDeepeningAlphaBetaSearch(new TablutGame(), Integer.MIN_VALUE, Integer.MAX_VALUE, 10);
+        IterativeDeepeningAlphaBetaSearch search = new IterativeDeepeningAlphaBetaSearch(new TablutGame(), Integer.MIN_VALUE, Integer.MAX_VALUE, 15);
 
         /***************************************************************************************************************
          * Ponendo il timeout a pochi secondi e debuggando (facendo quindi scadere il tempo limite), la funzione ritorna
@@ -142,8 +142,7 @@ public class B2PTablutClient extends TablutClient {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                         System.exit(1);
-                    }
-                }
+                    } }
 
                 //  il turno dell'avversario
                 else if (state.getTurn().equals(StateTablut.Turn.WHITE)) {

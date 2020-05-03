@@ -12,6 +12,9 @@ public class BitSetResultFunction implements ResultFunction {
     @Override
     public Object result(Object state, Action action) {
 
+        /*
+         * Ci sono problemi con questa funzione
+         */
         if (state instanceof BitSetState)
         {
             ArrayList<BitSetState> result = new ArrayList<>();

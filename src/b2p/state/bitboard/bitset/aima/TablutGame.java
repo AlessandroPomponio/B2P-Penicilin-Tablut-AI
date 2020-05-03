@@ -33,7 +33,9 @@ public class TablutGame implements Game<BitSetState, BitSetAction, Turn> {
 
     @Override
     public BitSetState getResult(BitSetState bitSetState, BitSetAction bitSetAction) {
-        return ((ArrayList<BitSetState>) new BitSetResultFunction().result(bitSetState, bitSetAction)).get(0);
+        BitSetState result = (BitSetState) bitSetState.clone();
+        result.performMove(bitSetAction);
+        return result;
     }
 
     @Override
@@ -43,6 +45,7 @@ public class TablutGame implements Game<BitSetState, BitSetAction, Turn> {
 
     @Override
     public double getUtility(BitSetState bitSetState, Turn turn) {
+        /*
         if(bitSetState.getTurn() != turn) {
             System.out.println("ILLEGAL ARGUMENT");
             System.out.println("EXPECTED TURN: " + turn + " HAD: " + bitSetState.getTurn());
@@ -54,6 +57,8 @@ public class TablutGame implements Game<BitSetState, BitSetAction, Turn> {
             System.out.println(BitSetUtils.toBitString(bitSetState.getKing()));
             throw new IllegalArgumentException();
         }
+        */
+
         return bitSetState.getHeuristicValue();
     }
 }
