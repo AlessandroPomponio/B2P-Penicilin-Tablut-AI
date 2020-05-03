@@ -87,8 +87,8 @@ public class BitSetState implements IState {
             blackPawns.set(to);
 
             captures = BitSetMove.getCapturedPawns(from, to, this);
-            king.xor(captures);
-            whitePawns.xor(captures);
+            king.andNot(captures);
+            whitePawns.andNot(captures);
             turn = Turn.WHITE;
 
         } else {
@@ -102,14 +102,14 @@ public class BitSetState implements IState {
             }
 
             captures = BitSetMove.getCapturedPawns(from, to, this);
-            blackPawns.xor(captures);
+            blackPawns.andNot(captures);
             turn = Turn.BLACK;
 
         }
 
         board.clear(from);
         board.set(to);
-        board.xor(captures);
+        board.andNot(captures);
 
     }
 
