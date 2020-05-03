@@ -1,16 +1,11 @@
 package b2p.client;
 
 import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch;
-import aima.core.search.framework.SearchAgent;
-import aima.core.search.framework.SearchForActions;
 import aima.core.search.framework.problem.Problem;
-import b2p.search.minimax.MinMaxAlphaBeta;
-import b2p.search.strategy.IterativeDeepening;
 import b2p.state.bitboard.bitset.BitSetAction;
-import b2p.state.bitboard.bitset.BitSetMove;
 import b2p.state.bitboard.bitset.BitSetState;
 import b2p.state.bitboard.bitset.BitSetUtils;
-import b2p.state.bitboard.bitset.aima.*;
+import b2p.state.bitboard.bitset.aima.TablutGame;
 import it.unibo.ai.didattica.competition.tablut.client.TablutClient;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
@@ -18,7 +13,6 @@ import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
-import java.util.BitSet;
 
 public class B2PTablutClient extends TablutClient {
 

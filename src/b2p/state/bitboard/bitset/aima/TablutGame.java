@@ -43,20 +43,20 @@ public class TablutGame implements Game<BitSetState, BitSetAction, Turn> {
 
     @Override
     public double getUtility(BitSetState bitSetState, Turn turn) {
-        /*
-        if(bitSetState.getTurn() != turn) {
-            System.out.println("ILLEGAL ARGUMENT");
-            System.out.println("EXPECTED TURN: " + turn + " HAD: " + bitSetState.getTurn());
-            System.out.println("BLACK:");
-            System.out.println(BitSetUtils.toBitString(bitSetState.getBlackPawns()));
-            System.out.println("WHITE:");
-            System.out.println(BitSetUtils.toBitString(bitSetState.getWhitePawns()));
-            System.out.println("KING:");
-            System.out.println(BitSetUtils.toBitString(bitSetState.getKing()));
-            throw new IllegalArgumentException();
-        }
-        */
 
+        if (turn == Turn.BLACK) {
+            if (bitSetState.whiteHasWon())
+                return Integer.MIN_VALUE;
+            else if (bitSetState.blackHasWon())
+                return Integer.MAX_VALUE;
+        }
+        else {
+            if (bitSetState.whiteHasWon())
+                return Integer.MAX_VALUE;
+            else if (bitSetState.blackHasWon())
+                return Integer.MIN_VALUE;
+
+        }
         return bitSetState.getHeuristicValue();
     }
 }
