@@ -65,7 +65,7 @@ public class B2PTablutClient extends TablutClient {
 
         // Algoritmo di ricerca
         Problem problem;
-        IterativeDeepeningAlphaBetaSearch search = new IterativeDeepeningAlphaBetaSearch(new TablutGame(), Integer.MIN_VALUE, Integer.MAX_VALUE, 15);
+        IterativeDeepeningAlphaBetaSearch search = new IterativeDeepeningAlphaBetaSearch(new TablutGame(), Integer.MIN_VALUE, Integer.MAX_VALUE, 2);
 
         /***************************************************************************************************************
          * Ponendo il timeout a pochi secondi e debuggando (facendo quindi scadere il tempo limite), la funzione ritorna

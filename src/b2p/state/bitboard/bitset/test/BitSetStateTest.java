@@ -3,6 +3,9 @@ package b2p.state.bitboard.bitset.test;
 import b2p.state.bitboard.bitset.*;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
+import java.util.ArrayList;
+import java.util.BitSet;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -339,64 +342,159 @@ public class BitSetStateTest {
      * nel match.
      * (da completare)
      *
-     *
+     * Stato 1, turno Nero
      * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   | A | A | A |   |   |   |  1
+     * |   |   |   | N | N | N |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   | A |   |   |   |   |  2
+     * |   |   |   | B | N |   |   |   |   |  2
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   |   |   |   |   |   |   |  3
      * +---+---+---+---+---+---+---+---+---+
-     * | A |   |   |   |   |   |   |   | A |  4
+     * | N |   |   | B |   |   |   |   | N |  4
      * +---+---+---+---+---+---+---+---+---+
-     * | A | A |   |   | C |   |   | A | A |  5
+     * | N | N | B | B | R | B | B | N | N |  5
      * +---+---+---+---+---+---+---+---+---+
-     * | A |   |   |   |   |   |   |   | A |  6
+     * | N |   |   |   | B |   |   |   | A |  6
      * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   |   |   |   |   |   |  7
+     * |   |   |   |   | B |   |   |   |   |  7
      * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   |   | A |   |   |   |   |  8
+     * | N |   |   |   | A |   |   |   | N |  8
      * +---+---+---+---+---+---+---+---+---+
-     * |   |   |   | A | A | A |   |   |   |  9
+     * |   |   |   | N | N | N |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
      *   A   B   C   D   E   F   G   H   I
      *
+     * Mossa D1 -> C1
+     *
+     * Stato 2, turno Bianco
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   | N | A | N | N |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | B | N |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | N |   |   | B |   |   |   |   | N |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | N | N | B | B | R | B | B | N | N |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | N |   |   |   | B |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | B |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * | N |   |   |   | A |   |   |   | N |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | N | N | N |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     * Mossa E5 -> E3
+     *
+     * Stato 3, turno Nero
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   | N | A | N | N |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | B | N |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | R |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | N |   |   | B |   |   |   |   | N |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | N | N | B | B | C | B | B | N | N |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | N |   |   |   | B |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | B |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * | N |   |   |   | A |   |   |   | N |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | N | N | N |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     *
      */
-    /*
+
     @org.junit.Test
     public void testPerformMoveFromMatch() {
 
-        BitSetState fromState = new BitSetState(
+        BitSetState initialState = new BitSetState(
                 Turn.BLACK,
-                BitSetUtils.newFromPositions(new int[]{      // Posizioni delle pedine nere
-
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.D1,
+                        BitSetPosition.E1,
+                        BitSetPosition.F1,
+                        BitSetPosition.E2,
+                        BitSetPosition.A4,
+                        BitSetPosition.I4,
+                        BitSetPosition.A5,
+                        BitSetPosition.B5,
+                        BitSetPosition.H5,
+                        BitSetPosition.I5,
+                        BitSetPosition.A6,
+                        BitSetPosition.A8,
+                        BitSetPosition.I8,
+                        BitSetPosition.D9,
+                        BitSetPosition.E9,
+                        BitSetPosition.F9,
                 }),
-                BitSetUtils.newFromPositions(new int[]{      // Posizioni delle pedine bianche
-
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.D2,
+                        BitSetPosition.D4,
+                        BitSetPosition.C5,
+                        BitSetPosition.D5,
+                        BitSetPosition.F5,
+                        BitSetPosition.G5,
+                        BitSetPosition.E6,
+                        BitSetPosition.E7,
                 }),
-                BitSetUtils.newFromPositions(new int[]{      // Posizione della pedina king
-
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.E5
                 })
         );
 
-        BitSetState toState = new BitSetState(
+        BitSetState finalState = new BitSetState(
                 Turn.BLACK,
-                BitSetUtils.newFromPositions(new int[]{      // Posizioni delle pedine nere
-
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.C1,
+                        BitSetPosition.E1,
+                        BitSetPosition.F1,
+                        BitSetPosition.E2,
+                        BitSetPosition.A4,
+                        BitSetPosition.I4,
+                        BitSetPosition.A5,
+                        BitSetPosition.B5,
+                        BitSetPosition.H5,
+                        BitSetPosition.I5,
+                        BitSetPosition.A6,
+                        BitSetPosition.A8,
+                        BitSetPosition.I8,
+                        BitSetPosition.D9,
+                        BitSetPosition.E9,
+                        BitSetPosition.F9,
                 }),
-                BitSetUtils.newFromPositions(new int[]{      // Posizioni delle pedine bianche
-
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.D2,
+                        BitSetPosition.D4,
+                        BitSetPosition.C5,
+                        BitSetPosition.D5,
+                        BitSetPosition.F5,
+                        BitSetPosition.G5,
+                        BitSetPosition.E6,
+                        BitSetPosition.E7,
                 }),
-                BitSetUtils.newFromPositions(new int[]{      // Posizione della pedina king
-
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                        BitSetPosition.E3,
                 })
         );
 
-        fromState.performMove(BitSetPosition.D3.ordinal(), BitSetPosition.F3.ordinal());
-        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
+        initialState.performMove(new BitSetAction("D1", "C1", Turn.BLACK));
+        initialState.performMove(new BitSetAction("E5", "E3", Turn.WHITE));
+        assertEquals(BitSetUtils.toBitString(initialState.getBoard()), BitSetUtils.toBitString(finalState.getBoard()));
+        assert(initialState.getTurn() == finalState.getTurn());
+
     }
-    */
+
 
 
     /**
