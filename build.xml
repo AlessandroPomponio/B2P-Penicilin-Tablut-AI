@@ -1,6 +1,7 @@
 <project name="B2P - Tablut AI" basedir="." default="test">
 
     <property name="src.dir"     value="src"/>
+    <property name="galassi.dir" value="AGalassi"/>
     <property name="build.dir"   value="build"/>
     <property name="classes.dir" value="${build.dir}/classes"/>
     <property name="jar.dir"     value="${build.dir}/jar"/>
@@ -18,7 +19,11 @@
 
     <target name="compile">
         <mkdir dir="${classes.dir}"/>
-        <javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+        <javac destdir="${classes.dir}" classpathref="classpath">
+            <src path="${src.dir}"/>
+            <src path="${galassi.dir}"/>
+        </javac>
+
     </target>
 
     <path id="classPath">
@@ -51,7 +56,6 @@
             <batchtest fork="no">
                 <zipfileset src="${build.dir}/jar/B2P - Tablut AI.jar" includes="**/test/*Test.class" />
             </batchtest>
-
         </junit>
     </target>
 
