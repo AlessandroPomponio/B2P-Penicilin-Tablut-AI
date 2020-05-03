@@ -1,10 +1,7 @@
 package b2p.state.bitboard.bitset.test;
 
-import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import b2p.state.bitboard.bitset.*;
-import org.junit.jupiter.api.Assertions;
-
-import java.util.BitSet;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -29,12 +26,8 @@ public class BitSetStateTest {
      *
      *
      * TODO:
-     * - Verificare la performMove dello stato
-     * - Simulare la cattura nella performMove dello stato e verificare che non catturi quando una pedina si trova tra
-     *   due pedine del colore opposto (se una pedina del colore opposto si muove in generale e se si muove in una cella
-     *   adiacente)
+     * - Test vittoria se un giocatore non può muovere pedine
      *
-     * - Verificare la isWinningState dello stato
      */
 
     /*
@@ -89,7 +82,7 @@ public class BitSetStateTest {
 
         };
 
-        assertArrayEquals(current.getAvailablePawnMoves().toArray(), wanted);
+        assertArrayEquals(wanted, current.getAvailablePawnMoves().toArray());
     }
 
 
@@ -145,7 +138,7 @@ public class BitSetStateTest {
                 new BitSetAction("I9", "H9", Turn.WHITE),
         };
 
-        assertArrayEquals(current.getAvailablePawnMoves().toArray(), wanted);
+        assertArrayEquals(wanted, current.getAvailablePawnMoves().toArray());
     }
 
     /*
@@ -197,7 +190,7 @@ public class BitSetStateTest {
         );
 
         BitSetState toState = new BitSetState(
-                Turn.WHITE,
+                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
                 }),
@@ -210,7 +203,8 @@ public class BitSetStateTest {
         );
 
         fromState.performMove(new BitSetAction(from, to, Turn.WHITE));
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
     }
 
 
@@ -259,7 +253,7 @@ public class BitSetStateTest {
         );
 
         BitSetState toState = new BitSetState(
-                Turn.WHITE,
+                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
                 }),
@@ -272,7 +266,8 @@ public class BitSetStateTest {
         );
 
         fromState.performMove(from, to);
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
     }
 
 
@@ -320,7 +315,7 @@ public class BitSetStateTest {
         );
 
         BitSetState toState = new BitSetState(
-                Turn.WHITE,
+                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
                 }),
@@ -333,7 +328,265 @@ public class BitSetStateTest {
         );
 
         fromState.performMove(BitSetPosition.D3.ordinal(), BitSetPosition.F3.ordinal());
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
+    }
+
+
+    /**
+     * funzione : testPerformMoveFromMatch
+     * testa la funzione performMove(int, int) per verificare che gli stati siano coerenti, in seguito ad un errore
+     * nel match.
+     * (da completare)
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    /*
+    @org.junit.Test
+    public void testPerformMoveFromMatch() {
+
+        BitSetState fromState = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new int[]{      // Posizioni delle pedine nere
+
+                }),
+                BitSetUtils.newFromPositions(new int[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new int[]{      // Posizione della pedina king
+
+                })
+        );
+
+        BitSetState toState = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new int[]{      // Posizioni delle pedine nere
+
+                }),
+                BitSetUtils.newFromPositions(new int[]{      // Posizioni delle pedine bianche
+
+                }),
+                BitSetUtils.newFromPositions(new int[]{      // Posizione della pedina king
+
+                })
+        );
+
+        fromState.performMove(BitSetPosition.D3.ordinal(), BitSetPosition.F3.ordinal());
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
+    }
+    */
+
+
+    /**
+     * funzione : testPerformMoveNoCaptureBetweenPawns
+     * testa la funzione performMove(int, int) per verificare che la pedina mossa, quando si sposti tra due pedine del
+     * colore opposto, non venga catturata
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | N | B'| N |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   | B |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.Test
+    public void testPerformMoveNoCaptureBetweenPawns() {
+
+        BitSetState fromState = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.D3,
+                        BitSetPosition.F3,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.E4,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        BitSetState toState = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.D3,
+                        BitSetPosition.F3,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.E3,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        fromState.performMove(BitSetPosition.E4.ordinal(), BitSetPosition.E3.ordinal());
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
+    }
+
+
+    /**
+     * funzione : testPerformMoveNoCaptureBetweenPawnAndCamp
+     * testa la funzione performMove(int, int) per verificare che la pedina mossa, quando si sposti tra una pedina del
+     * colore opposto ed un accampamento, non venga catturata
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A | B'|   |   | B |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   | N |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C |   |   | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.Test
+    public void testPerformMoveNoCaptureBetweenPawnAndCamp() {
+
+        BitSetState fromState = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.F3,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.I2,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        BitSetState toState = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.F3,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.F2,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        fromState.performMove(BitSetPosition.I2.ordinal(), BitSetPosition.F2.ordinal());
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
+    }
+
+
+    /**
+     * funzione : testPerformMoveNoCaptureBetweenPawnAndCastle
+     * testa la funzione performMove(int, int) per verificare che la pedina mossa, quando si sposti tra una pedina del
+     * colore opposto ed il castello, non venga catturata, ma che catturi l'altra.
+     *
+     *
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  1
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A |   |   |   |   |  2
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  3
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  4
+     * +---+---+---+---+---+---+---+---+---+
+     * | A | A |   |   | C | B'| N | A | A |  5
+     * +---+---+---+---+---+---+---+---+---+
+     * | A |   |   |   |   |   |   |   | A |  6
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   |   |   |   |   |   |  7
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   |   | A | B |   |   |   |  8
+     * +---+---+---+---+---+---+---+---+---+
+     * |   |   |   | A | A | A |   |   |   |  9
+     * +---+---+---+---+---+---+---+---+---+
+     *   A   B   C   D   E   F   G   H   I
+     *
+     */
+    @org.junit.Test
+    public void testPerformMoveNoCaptureBetweenPawnAndCastle() {
+
+        BitSetState fromState = new BitSetState(
+                Turn.WHITE,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+                        BitSetPosition.G5,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.F8,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        BitSetState toState = new BitSetState(
+                Turn.BLACK,
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
+
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                        BitSetPosition.F5,
+                }),
+                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+
+                })
+        );
+
+        fromState.performMove(BitSetPosition.F8.ordinal(), BitSetPosition.F5.ordinal());
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
     }
 
 
@@ -384,7 +637,7 @@ public class BitSetStateTest {
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
+                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.E4,
                         BitSetPosition.E6,
@@ -397,7 +650,8 @@ public class BitSetStateTest {
                 })
         );
         fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
         assert(!fromState.blackHasWon());
     }
 
@@ -450,7 +704,7 @@ public class BitSetStateTest {
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
+                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.E4,
                         BitSetPosition.D5,
@@ -464,7 +718,8 @@ public class BitSetStateTest {
                 })
         );
         fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
         assert(!fromState.blackHasWon());
     }
 
@@ -517,7 +772,7 @@ public class BitSetStateTest {
         );
 
         BitSetState toState = new BitSetState(
-                Turn.WHITE,
+                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
                 }),
@@ -530,7 +785,8 @@ public class BitSetStateTest {
         );
 
         fromState.performMove(from.ordinal(), to.ordinal());
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
         assert(toState.whiteHasWon());
     }
 
@@ -585,7 +841,7 @@ public class BitSetStateTest {
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
+                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.G3,
                         BitSetPosition.I3,
@@ -598,7 +854,8 @@ public class BitSetStateTest {
                 })
         );
         fromState.performMove(BitSetPosition.A3.ordinal(), BitSetPosition.G3.ordinal());
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
         assert(fromState.blackHasWon());
     }
 
@@ -651,7 +908,7 @@ public class BitSetStateTest {
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
+                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.D4,
                         BitSetPosition.F4,
@@ -665,7 +922,8 @@ public class BitSetStateTest {
                 })
         );
         fromState.performMove(BitSetPosition.A3.ordinal(), BitSetPosition.E3.ordinal());
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
         assert(fromState.blackHasWon());
     }
 
@@ -719,7 +977,7 @@ public class BitSetStateTest {
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
+                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.D5,
                         BitSetPosition.F5,
@@ -734,7 +992,8 @@ public class BitSetStateTest {
                 })
         );
         fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
-        assertEquals(BitSetUtils.toBitString(fromState.getBoard()), BitSetUtils.toBitString(toState.getBoard()));
+        assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
+        assert(fromState.getTurn() == toState.getTurn());
         assert(fromState.blackHasWon());
     }
 
