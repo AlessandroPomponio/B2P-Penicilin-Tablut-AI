@@ -78,7 +78,7 @@
     </orderEntry>
     <orderEntry type="library" name="gson-2.2.2" level="project" />
     <orderEntry type="library" name="gson-2.2.2" level="project" />
-    <orderEntry type="library" name="aima-core-3.0.0" level="project" />
+    <orderEntry type="library" exported="" name="aima-core-3.0.0" level="project" />
     <orderEntry type="library" name="gson-2.2.2" level="project" />
     <orderEntry type="library" name="aima-core-3.0.0" level="project" />
   </component>

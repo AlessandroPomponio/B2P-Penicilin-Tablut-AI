@@ -247,6 +247,72 @@ public class BitSetMove {
         return captured;
     }
 
+    public static int dangerToKing(BitSetState state) {
+
+        BitSet king = BitSetUtils.copy(state.getKing());
+        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+
+        if (king.intersects(BitSetPosition.specialKingCells)) {
+
+            // If the king is in the castle, he must be
+            // surrounded by 4 black soldiers
+            if (king.equals(BitSetPosition.castle)) {
+
+                blacks.and(BitSetPosition.kingSurrounded);
+                return blacks.cardinality();
+
+            } else {
+
+                try {
+                    int menace = 0;
+                    int kingPos = king.nextSetBit(0);
+
+                    if (blacks.get(kingPos - 1))
+                        menace++;
+
+                    if (blacks.get(kingPos + 1))
+                        menace++;
+
+                    if (blacks.get(kingPos - 9))
+                        menace++;
+
+                    if (blacks.get(kingPos + 9))
+                        menace++;
+
+                    return menace;
+                } catch (Exception e) {
+
+                    System.out.println("Eccezione. Kingpos: " + king.nextSetBit(0));
+                    System.out.println("KING\n" + BitSetUtils.toBitString(king));
+
+                }
+
+                return 2;
+
+            }
+
+        } else {
+
+            int menace = 0;
+            int kingPos = king.nextSetBit(0);
+
+            if (kingPos % 9 != 0 && (blacks.get(kingPos - 1) || BitSetPosition.camps.get(kingPos - 1)))
+                menace++;
+
+            if (kingPos % 9 != 8 && (blacks.get(kingPos + 1) || BitSetPosition.camps.get(kingPos + 1)))
+                menace++;
+
+            if (kingPos > 9 && (blacks.get(kingPos - 9) || BitSetPosition.camps.get(kingPos - 9)))
+                menace++;
+
+            if (kingPos < 72 && (blacks.get(kingPos + 9) || BitSetPosition.camps.get(kingPos + 9)))
+                menace++;
+
+            return menace * 2;
+
+        }
+    }
+
     public static int movesNeededForKingEscape(BitSetState state) {
         return movesNeededForKingEscape_rec(state, 1);
     }

@@ -14,6 +14,7 @@ public class BitSetState implements IState {
 
     //
     private Turn turn;
+    private short turnAmt = 0;
 
     //
     private final BitSet blackPawns;
@@ -80,6 +81,7 @@ public class BitSetState implements IState {
     public void performMove(int from, int to) {
 
         BitSet captures;
+        turnAmt++;
 
         if (turn == Turn.BLACK) {
 
@@ -177,9 +179,18 @@ public class BitSetState implements IState {
         int strategicBlacks = blacks.cardinality();
 
         //
-        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
+//        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
+        int movesToKingEscape =0;
 
-        return pieceDifference + strategicBlacks - movesToKingEscape;
+        if (turnAmt <= 3) {
+            return strategicBlacks * 100 + BitSetMove.dangerToKing(this);
+        }
+
+        if (turnAmt > 10) {
+            return (pieceDifference-8)*4 + strategicBlacks + BitSetMove.dangerToKing(this) * 3;
+        }
+
+        return (pieceDifference-8) + strategicBlacks * 20 - movesToKingEscape + BitSetMove.dangerToKing(this) * 3;
 
     }
 
@@ -189,9 +200,9 @@ public class BitSetState implements IState {
         int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
 
         //
-        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
-
-        return pieceDifference + movesToKingEscape;
+//        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
+        int movesToKingEscape =0;
+        return 2*(8+pieceDifference) + movesToKingEscape - 10*BitSetMove.dangerToKing(this);
 
     }
     //endregion

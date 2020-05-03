@@ -58,7 +58,7 @@ public class B2PTablutClient extends TablutClient {
         State serverState = new StateTablut();
 
         // Algoritmo di ricerca
-        Problem problem;
+        //Problem problem;
         IterativeDeepeningAlphaBetaSearch search = new IterativeDeepeningAlphaBetaSearch(new TablutGame(), Integer.MIN_VALUE, Integer.MAX_VALUE, 2);
         System.out.println("You are player " + this.getPlayer().toString() + "!");
 
