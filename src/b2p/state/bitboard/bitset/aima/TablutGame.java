@@ -3,10 +3,8 @@ package b2p.state.bitboard.bitset.aima;
 import aima.core.search.adversarial.Game;
 import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
-import b2p.state.bitboard.bitset.BitSetUtils;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TablutGame implements Game<BitSetState, BitSetAction, Turn> {
@@ -40,7 +38,7 @@ public class TablutGame implements Game<BitSetState, BitSetAction, Turn> {
 
     @Override
     public boolean isTerminal(BitSetState bitSetState) {
-        return new BitSetGoalTest().isGoalState(bitSetState);
+        return bitSetState.isWinningState();
     }
 
     @Override
