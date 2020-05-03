@@ -1,4 +1,4 @@
-package b2p.state.bitboard.bitset.aima;
+package b2p.state.bitboard.bitset.aima.uninformed;
 
 import aima.core.agent.Action;
 import aima.core.search.framework.problem.StepCostFunction;

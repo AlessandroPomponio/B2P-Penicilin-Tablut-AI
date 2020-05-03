@@ -1,4 +1,4 @@
-package b2p.state.bitboard.bitset.aima;
+package b2p.state.bitboard.bitset.aima.adversarial;
 
 import aima.core.search.adversarial.Game;
 import b2p.state.bitboard.bitset.BitSetAction;

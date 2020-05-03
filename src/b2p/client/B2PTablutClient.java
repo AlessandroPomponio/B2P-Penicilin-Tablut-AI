@@ -1,11 +1,10 @@
 package b2p.client;
 
 import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch;
-import aima.core.search.framework.problem.Problem;
 import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
 import b2p.state.bitboard.bitset.BitSetUtils;
-import b2p.state.bitboard.bitset.aima.TablutGame;
+import b2p.state.bitboard.bitset.aima.adversarial.TablutGame;
 import it.unibo.ai.didattica.competition.tablut.client.TablutClient;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
