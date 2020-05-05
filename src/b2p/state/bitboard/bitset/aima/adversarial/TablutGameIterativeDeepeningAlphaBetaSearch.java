@@ -4,7 +4,7 @@ import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarialSearch {
@@ -13,34 +13,35 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
     private final int utilMin;
     private final int utilMax;
 
-    private TablutGameIterativeDeepeningAlphaBetaSearch.Timer timer;
+    private final TablutGameIterativeDeepeningAlphaBetaSearch.Timer timer;
 
     private int currDepthLimit;
-/*
- *  TODO:
- *   - finire di scrivere le funzioni finali di questa classe
- *   - finire di ottimizzare tutte le funzioni di questa classe
- *   - strip makeDecision di tutte le funzioni non necessarie che possono rallentare l'esecuzione (releative ad esempio
- *     a metrics)
- *   - valutare se è necessario sostituire il risultato dell'euristica da double a Integer (per questioni di efficienza)
- *     nel caso è necessario cambiare anche l'interfaccia Game e la classe TablutGame
- *   - capire come viene impiegata la variabile booleana heuristicEvaluationUsed perchè non ha molto senso per come è
- *     stata scritta nel codice originale
- *   - Modificare la classe orderAction per fare in modo che ordini le azioni solo quando viene aggiunto un nuovo elemento
- *     E, anzi, sarebbe meglio se il metodo venisse chiamato esclusivamente quando vengono inserite nuove azioni con le
- *     rispettive valutazioni euristiche. Inoltre, si potrebbe pensare di creare una classe apposta che sfrutti la class
- *     classe Thread per fare in modo che le azioni vengano ordinate in un processo diverso da quello corrente.
- *   - Considerare se è meglio settare currDepthLimit a un valore diverso di 2
- */
+    /*
+     *  TODO:
+     *   - finire di scrivere le funzioni finali di questa classe
+     *   - finire di ottimizzare tutte le funzioni di questa classe
+     *   - strip makeDecision di tutte le funzioni non necessarie che possono rallentare l'esecuzione (releative ad esempio
+     *     a metrics)
+     *   - valutare se è necessario sostituire il risultato dell'euristica da double a Integer (per questioni di efficienza)
+     *     nel caso è necessario cambiare anche l'interfaccia Game e la classe TablutGame
+     *   - capire come viene impiegata la variabile booleana heuristicEvaluationUsed perchè non ha molto senso per come è
+     *     stata scritta nel codice originale
+     *   - Modificare la classe orderAction per fare in modo che ordini le azioni solo quando viene aggiunto un nuovo elemento
+     *     E, anzi, sarebbe meglio se il metodo venisse chiamato esclusivamente quando vengono inserite nuove azioni con le
+     *     rispettive valutazioni euristiche. Inoltre, si potrebbe pensare di creare una classe apposta che sfrutti la class
+     *     classe Thread per fare in modo che le azioni vengano ordinate in un processo diverso da quello corrente.
+     *   - Considerare se è meglio settare currDepthLimit a un valore diverso di 2
+     */
 
-/*
- * DONE:
- *   - Rimosse le variabili inerenti al log e i relativi controlli.
- *   - Fixed typo in Timer.timeOutOccured -> Timer.timeOutOccurred.
- *   - Aggiunto argomento depth nella funzione eval, aggiunto controllo di profondità nella funzione depth.
- *   - Creato interfacce AdversarialSearch e IGame (in cui è stato cambiato il valore dell'euristica da double a int)
- *   - implementare correttamente questa classe nel client (e cambiare il timeout)
- */
+    /*
+     * DONE:
+     *   - Rimosse le variabili inerenti al log e i relativi controlli.
+     *   - Fixed typo in Timer.timeOutOccured -> Timer.timeOutOccurred.
+     *   - Aggiunto argomento depth nella funzione eval, aggiunto controllo di profondità nella funzione depth.
+     *   - Creato interfacce AdversarialSearch e IGame (in cui è stato cambiato il valore dell'euristica da double a int)
+     *   - implementare correttamente questa classe nel client (e cambiare il timeout)
+     */
+
     /**
      * Creates a new search object for a given game.
      *
@@ -68,68 +69,117 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
      */
     @Override
     public BitSetAction makeDecision(BitSetState state) {
+
+        //
         Turn player = game.getPlayer(state);
-        List<BitSetAction> results = orderActions(state, game.getActions(state), player, 0);
+        List<BitSetAction> availableActions = orderActions(state, game.getActions(state), player, 0);
+
+        //
         timer.start();
         currDepthLimit = 0;
 
+        //
+        BitSetAction result = null;
+        ActionStore<BitSetAction> heuristicsResults = null;
+
         do {
+
             currDepthLimit++;
-            ActionStore<BitSetAction> newResults = new ActionStore<BitSetAction>();
-            for (BitSetAction action : results) {
-                int value = minValue(game.getResult(state, action), player, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
-                if (timer.timeOutOccurred())
-                    break; // exit from action loop
-                newResults.add(action, value);
-            }
-            if (newResults.size() > 0) {
-                results = newResults.actions;
-                if (!timer.timeOutOccurred()) {
-                    if (hasSafeWinner(newResults.utilValues.get(0)))
-                        break; // exit from iterative deepening loop
-                    else if (newResults.size() > 1
-                            && isSignificantlyBetter(newResults.utilValues.get(0), newResults.utilValues.get(1)))
-                        break; // exit from iterative deepening loop
+            System.out.println("DEPTH LIMIT:" + currDepthLimit);
+            heuristicsResults = new ActionStore<>(availableActions.size());
+
+            for (BitSetAction action : availableActions) {
+
+                // minValue calls recursively maxValue and minValue
+                // in order to perform Alpha/Beta Min/Max search.
+                int heuristicValue = minValue(game.getResult(state, action), player, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+
+                // Make sure we don't overshoot
+                if (timer.timeOutOccurred()) {
+                    System.out.println("TIMEOUT");
+                    break;
                 }
+
+                heuristicsResults.add(action, heuristicValue);
+
             }
-        } while (!timer.timeOutOccurred());
-        return results.get(0);
+
+            if (heuristicsResults.size() > 0) {
+
+                availableActions = heuristicsResults.actions;
+
+                // If we have a safe winning value, we can stop the search
+                if (hasSafeWinner(heuristicsResults.utilValues.get(0))) {
+                    break;
+                } else if (heuristicsResults.size() > 1) {
+                    if (isSignificantlyBetter(heuristicsResults.utilValues.get(0), heuristicsResults.utilValues.get(1))) {
+                        break;
+                    }
+
+                }
+
+            }
+
+        } while(!timer.timeOutOccurred());
+
+        return availableActions.get(0);
+
     }
 
     // returns an utility value
-    public int maxValue(BitSetState state, Turn player, double alpha, double beta, int depth) {
+    public int maxValue(BitSetState state, Turn player, int alpha, int beta, int depth) {
+
         if (game.isTerminal(state) || depth >= currDepthLimit || timer.timeOutOccurred())
             return eval(state, player, depth);
 
+        // The worst case for the maximizer is the minimum value
         int value = Integer.MIN_VALUE;
-        // valutare come gestire l'ordinamento delle azioni
+
+        // TODO: valutare come gestire l'ordinamento delle azioni
         for (BitSetAction action : orderActions(state, game.getActions(state), player, depth)) {
-            value = Math.max(value, minValue(game.getResult(state, action), //
-                    player, alpha, beta, depth + 1));
+
+            // Min/Max depth-first
+            int minimizerValue = minValue(game.getResult(state, action), player, alpha, beta, depth + 1);
+            value = Math.max(value, minimizerValue);
+
+            // Alpha/Beta pruning
             if (value >= beta)
                 return value;
 
+            // Update alpha value for maximizer
             alpha = Math.max(alpha, value);
+
         }
+
         return value;
 
     }
 
     // returns an utility value
-    public int minValue(BitSetState state, Turn player, double alpha, double beta, int depth) {
+    public int minValue(BitSetState state, Turn player, int alpha, int beta, int depth) {
+
         if (game.isTerminal(state) || depth >= currDepthLimit || timer.timeOutOccurred())
             return eval(state, player, depth);
 
+        // The worst case scenario for the minimizer is Maxvalue
         int value = Integer.MAX_VALUE;
-        // valutare come gestire l'ordinamento delle azioni
+
+        // TODO: valutare come gestire l'ordinamento delle azioni
         for (BitSetAction action : orderActions(state, game.getActions(state), player, depth)) {
-            value = Math.min(value, maxValue(game.getResult(state, action), //
-                player, alpha, beta, depth + 1));
+
+            // Min/Max depth-first
+            int maximizerValue = maxValue(game.getResult(state, action), player, alpha, beta, depth + 1);
+            value = Math.min(value, maximizerValue);
+
+            // Alpha/Beta pruning
             if (value <= alpha)
                 return value;
 
+            // Update beta value for minimizer
             beta = Math.min(beta, value);
+
         }
+
         return value;
 
     }
@@ -163,16 +213,17 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
 
         if ((game.isTerminal(state) || depth >= currDepthLimit) && !timer.timeOutOccurred()) {
             return game.getUtility(state, player);
-        } else {
-            /*
-             * Quando scatta il timeout, il nodo che stiamo analizzando non deve essere considerato nella scelta
-             */
-            if((depth & 1) == 0)                // se è pari, equivalente a ((depth % 2) == 0), profondità per massimizzante
-                return Integer.MIN_VALUE;
-            else                                // se è dispari, equivalente a ((depth % 2) == 1, profondità per massimizzante
-                return Integer.MAX_VALUE;
-                                                // faceva (utilMin + utilMax) / 2 = -0.5 usando dei double
         }
+
+        /*
+         * Quando scatta il timeout, il nodo che stiamo analizzando non deve essere considerato nella scelta
+         */
+        if ((depth & 1) == 0)                // se è pari, equivalente a ((depth % 2) == 0), profondità per massimizzante
+            return Integer.MIN_VALUE;
+        else                                // se è dispari, equivalente a ((depth % 2) == 1, profondità per massimizzante
+            return Integer.MAX_VALUE;
+        // faceva (utilMin + utilMax) / 2 = -0.5 usando dei double
+
     }
 
     /**
@@ -187,11 +238,11 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
     // nested helper classes
 
     protected static class Timer {
-        private long duration;
+        private final long duration;
         private long startTime;
 
         Timer(int maxSeconds) {
-            this.duration = 1000l * maxSeconds;
+            this.duration = 1000L * maxSeconds;
         }
 
         void start() {
@@ -203,23 +254,4 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
         }
     }
 
-    /** Orders actions by utility. */
-    protected static class ActionStore<ACTION> {
-
-        // fare hashTable?
-        private List<ACTION> actions = new ArrayList<ACTION>();
-        private List<Double> utilValues = new ArrayList<Double>();
-
-        void add(ACTION action, double utilValue) {
-            int idx;
-            for (idx = 0; idx < actions.size() && utilValue <= utilValues.get(idx); idx++)
-                ;                   // da completare
-            actions.add(idx, action);
-            utilValues.add(idx, utilValue);
-        }
-
-        int size() {
-            return actions.size();
-        }
-    }
 }

@@ -4,6 +4,7 @@ import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 public class BitSetMove {
 
@@ -245,6 +246,21 @@ public class BitSetMove {
         }
 
         return captured;
+    }
+
+    public static int kingEscapesInOneMove(BitSetState state) {
+
+        List<BitSetAction> moves = getMovesForPawn(state.getKing().nextSetBit(0), state);
+        int escapes = 0;
+
+        // Check if one of the escape cells is in our reach
+        for (BitSetAction move : moves) {
+            if (BitSetPosition.escapeHashSet.contains(move.getTo()))
+                escapes++;
+        }
+
+        return escapes;
+
     }
 
     public static int dangerToKing(BitSetState state) {

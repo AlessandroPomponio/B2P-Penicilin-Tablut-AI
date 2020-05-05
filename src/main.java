@@ -88,7 +88,7 @@ public class main {
 //        System.out.println("Elapsed: " + (end-start));
 
         try {
-            B2PTablutClient client = new B2PTablutClient("white", 15000);
+            B2PTablutClient client = new B2PTablutClient("black", 15000);
             client.run();
         } catch (IOException e) {
             e.printStackTrace();
