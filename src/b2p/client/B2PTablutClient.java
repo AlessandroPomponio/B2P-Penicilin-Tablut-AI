@@ -1,10 +1,10 @@
 package b2p.client;
 
-import aima.core.search.adversarial.IterativeDeepeningAlphaBetaSearch;
 import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
 import b2p.state.bitboard.bitset.BitSetUtils;
 import b2p.state.bitboard.bitset.aima.adversarial.TablutGame;
+import b2p.state.bitboard.bitset.aima.adversarial.TablutGameIterativeDeepeningAlphaBetaSearch;
 import it.unibo.ai.didattica.competition.tablut.client.TablutClient;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
@@ -58,8 +58,10 @@ public class B2PTablutClient extends TablutClient {
 
         // Algoritmo di ricerca
         //Problem problem;
-        IterativeDeepeningAlphaBetaSearch search = new IterativeDeepeningAlphaBetaSearch(new TablutGame(), Integer.MIN_VALUE, Integer.MAX_VALUE, 2);
         System.out.println("You are player " + this.getPlayer().toString() + "!");
+        int timeout = 3600;
+        TablutGame gameInstance = new TablutGame();
+        TablutGameIterativeDeepeningAlphaBetaSearch search = new TablutGameIterativeDeepeningAlphaBetaSearch(gameInstance, Integer.MIN_VALUE, Integer.MAX_VALUE, timeout - 1);
 
         while (true) {
             try {
