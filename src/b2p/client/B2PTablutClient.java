@@ -59,7 +59,7 @@ public class B2PTablutClient extends TablutClient {
         // Algoritmo di ricerca
         //Problem problem;
         System.out.println("You are player " + this.getPlayer().toString() + "!");
-        int timeout = 3600;
+        timeout = 10;
         TablutGame gameInstance = new TablutGame();
         TablutGameIterativeDeepeningAlphaBetaSearch search = new TablutGameIterativeDeepeningAlphaBetaSearch(gameInstance, Integer.MIN_VALUE, Integer.MAX_VALUE, timeout - 1);
 
