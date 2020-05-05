@@ -20,7 +20,6 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
  *  TODO:
  *   - finire di scrivere le funzioni finali di questa classe
  *   - finire di ottimizzare tutte le funzioni di questa classe
- *   - implementare correttamente questa classe nel client (e cambiare il timeout)
  *   - strip makeDecision di tutte le funzioni non necessarie che possono rallentare l'esecuzione (releative ad esempio
  *     a metrics)
  *   - valutare se è necessario sostituire il risultato dell'euristica da double a Integer (per questioni di efficienza)
@@ -40,6 +39,7 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
  *   - Fixed typo in Timer.timeOutOccured -> Timer.timeOutOccurred.
  *   - Aggiunto argomento depth nella funzione eval, aggiunto controllo di profondità nella funzione depth.
  *   - Creato interfacce AdversarialSearch e IGame (in cui è stato cambiato il valore dell'euristica da double a int)
+ *   - implementare correttamente questa classe nel client (e cambiare il timeout)
  */
     /**
      * Creates a new search object for a given game.
