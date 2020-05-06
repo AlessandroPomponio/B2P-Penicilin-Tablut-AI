@@ -4,7 +4,6 @@ import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarialSearch {
@@ -79,7 +78,6 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
         currDepthLimit = 0;
 
         //
-        BitSetAction result = null;
         ActionStore<BitSetAction> heuristicsResults = null;
 
         do {
@@ -104,11 +102,11 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
 
             }
 
-            /* Codice potenzialmente inutile per il nostro gioco
             if (heuristicsResults.size() > 0) {
 
                 availableActions = heuristicsResults.actions;
 
+/*              // Codice potenzialmente inutile per il nostro gioco
                 // If we have a safe winning value, we can stop the search
                 if (hasSafeWinner(heuristicsResults.utilValues.get(0))) {
                     break;
@@ -118,9 +116,9 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
                     }
 
                 }
-
+*/
             }
-            */
+
 
         } while(!timer.timeOutOccurred());
 
