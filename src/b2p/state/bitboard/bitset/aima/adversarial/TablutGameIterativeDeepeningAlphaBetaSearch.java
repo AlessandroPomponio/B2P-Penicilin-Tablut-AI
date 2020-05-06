@@ -23,7 +23,7 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
  *   - finire di ottimizzare tutte le funzioni di questa classe
  *   - strip makeDecision di tutte le funzioni non necessarie che possono rallentare l'esecuzione (releative ad esempio
  *     a metrics)
- *   - Modificare la classe orderAction per fare in modo che ordini le azioni solo quando viene aggiunto un nuovo elemento
+ *   - Modificare la classe ActionStore per fare in modo che ordini le azioni solo quando viene aggiunto un nuovo elemento
  *     E, anzi, sarebbe meglio se il metodo venisse chiamato esclusivamente quando vengono inserite nuove azioni con le
  *     rispettive valutazioni euristiche. Inoltre, si potrebbe pensare di creare una classe apposta che sfrutti la class
  *     classe Thread per fare in modo che le azioni vengano ordinate in un processo diverso da quello corrente.
@@ -235,7 +235,7 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
          */
         if ((depth & 1) == 0)                // se è pari, equivalente a ((depth % 2) == 0), profondità per massimizzante
             return Integer.MIN_VALUE;
-        else                                // se è dispari, equivalente a ((depth % 2) == 1, profondità per massimizzante
+        else                                // se è dispari, equivalente a ((depth % 2) == 1, profondità per minimizzante
             return Integer.MAX_VALUE;
         // faceva (utilMin + utilMax) / 2 = -0.5 usando dei double
 
@@ -246,16 +246,6 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
      * the original order (provided by the game).
      */
     public List<BitSetAction> orderActions(BitSetState state, List<BitSetAction> actions, Turn player, int depth) {
-        /*
-        actions.stream().sorted()....
-        Bisogna capire se è possibile, e come fare nel caso in cui lo sia, valutare l'euristica di ogni azione
-        orderAction.Infatti potrebbe essere interessante se fosse chiamata nel nodo con cui currDepthLimit è uguale a
-        depth + 1, però potrebbe essere inutile nel pruning dei rami: se lo si fa in depth == currDepthLimit - 1,
-        non si ottiene un pruning effettivo.
-        Farlo invece nell'ultimo valore di un nodo di un albero esplorato in larghezza invece potrebbe essere inutile
-        allo stesso modo.
-        INVESTIGARE COME è MEGLIO ORDINARE LE AZIONI
-        */
         return actions;
     }
 
