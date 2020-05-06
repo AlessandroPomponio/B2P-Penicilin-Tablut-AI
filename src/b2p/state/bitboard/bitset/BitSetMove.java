@@ -126,15 +126,28 @@ public class BitSetMove {
             // surrounded by 4 black soldiers
             if (king.equals(BitSetPosition.castle)) {
 
-                if (blacks.equals(BitSetPosition.kingSurrounded))
+                BitSet tempBlacks = BitSetUtils.copy(blacks);
+                tempBlacks.and(BitSetPosition.kingSurrounded);
+                if (tempBlacks.cardinality() == 4)
                     specialCaptures.set(BitSetPosition.E5.ordinal());
 
             } else  {
 
-                if (blacks.equals(BitSetPosition.kingInE4Surrounded) ||
-                    blacks.equals(BitSetPosition.kingInD5Surrounded) ||
-                    blacks.equals(BitSetPosition.kingInE6Surrounded) ||
-                    blacks.equals(BitSetPosition.kingInF5Surrounded))
+                // Perform checks
+                BitSet e4Check = BitSetUtils.copy(blacks);
+                BitSet d5Check = BitSetUtils.copy(blacks);
+                BitSet e6Check = BitSetUtils.copy(blacks);
+                BitSet f5Check = BitSetUtils.copy(blacks);
+
+                e4Check.and(BitSetPosition.kingInE4Surrounded);
+                d5Check.and(BitSetPosition.kingInD5Surrounded);
+                e6Check.and(BitSetPosition.kingInE6Surrounded);
+                f5Check.and(BitSetPosition.kingInF5Surrounded);
+
+                if (e4Check.cardinality() == 3 ||
+                        d5Check.cardinality() == 3 ||
+                        e6Check.cardinality() == 3 ||
+                        f5Check.cardinality() == 3)
                     specialCaptures.set(king.nextSetBit(0));
 
             }
