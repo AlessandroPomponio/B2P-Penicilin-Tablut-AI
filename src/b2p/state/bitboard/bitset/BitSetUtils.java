@@ -33,10 +33,6 @@ public class BitSetUtils {
             }
         }
 
-        System.out.println("Black:" + Arrays.toString(blackPawns));
-        System.out.println("White:" + Arrays.toString(whitePawns));
-        System.out.println("King:" + Arrays.toString(kingPawn));
-
         return new BitSetState(
                 serverState.getTurn(),
                 BitSetUtils.newFromPositions(blackPawns),
