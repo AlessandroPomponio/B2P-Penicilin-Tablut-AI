@@ -9,28 +9,25 @@ import java.util.List;
 
 public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarialSearch {
 
-    private final TablutGame game;
     private final int utilMin;
     private final int utilMax;
+    private int currDepthLimit;
+    private Metrics metrics;
 
+    private final TablutGame game;
     private TablutGameIterativeDeepeningAlphaBetaSearch.Timer timer;
 
-    private int currDepthLimit;
+
 /*
  *  TODO:
  *   - finire di scrivere le funzioni finali di questa classe
  *   - finire di ottimizzare tutte le funzioni di questa classe
  *   - strip makeDecision di tutte le funzioni non necessarie che possono rallentare l'esecuzione (releative ad esempio
  *     a metrics)
- *   - valutare se è necessario sostituire il risultato dell'euristica da double a Integer (per questioni di efficienza)
- *     nel caso è necessario cambiare anche l'interfaccia Game e la classe TablutGame
- *   - capire come viene impiegata la variabile booleana heuristicEvaluationUsed perchè non ha molto senso per come è
- *     stata scritta nel codice originale
  *   - Modificare la classe orderAction per fare in modo che ordini le azioni solo quando viene aggiunto un nuovo elemento
  *     E, anzi, sarebbe meglio se il metodo venisse chiamato esclusivamente quando vengono inserite nuove azioni con le
  *     rispettive valutazioni euristiche. Inoltre, si potrebbe pensare di creare una classe apposta che sfrutti la class
  *     classe Thread per fare in modo che le azioni vengano ordinate in un processo diverso da quello corrente.
- *   - Considerare se è meglio settare currDepthLimit a un valore diverso di 2
  */
 
 /*
@@ -40,6 +37,10 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
  *   - Aggiunto argomento depth nella funzione eval, aggiunto controllo di profondità nella funzione depth.
  *   - Creato interfacce AdversarialSearch e IGame (in cui è stato cambiato il valore dell'euristica da double a int)
  *   - implementare correttamente questa classe nel client (e cambiare il timeout)
+ *   - valutare se è necessario sostituire il risultato dell'euristica da double a Integer (per questioni di efficienza)
+ *     nel caso è necessario cambiare anche l'interfaccia Game e la classe TablutGame
+ *   - capire come viene impiegata la variabile booleana heuristicEvaluationUsed perchè non ha molto senso per come è
+ *     stata scritta nel codice originale
  */
     /**
      * Creates a new search object for a given game.
@@ -69,19 +70,21 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
     @Override
     public BitSetAction makeDecision(BitSetState state) {
         Turn player = game.getPlayer(state);
+        metrics = new Metrics();
         List<BitSetAction> results = orderActions(state, game.getActions(state), player, 0);
         timer.start();
         currDepthLimit = 0;
 
         do {
             currDepthLimit++;
-            ActionStore<BitSetAction> newResults = new ActionStore<BitSetAction>();
+            ActionStore<BitSetAction> newResults = new ActionStore<>();
             for (BitSetAction action : results) {
-                int value = minValue(game.getResult(state, action), player, Integer.MIN_VALUE, Integer.MAX_VALUE, 1);
+                int value = minValue(game.getResult(state, action), player, utilMin, utilMax, 1);
                 if (timer.timeOutOccurred())
                     break; // exit from action loop
                 newResults.add(action, value);
             }
+            /* Codice potenzialmente inutile per il nostro gioco
             if (newResults.size() > 0) {
                 results = newResults.actions;
                 if (!timer.timeOutOccurred()) {
@@ -92,16 +95,19 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
                         break; // exit from iterative deepening loop
                 }
             }
+            */
         } while (!timer.timeOutOccurred());
         return results.get(0);
     }
 
+
     // returns an utility value
     public int maxValue(BitSetState state, Turn player, double alpha, double beta, int depth) {
+        updateMetrics(depth);
         if (game.isTerminal(state) || depth >= currDepthLimit || timer.timeOutOccurred())
             return eval(state, player, depth);
 
-        int value = Integer.MIN_VALUE;
+        int value = utilMin;
         // valutare come gestire l'ordinamento delle azioni
         for (BitSetAction action : orderActions(state, game.getActions(state), player, depth)) {
             value = Math.max(value, minValue(game.getResult(state, action), //
@@ -117,10 +123,11 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
 
     // returns an utility value
     public int minValue(BitSetState state, Turn player, double alpha, double beta, int depth) {
+        updateMetrics(depth);
         if (game.isTerminal(state) || depth >= currDepthLimit || timer.timeOutOccurred())
             return eval(state, player, depth);
 
-        int value = Integer.MAX_VALUE;
+        int value = utilMax;
         // valutare come gestire l'ordinamento delle azioni
         for (BitSetAction action : orderActions(state, game.getActions(state), player, depth)) {
             value = Math.min(value, maxValue(game.getResult(state, action), //
@@ -134,25 +141,36 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
 
     }
 
+    private void updateMetrics(int depth) {
+        metrics.updateMetrics(depth);
+    }
+
+    @Override
+    public Metrics getMetrics() {
+        return metrics;
+    }
+
     /**
      * Primitive operation which is used to stop iterative deepening search in
      * situations where a clear best action exists. This implementation returns
      * always false.
      */
+    /*
     protected boolean isSignificantlyBetter(double newUtility, double utility) {
         return false;
     }
-
+    */
     /**
      * Primitive operation which is used to stop iterative deepening search in
      * situations where a safe winner has been identified. This implementation
      * returns true if the given value (for the currently preferred action
      * result) is the highest or lowest utility value possible.
      */
+    /*
     protected boolean hasSafeWinner(double resultUtility) {
         return resultUtility <= utilMin || resultUtility >= utilMax;
     }
-
+    */
     /**
      * Primitive operation, which estimates the value for (not necessarily
      * terminal) states. This implementation returns the utility value for
@@ -180,6 +198,16 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
      * the original order (provided by the game).
      */
     public List<BitSetAction> orderActions(BitSetState state, List<BitSetAction> actions, Turn player, int depth) {
+        /*
+        actions.stream().sorted()....
+        Bisogna capire se è possibile, e come fare nel caso in cui lo sia, valutare l'euristica di ogni azione
+        orderAction.Infatti potrebbe essere interessante se fosse chiamata nel nodo con cui currDepthLimit è uguale a
+        depth + 1, però potrebbe essere inutile nel pruning dei rami: se lo si fa in depth == currDepthLimit - 1,
+        non si ottiene un pruning effettivo.
+        Farlo invece nell'ultimo valore di un nodo di un albero esplorato in larghezza invece potrebbe essere inutile
+        allo stesso modo.
+        INVESTIGARE COME è MEGLIO ORDINARE LE AZIONI
+        */
         return actions;
     }
 
