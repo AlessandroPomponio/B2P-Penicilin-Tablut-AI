@@ -11,7 +11,7 @@ public class BitSetAction implements IAction {
     private final String from;
     private final String to;
     private final Turn turn;
-    private final int value;
+    private int value;
 
     public BitSetAction(String from, String to, Turn turn) {
         this.from = from;
@@ -48,11 +48,17 @@ public class BitSetAction implements IAction {
     }
 
     @Override
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    @Override
     public String toString() {
         return "BitSetAction{" +
                 "from='" + from + '\'' +
                 ", to='" + to + '\'' +
                 ", turn=" + turn +
+                ", value=" + value +
                 '}';
     }
 
@@ -69,5 +75,10 @@ public class BitSetAction implements IAction {
     @Override
     public int hashCode() {
         return Objects.hash(from, to, turn);
+    }
+
+    @Override
+    public int compareTo(IAction o) {
+        return this.value - o.getValue();
     }
 }

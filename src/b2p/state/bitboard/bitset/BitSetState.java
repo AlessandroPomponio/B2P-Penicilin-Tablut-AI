@@ -157,6 +157,55 @@ public class BitSetState implements IState {
     //endregion
 
     //region Heuristics-related functions
+//    @Override
+//    public int getHeuristicValue() {
+//
+//        if (turn == Turn.BLACK) {
+//            return blackHeuristic();
+//        }
+//
+//        return whiteHeuristic();
+//
+//    }
+//
+//    private int blackHeuristic() {
+//
+//        //
+//        int pieceDifference =  blackPawns.cardinality() - (whitePawns.cardinality() + king.cardinality());
+//
+//        //
+//        BitSet blacks = BitSetUtils.copy(blackPawns);
+//        blacks.and(BitSetPosition.blackStrategicCells);
+//        int strategicBlacks = blacks.cardinality();
+//
+//        //
+////        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
+//        int movesToKingEscape =0;
+//
+//        if (turnAmt <= 3) {
+//            return strategicBlacks * 100 + BitSetMove.dangerToKing(this);
+//        }
+//
+//        if (turnAmt > 10) {
+//            return (pieceDifference-8)*4 + strategicBlacks + BitSetMove.dangerToKing(this) * 3;
+//        }
+//
+//        return (pieceDifference-8) + strategicBlacks * 20 - movesToKingEscape + BitSetMove.dangerToKing(this) * 3;
+//
+//    }
+//
+//    private int whiteHeuristic() {
+//
+//        //
+//        int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
+//
+//        //
+////        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
+//        int movesToKingEscape =0;
+//        return 2*(8+pieceDifference) + movesToKingEscape - 10*BitSetMove.dangerToKing(this);
+//
+//    }
+
     @Override
     public int getHeuristicValue() {
 
@@ -174,23 +223,14 @@ public class BitSetState implements IState {
         int pieceDifference =  blackPawns.cardinality() - (whitePawns.cardinality() + king.cardinality());
 
         //
-        BitSet blacks = BitSetUtils.copy(blackPawns);
-        blacks.and(BitSetPosition.blackStrategicCells);
-        int strategicBlacks = blacks.cardinality();
+//        BitSet blacks = BitSetUtils.copy(blackPawns);
+//        blacks.and(BitSetPosition.blackStrategicCells);
+//        int strategicBlacks = blacks.cardinality() * 50;
+
+        int escapeMalus = BitSetMove.kingEscapesInOneMove(this) * -10000;
 
         //
-//        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
-        int movesToKingEscape =0;
-
-        if (turnAmt <= 3) {
-            return strategicBlacks * 100 + BitSetMove.dangerToKing(this);
-        }
-
-        if (turnAmt > 10) {
-            return (pieceDifference-8)*4 + strategicBlacks + BitSetMove.dangerToKing(this) * 3;
-        }
-
-        return (pieceDifference-8) + strategicBlacks * 20 - movesToKingEscape + BitSetMove.dangerToKing(this) * 3;
+        return pieceDifference +  escapeMalus + BitSetMove.dangerToKing(this);
 
     }
 
@@ -199,10 +239,19 @@ public class BitSetState implements IState {
         //
         int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
 
-        //
-//        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
-        int movesToKingEscape =0;
-        return 2*(8+pieceDifference) + movesToKingEscape - 10*BitSetMove.dangerToKing(this);
+        int strategicWhites = 0;
+        int escapeBonus = BitSetMove.kingEscapesInOneMove(this) * 10000;
+//        if (turnAmt < 3) {
+//            BitSet whites = BitSetUtils.copy(whitePawns);
+//            whites.and(BitSetPosition.blackStrategicCells);
+//            strategicWhites = whites.cardinality() * 50;
+//        } else
+
+//        if (turnAmt > 4) {
+//            return pieceDifference + 8 + escapeBonus - 2*BitSetMove.dangerToKing(this);
+//        }
+
+        return 3*(pieceDifference + 8) + strategicWhites + escapeBonus - BitSetMove.dangerToKing(this);
 
     }
     //endregion
