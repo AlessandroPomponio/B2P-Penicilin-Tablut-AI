@@ -4,6 +4,7 @@ import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
+import java.util.Collections;
 import java.util.List;
 
 public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarialSearch {
@@ -102,9 +103,12 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
 
             }
 
-            if (heuristicsResults.size() > 0) {
-
+            // TODO: CONTROLLARE
+            // SENZA TIMEOUTOCCURRED ABBIAMO ALBERO ESPLORATO SOLO IN PARTE
+//            if (heuristicsResults.size() > 0 && !timer.timeOutOccurred()) {
+                if (heuristicsResults.size() > 0) {
                 availableActions = heuristicsResults.actions;
+                availableActions.get(0).setValue(heuristicsResults.utilValues.get(0));
 
 /*              // Codice potenzialmente inutile per il nostro gioco
                 // If we have a safe winning value, we can stop the search
@@ -117,11 +121,13 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
 
                 }
 */
+                System.out.println("MAXVALUE: " + Collections.max(heuristicsResults.utilValues));
             }
 
 
         } while(!timer.timeOutOccurred());
 
+        System.out.println("Current depth: " + metrics.getCurrDepthLimit() + " Nodes Explored: " + metrics.getNodeExpanded());
         return availableActions.get(0);
 
     }

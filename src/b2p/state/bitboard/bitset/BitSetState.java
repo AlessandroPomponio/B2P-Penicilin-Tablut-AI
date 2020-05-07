@@ -14,7 +14,7 @@ public class BitSetState implements IState {
 
     //
     private Turn turn;
-    private short turnAmt = 0;
+    private int turnAmt = 0;
 
     //
     private final BitSet blackPawns;
@@ -34,6 +34,11 @@ public class BitSetState implements IState {
         board.or(whitePawns);
         board.or(king);
 
+    }
+
+    public BitSetState(Turn turn, BitSet blackPawns, BitSet whitePawns, BitSet king, int turnAmt) {
+        this(turn, blackPawns, whitePawns, king);
+        this.turnAmt = turnAmt;
     }
 
     public BitSetState() {

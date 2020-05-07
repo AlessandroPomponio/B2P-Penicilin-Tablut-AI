@@ -7,7 +7,7 @@ import java.util.BitSet;
 
 public class BitSetUtils {
 
-    public static BitSetState newFromServer(StateTablut serverState) {
+    public static BitSetState newFromServer(StateTablut serverState, int turnAmt) {
 
         State.Turn turn = serverState.getTurn();
 
@@ -36,7 +36,8 @@ public class BitSetUtils {
                 serverState.getTurn(),
                 BitSetUtils.newFromPositions(blackPawns),
                 BitSetUtils.newFromPositions(whitePawns),
-                BitSetUtils.newFromPositions(kingPawn)
+                BitSetUtils.newFromPositions(kingPawn),
+                turnAmt
         );
     }
 

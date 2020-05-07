@@ -147,17 +147,26 @@ public enum BitSetPosition {
 
     };
 
+//    private static final int[] strategicBlackCells = {
+//
+//                                            C2.ordinal(),                                                       G2.ordinal(),
+//                            B3.ordinal(),                                                                                       H3.ordinal(),
+//
+//
+//
+//
+//                            B7.ordinal(),                                                                                       H7.ordinal(),
+//                                            C8.ordinal(),                                                       G8.ordinal()
+//
+//    };
+
     private static final int[] strategicBlackCells = {
 
-            C2.ordinal(),                                                       G2.ordinal(),
-            B3.ordinal(),                                                                                       H3.ordinal(),
+                                                                D3.ordinal(),           F3.ordinal(),
+                                                C4.ordinal(),                                           G4.ordinal(),
 
-
-
-
-            B7.ordinal(),                                                                                       H7.ordinal(),
-            C8.ordinal(),                                                       G8.ordinal()
-
+                                                C6.ordinal(),                                           G6.ordinal(),
+                                                                D7.ordinal(),           F7.ordinal()
     };
     //endregion
 
