@@ -173,7 +173,25 @@ public class BitSetState implements IState {
 
     }
 
+    public int getHeuristicValueForPlayer(Turn player) {
+
+        if (player == Turn.BLACK)
+            return blackHeuristic();
+
+        return whiteHeuristic();
+
+    }
+
     private int blackHeuristic() {
+
+//        if (BitSetMove.kingHasMoreThanOneEscapePath(this))
+//            return Integer.MIN_VALUE;
+
+
+//        if (turnAmt >= 30) {
+//            return - (whitePawns.cardinality() + king.cardinality()) + BitSetMove.dangerToKing(this);
+//        }
+
 
         //
         int pieceDifference =  blackPawns.cardinality() - (whitePawns.cardinality() + king.cardinality());
@@ -185,29 +203,44 @@ public class BitSetState implements IState {
 
         //
 //        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
-        int movesToKingEscape =0;
-
-        if (turnAmt <= 3) {
-            return strategicBlacks * 100 + BitSetMove.dangerToKing(this);
+        // I TURNI SONO x2
+        if (turnAmt < 6) {
+            return strategicBlacks + (pieceDifference-7);
         }
 
-        if (turnAmt > 10) {
-            return (pieceDifference-8)*4 + strategicBlacks + BitSetMove.dangerToKing(this) * 3;
-        }
 
-        return (pieceDifference-8) + strategicBlacks * 20 - movesToKingEscape + BitSetMove.dangerToKing(this) * 3;
+
+        return strategicBlacks + 2*(pieceDifference-7)+ BitSetMove.dangerToKing(this);
+
+//        return (pieceDifference-7) + strategicBlacks + 5*BitSetMove.dangerToKing(this) -5*getAvailableKingMoves().size();
+
+//
+//        return (pieceDifference-8) + strategicBlacks * 20 - movesToKingEscape + BitSetMove.dangerToKing(this) * 3;
 
     }
 
     private int whiteHeuristic() {
 
-        //
-        int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
+//        if (BitSetMove.kingHasMoreThanOneEscapePath(this))
+//            return Integer.MAX_VALUE;
 
         //
+//        int bestQuadrant = BitSetPosition.findTargetQuadrantForWhites(this);
+//        int kingInBestQuadrantBonus = 0;
+//        if (king.intersects(BitSetStartingBoard.quadrants[bestQuadrant]))
+//            kingInBestQuadrantBonus = 10;
+
+        //
+        int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
+        //
 //        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
-        int movesToKingEscape =0;
-        return 2*(8+pieceDifference) + movesToKingEscape - 10*BitSetMove.dangerToKing(this);
+
+        // i turni sono x2
+        if (turnAmt > 10) {
+            return (7+pieceDifference) - BitSetMove.dangerToKing(this);
+        }
+
+        return (7+pieceDifference) - 2*BitSetMove.dangerToKing(this);
 
     }
 
