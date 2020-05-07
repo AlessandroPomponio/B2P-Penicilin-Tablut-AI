@@ -52,10 +52,10 @@ public class BitSetMoveTest {
     public void testGetMovesForWhitePawnsAtStart() {
 
         BitSetState start = new BitSetState();
-        BitSetAction[] wanted;
+        BitSetAction[] expected;
+        BitSetAction[] actual;
 
-
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("E3", "D3", Turn.WHITE),
                 new BitSetAction("E3", "C3", Turn.WHITE),
                 new BitSetAction("E3", "B3", Turn.WHITE),
@@ -65,9 +65,10 @@ public class BitSetMoveTest {
                 new BitSetAction("E3", "H3", Turn.WHITE),
                 new BitSetAction("E3", "I3", Turn.WHITE),
         };
-        Assertions.assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E3.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E3.ordinal(), start).toArray(new BitSetAction[]{});
+        Assertions.assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("E4", "D4", Turn.WHITE),
                 new BitSetAction("E4", "C4", Turn.WHITE),
                 new BitSetAction("E4", "B4", Turn.WHITE),
@@ -75,9 +76,10 @@ public class BitSetMoveTest {
                 new BitSetAction("E4", "G4", Turn.WHITE),
                 new BitSetAction("E4", "H4", Turn.WHITE),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E4.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E4.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("C5", "C4", Turn.WHITE),
                 new BitSetAction("C5", "C3", Turn.WHITE),
                 new BitSetAction("C5", "C2", Turn.WHITE),
@@ -87,9 +89,10 @@ public class BitSetMoveTest {
                 new BitSetAction("C5", "C8", Turn.WHITE),
                 new BitSetAction("C5", "C9", Turn.WHITE),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.C5.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.C5.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("D5", "D4", Turn.WHITE),
                 new BitSetAction("D5", "D3", Turn.WHITE),
                 new BitSetAction("D5", "D2", Turn.WHITE),
@@ -97,14 +100,16 @@ public class BitSetMoveTest {
                 new BitSetAction("D5", "D7", Turn.WHITE),
                 new BitSetAction("D5", "D8", Turn.WHITE),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.D5.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.D5.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
 
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E5.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E5.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("F5", "F4", Turn.WHITE),
                 new BitSetAction("F5", "F3", Turn.WHITE),
                 new BitSetAction("F5", "F2", Turn.WHITE),
@@ -112,9 +117,10 @@ public class BitSetMoveTest {
                 new BitSetAction("F5", "F7", Turn.WHITE),
                 new BitSetAction("F5", "F8", Turn.WHITE),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.F5.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.F5.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("G5", "G4", Turn.WHITE),
                 new BitSetAction("G5", "G3", Turn.WHITE),
                 new BitSetAction("G5", "G2", Turn.WHITE),
@@ -124,9 +130,10 @@ public class BitSetMoveTest {
                 new BitSetAction("G5", "G8", Turn.WHITE),
                 new BitSetAction("G5", "G9", Turn.WHITE),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("E6", "D6", Turn.WHITE),
                 new BitSetAction("E6", "C6", Turn.WHITE),
                 new BitSetAction("E6", "B6", Turn.WHITE),
@@ -134,9 +141,10 @@ public class BitSetMoveTest {
                 new BitSetAction("E6", "G6", Turn.WHITE),
                 new BitSetAction("E6", "H6", Turn.WHITE),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E6.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E6.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("E7", "D7", Turn.WHITE),
                 new BitSetAction("E7", "C7", Turn.WHITE),
                 new BitSetAction("E7", "B7", Turn.WHITE),
@@ -146,7 +154,8 @@ public class BitSetMoveTest {
                 new BitSetAction("E7", "H7", Turn.WHITE),
                 new BitSetAction("E7", "I7", Turn.WHITE),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E7.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E7.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
     }
 
 
@@ -181,11 +190,12 @@ public class BitSetMoveTest {
     public void testGetMovesForBlackPawnsAtStart() {
 
         BitSetState start = new BitSetState();
-        BitSetAction[] wanted;
+        BitSetAction[] expected;
+        BitSetAction[] actual;
 
         start.setTurn(Turn.BLACK);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("D1", "D2", Turn.BLACK),
                 new BitSetAction("D1", "D3", Turn.BLACK),
                 new BitSetAction("D1", "D4", Turn.BLACK),
@@ -193,14 +203,16 @@ public class BitSetMoveTest {
                 new BitSetAction("D1", "B1", Turn.BLACK),
                 new BitSetAction("D1", "A1", Turn.BLACK),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.D1.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.D1.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
 
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E1.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E1.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("F1", "F2", Turn.BLACK),
                 new BitSetAction("F1", "F3", Turn.BLACK),
                 new BitSetAction("F1", "F4", Turn.BLACK),
@@ -208,9 +220,10 @@ public class BitSetMoveTest {
                 new BitSetAction("F1", "H1", Turn.BLACK),
                 new BitSetAction("F1", "I1", Turn.BLACK),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.F1.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.F1.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("E2", "D2", Turn.BLACK),
                 new BitSetAction("E2", "C2", Turn.BLACK),
                 new BitSetAction("E2", "B2", Turn.BLACK),
@@ -220,7 +233,8 @@ public class BitSetMoveTest {
                 new BitSetAction("E2", "H2", Turn.BLACK),
                 new BitSetAction("E2", "I2", Turn.BLACK),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.E2.ordinal(), start).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E2.ordinal(), start).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
     }
 
 
@@ -255,7 +269,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testCampCollision(){
 
-        BitSetAction[] wanted;
+        BitSetAction[] expected;
+        BitSetAction[] actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -270,13 +286,14 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("H2", "H3", Turn.WHITE),
                 new BitSetAction("H2", "H4", Turn.WHITE),
                 new BitSetAction("H2", "G2", Turn.WHITE),
                 new BitSetAction("H2", "F2", Turn.WHITE),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.H2.ordinal(), current).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.H2.ordinal(), current).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
     }
 
 
@@ -310,7 +327,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testCastleCollision(){
 
-        BitSetAction[] wanted;
+        BitSetAction[] expected;
+        BitSetAction[] actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -325,12 +344,13 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("G5", "G4", Turn.WHITE),
                 new BitSetAction("G5", "G6", Turn.WHITE),
                 new BitSetAction("G5", "F5", Turn.WHITE),
         };
-        assertArrayEquals(BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(), wanted);
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
     }
 
 
@@ -364,7 +384,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testBorderCollision(){
 
-        BitSetAction[] wanted;
+        BitSetAction[] expected;
+        BitSetAction[] actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
@@ -378,13 +400,14 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("I1", "I2", Turn.WHITE),
                 new BitSetAction("I1", "I3", Turn.WHITE),
                 new BitSetAction("I1", "H1", Turn.WHITE),
                 new BitSetAction("I1", "G1", Turn.WHITE),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.I1.ordinal(), current).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.I1.ordinal(), current).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
     }
 
 
@@ -418,7 +441,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testKingCollisions(){
 
-        BitSetAction[] wanted;
+        BitSetAction[] expected;
+        BitSetAction[] actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -432,7 +457,7 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("G5", "G4", Turn.WHITE),
                 new BitSetAction("G5", "G3", Turn.WHITE),
                 new BitSetAction("G5", "G2", Turn.WHITE),
@@ -443,7 +468,8 @@ public class BitSetMoveTest {
                 new BitSetAction("G5", "G9", Turn.WHITE),
                 new BitSetAction("G5", "F5", Turn.WHITE),
         };
-        assertArrayEquals(wanted, BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray());
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(new BitSetAction[]{});
+        assertArrayEquals(expected, actual);
     }
 
 
@@ -482,7 +508,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsNoCaptures() {
 
-        BitSet wanted;
+        BitSet expected;
+        BitSet actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -496,11 +524,12 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+        expected = BitSetUtils.newFromPositions(new BitSetPosition[]{
 
         });
+        actual = BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.G3.ordinal(), current);
 
-        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.G3.ordinal(), current)));
+        assertEquals(BitSetUtils.toBitString(expected), BitSetUtils.toBitString(actual));
     }
 
 
@@ -533,7 +562,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsSingleCapture() {
 
-        BitSet wanted;
+        BitSet expected;
+        BitSet actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -548,11 +579,12 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+        expected = BitSetUtils.newFromPositions(new BitSetPosition[]{
                 BitSetPosition.F3,
         });
+        actual = BitSetMove.getCapturedPawns(BitSetPosition.E4.ordinal(), BitSetPosition.E3.ordinal(), current);
 
-        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.E4.ordinal(), BitSetPosition.E3.ordinal(), current)));
+        assertEquals(BitSetUtils.toBitString(expected), BitSetUtils.toBitString(actual));
     }
 
 
@@ -586,7 +618,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsDoubleCapture() {
 
-        BitSet wanted;
+        BitSet expected;
+        BitSet actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -603,12 +637,13 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+        expected = BitSetUtils.newFromPositions(new BitSetPosition[]{
                 BitSetPosition.F3,
                 BitSetPosition.G4,
         });
+        actual = BitSetMove.getCapturedPawns(BitSetPosition.G2.ordinal(), BitSetPosition.G3.ordinal(), current);
 
-        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.G2.ordinal(), BitSetPosition.G3.ordinal(), current)));
+        assertEquals(BitSetUtils.toBitString(expected), BitSetUtils.toBitString(actual));
     }
 
 
@@ -642,7 +677,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsTripleCapture() {
 
-        BitSet wanted;
+        BitSet expected;
+        BitSet actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -661,13 +698,14 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+        expected = BitSetUtils.newFromPositions(new BitSetPosition[]{
                 BitSetPosition.F3,
                 BitSetPosition.G4,
                 BitSetPosition.H3,
         });
 
-        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.G2.ordinal(), BitSetPosition.G3.ordinal(), current)));
+        actual = BitSetMove.getCapturedPawns(BitSetPosition.G2.ordinal(), BitSetPosition.G3.ordinal(), current);
+        assertEquals(BitSetUtils.toBitString(expected), BitSetUtils.toBitString(actual));
     }
 
 
@@ -701,7 +739,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsCastleLegalCapture() {
 
-        BitSet wanted;
+        BitSet expected;
+        BitSet actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -715,11 +755,11 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+        expected = BitSetUtils.newFromPositions(new BitSetPosition[]{
                 BitSetPosition.F5,
         });
-
-        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.G6.ordinal(), BitSetPosition.G5.ordinal(), current)));
+        actual = BitSetMove.getCapturedPawns(BitSetPosition.G6.ordinal(), BitSetPosition.G5.ordinal(), current);
+        assertEquals(BitSetUtils.toBitString(expected), BitSetUtils.toBitString(actual));
     }
 
 
@@ -754,7 +794,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsCampLegalCapture() {
 
-        BitSet wanted;
+        BitSet expected;
+        BitSet actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -769,11 +811,12 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+        expected = BitSetUtils.newFromPositions(new BitSetPosition[]{
                 BitSetPosition.H5,
         });
+        actual = BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.H4.ordinal(), current);
 
-        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.H4.ordinal(), current)));
+        assertEquals(BitSetUtils.toBitString(expected), BitSetUtils.toBitString(actual));
     }
 
 
@@ -808,7 +851,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsCampIllegalCapture() {
 
-        BitSet wanted;
+        BitSet expected;
+        BitSet actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -822,11 +867,12 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+        expected = BitSetUtils.newFromPositions(new BitSetPosition[]{
 
         });
+        actual = BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.I3.ordinal(), current);
 
-        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.H3.ordinal(), BitSetPosition.I3.ordinal(), current)));
+        assertEquals(BitSetUtils.toBitString(expected), BitSetUtils.toBitString(actual));
     }
 
 
@@ -861,7 +907,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsOutOfCampCapture() {
 
-        BitSet wanted;
+        BitSet expected;
+        BitSet actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -875,11 +923,12 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+        expected = BitSetUtils.newFromPositions(new BitSetPosition[]{
                 BitSetPosition.G5,
         });
+        actual = BitSetMove.getCapturedPawns(BitSetPosition.F6.ordinal(), BitSetPosition.F5.ordinal(), current);
 
-        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.F6.ordinal(), BitSetPosition.F5.ordinal(), current)));
+        assertEquals(BitSetUtils.toBitString(expected), BitSetUtils.toBitString(actual));
     }
 
 
@@ -913,7 +962,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsKingInCastle() {
 
-        BitSet wanted;
+        BitSet expected;
+        BitSet actual;
+
         BitSetState current = new BitSetState(
                 Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -930,11 +981,12 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+        expected = BitSetUtils.newFromPositions(new BitSetPosition[]{
                 BitSetPosition.E5,
         });
+        actual = BitSetMove.getCapturedPawns(BitSetPosition.E7.ordinal(), BitSetPosition.E6.ordinal(), current);
 
-        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.E7.ordinal(), BitSetPosition.E6.ordinal(), current)));
+        assertEquals(BitSetUtils.toBitString(expected), BitSetUtils.toBitString(actual));
     }
 
 
@@ -968,7 +1020,9 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsKingOutOfCastle() {
 
-        BitSet wanted;
+        BitSet expected;
+        BitSet actual;
+
         BitSetState current = new BitSetState(
                 Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -984,11 +1038,12 @@ public class BitSetMoveTest {
                 })
         );
 
-        wanted = BitSetUtils.newFromPositions(new BitSetPosition[]{
+        expected = BitSetUtils.newFromPositions(new BitSetPosition[]{
                 BitSetPosition.E4,
         });
+        actual = BitSetMove.getCapturedPawns(BitSetPosition.C4.ordinal(), BitSetPosition.D4.ordinal(), current);
 
-        assertEquals(BitSetUtils.toBitString(wanted), BitSetUtils.toBitString(BitSetMove.getCapturedPawns(BitSetPosition.C4.ordinal(), BitSetPosition.D4.ordinal(), current)));
+        assertEquals(BitSetUtils.toBitString(expected), BitSetUtils.toBitString(actual));
     }
 
 

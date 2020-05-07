@@ -1,8 +1,0 @@
-<component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="PartitaSimulata" type="CompoundRunConfigurationType">
-    <toRun name="Server" type="Application" />
-    <toRun name="main" type="Application" />
-    <toRun name="TablutRandomBlackClient" type="Application" />
-    <method v="2" />
-  </configuration>
-</component>

@@ -10,7 +10,7 @@ public class Metrics {
     }
 
     public int getNodeExpanded() { return nodeExpanded; }
-    public int getCurrDepthLimit() { return nodeExpanded; }
+    public int getCurrDepthLimit() { return currDepthLimit; }
 
     public void setNodeExpanded(int nodeExpanded) { this.nodeExpanded = nodeExpanded; }
     public void setCurrDepthLimit(int currDepthLimit) { this.currDepthLimit = currDepthLimit; }

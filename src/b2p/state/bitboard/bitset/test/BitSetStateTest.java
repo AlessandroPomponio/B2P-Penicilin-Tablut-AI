@@ -12,22 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BitSetStateTest {
 
     /*
-     * NOTE:
-     * -    Poichè la getAvailableKingMoves incapsula la funzione getMovesForPawns, già testata in BitSetMoveTest, queste
-     *      non verranno scritti test in merito
-     *
-     * -    Inoltre, il controllo della validità della mossa all'interno di performMove può essere fatto con:
-     *          if(! getAvailablePawnMoves().contains(new BitSetAction(from+"", to+"", turn)))
-     *              return;
-     *      Oppure rendendo il metodo void performMove(int,int) privato ed aggiungendo il controllo nelle due funzioni che lo
-     *      incapsulano.
-     *      In una funzione di più alto livello sarà necessario testare che le mosse illegali come
-     *      *   Attraversare accampamenti
-     *      *   Attraversare il castello
-     *      *   Spostare la pedina in diagonale
-     *      Non vengano accettate o che lancino eccezioni (anche se potenzialmente pericoloso)
-     *
-     *
      * TODO:
      * - Test vittoria se un giocatore non può muovere pedine
      *
@@ -67,7 +51,9 @@ public class BitSetStateTest {
     @org.junit.Test
     public void testGetAvailablePawnMovesEmpty() {
 
-        BitSetAction[] wanted;
+        BitSetAction[] expected;
+        BitSetAction[] actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -81,11 +67,12 @@ public class BitSetStateTest {
 
                 })
         );
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
 
         };
+        actual = current.getAvailablePawnMoves().toArray(new BitSetAction[]{});
 
-        assertArrayEquals(wanted, current.getAvailablePawnMoves().toArray());
+        assertArrayEquals(expected, actual);
     }
 
 
@@ -119,14 +106,15 @@ public class BitSetStateTest {
     @org.junit.Test
     public void testCollisionGetAvailablePawnMoves() {
 
-        BitSetAction[] wanted;
+        BitSetAction[] expected;
+        BitSetAction[] actual;
+
         BitSetState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.G8,
                         BitSetPosition.H8,
                         BitSetPosition.I8,
-
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.G9,
@@ -136,12 +124,13 @@ public class BitSetStateTest {
 
                 })
         );
-        wanted = new BitSetAction[]{
+        expected = new BitSetAction[]{
                 new BitSetAction("G9", "H9", Turn.WHITE),
                 new BitSetAction("I9", "H9", Turn.WHITE),
         };
+        actual = current.getAvailablePawnMoves().toArray(new BitSetAction[]{});
 
-        assertArrayEquals(wanted, current.getAvailablePawnMoves().toArray());
+        assertArrayEquals(expected, actual);
     }
 
     /*
