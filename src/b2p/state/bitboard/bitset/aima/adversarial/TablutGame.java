@@ -4,6 +4,7 @@ import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
+import java.util.BitSet;
 import java.util.List;
 
 public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {
@@ -31,6 +32,8 @@ public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {
     @Override
     public BitSetState getResult(BitSetState bitSetState, BitSetAction bitSetAction) {
         BitSetState result = (BitSetState) bitSetState.clone();
+        // TODO: CONTROLLARE, POTREBBE ESSERE INUTILE
+        result.setTurn(bitSetAction.getTurn());
         result.performMove(bitSetAction);
         return result;
     }
@@ -56,6 +59,6 @@ public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {
                 return Integer.MIN_VALUE;
 
         }
-        return bitSetState.getHeuristicValue();
+        return bitSetState.getHeuristicValueForPlayer(turn);
     }
 }
