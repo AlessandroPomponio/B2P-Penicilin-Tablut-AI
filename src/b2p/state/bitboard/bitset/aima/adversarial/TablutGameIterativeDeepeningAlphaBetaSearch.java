@@ -71,6 +71,7 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
 
         //
         Turn player = game.getPlayer(state);
+        System.out.println("CURRENT PLAYER: " + game.getPlayer(state));
         metrics = new Metrics();
         List<BitSetAction> availableActions = orderActions(state, game.getActions(state), player, 0);
 
@@ -99,6 +100,7 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
                     break;
                 }
 
+                action.setValue(heuristicValue);
                 heuristicsResults.add(action, heuristicValue);
 
             }
@@ -108,7 +110,6 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
 //            if (heuristicsResults.size() > 0 && !timer.timeOutOccurred()) {
                 if (heuristicsResults.size() > 0) {
                 availableActions = heuristicsResults.actions;
-                availableActions.get(0).setValue(heuristicsResults.utilValues.get(0));
 
 /*              // Codice potenzialmente inutile per il nostro gioco
                 // If we have a safe winning value, we can stop the search
@@ -121,6 +122,7 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
 
                 }
 */
+
                 System.out.println("MAXVALUE: " + Collections.max(heuristicsResults.utilValues));
             }
 
@@ -128,6 +130,7 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
         } while(!timer.timeOutOccurred());
 
         System.out.println("Current depth: " + metrics.getCurrDepthLimit() + " Nodes Explored: " + metrics.getNodeExpanded());
+        System.out.println(availableActions);
         return availableActions.get(0);
 
     }
