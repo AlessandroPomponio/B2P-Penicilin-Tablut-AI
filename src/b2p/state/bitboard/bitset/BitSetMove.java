@@ -276,15 +276,149 @@ public class BitSetMove {
 
     }
 
+    public static boolean kingHasMoreThanOneEscapePath(BitSetState state) {
+
+        List<BitSetAction> moves = state.getAvailableKingMoves();
+        int escapes = 0;
+
+        // Check if one of the escape cells is in our reach
+        for (BitSetAction move : moves) {
+
+            BitSetState newState = (BitSetState) state.clone();
+            newState.performMove(move);
+
+            List<BitSetAction> newMoves = newState.getAvailableKingMoves();
+            escapes = 0;
+            for (BitSetAction newMove : newMoves) {
+
+                if (BitSetPosition.escapeHashSet.contains(newMove.getTo()))
+                    escapes++;
+
+            }
+
+            if (escapes > 1)
+                return true;
+
+        }
+
+        return false;
+
+    }
+
+    public static int kingStatus(BitSetState state) {
+        //
+        BitSet king = BitSetUtils.copy(state.getKing());
+        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+        BitSet whites = BitSetUtils.copy(state.getWhitePawns());
+
+        //
+        int enemies, allies;
+
+        // Special capture needed
+        if (king.intersects(BitSetPosition.specialKingCells)) {
+
+            // The king is in the castle:
+            // check how many allied and enemy
+            // pawns are surrounding it.
+            if (king.equals(BitSetPosition.castle)) {
+
+                blacks.and(BitSetPosition.kingSurrounded);
+                whites.and(BitSetPosition.kingSurrounded);
+
+                return blacks.cardinality() - whites.cardinality();
+
+
+//                return blacks.cardinality();
+
+            } else {
+
+                int menace = 0;
+                int kingPos = king.nextSetBit(0);
+
+                if (blacks.get(kingPos - 1))
+                    menace++;
+
+                if (whites.get(kingPos - 1))
+                    menace--;
+
+                if (blacks.get(kingPos + 1))
+                    menace++;
+
+                if (whites.get(kingPos -1))
+                    menace--;
+
+                if (blacks.get(kingPos - 9))
+                    menace++;
+
+                if (whites.get(kingPos -9))
+                    menace--;
+
+                if (blacks.get(kingPos + 9))
+                    menace++;
+
+                if (whites.get(kingPos-9))
+                    menace--;
+
+                return menace;
+
+            }
+
+        } else {
+
+            int menace = 0;
+            int kingPos = king.nextSetBit(0);
+
+            if (kingPos % 9 != 0) {
+
+                if (whites.get(kingPos - 1))
+                    menace--;
+                else if (blacks.get(kingPos - 1) || BitSetPosition.camps.get(kingPos - 1))
+                    menace++;
+
+            }
+
+            if (kingPos % 9 != 8) {
+
+                if (whites.get(kingPos + 1))
+                    menace--;
+                else if (blacks.get(kingPos + 1) || BitSetPosition.camps.get(kingPos + 1))
+                    menace++;
+
+            }
+
+            if (kingPos > 9) {
+
+                if (whites.get(kingPos - 9))
+                    menace--;
+                else if (blacks.get(kingPos - 9) || BitSetPosition.camps.get(kingPos - 9))
+                    menace++;
+
+            }
+
+            if (kingPos < 72) {
+
+                if (whites.get(kingPos + 9))
+                    menace--;
+                else if (blacks.get(kingPos + 9) || BitSetPosition.camps.get(kingPos + 9))
+                    menace++;
+
+            }
+
+            return menace * 2;
+
+        }
+
+    }
+
     public static int dangerToKing(BitSetState state) {
 
+        //
         BitSet king = BitSetUtils.copy(state.getKing());
         BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
 
+        // Special capture needed
         if (king.intersects(BitSetPosition.specialKingCells)) {
 
-            // If the king is in the castle, he must be
-            // surrounded by 4 black soldiers
             if (king.equals(BitSetPosition.castle)) {
 
                 blacks.and(BitSetPosition.kingSurrounded);
@@ -292,31 +426,22 @@ public class BitSetMove {
 
             } else {
 
-                try {
-                    int menace = 0;
-                    int kingPos = king.nextSetBit(0);
+                int menace = 0;
+                int kingPos = king.nextSetBit(0);
 
-                    if (blacks.get(kingPos - 1))
-                        menace++;
+                if (blacks.get(kingPos - 1))
+                    menace++;
 
-                    if (blacks.get(kingPos + 1))
-                        menace++;
+                if (blacks.get(kingPos + 1))
+                    menace++;
 
-                    if (blacks.get(kingPos - 9))
-                        menace++;
+                if (blacks.get(kingPos - 9))
+                    menace++;
 
-                    if (blacks.get(kingPos + 9))
-                        menace++;
+                if (blacks.get(kingPos + 9))
+                    menace++;
 
-                    return menace;
-                } catch (Exception e) {
-
-                    System.out.println("Eccezione. Kingpos: " + king.nextSetBit(0));
-                    System.out.println("KING\n" + BitSetUtils.toBitString(king));
-
-                }
-
-                return 2;
+                return menace;
 
             }
 
