@@ -338,6 +338,13 @@ public class BitSetMove {
 
     }
 
+    public static int whiteCellInStrategicPosition(BitSetState state) {
+        //
+        BitSet result = BitSetUtils.copy(state.getWhitePawns());
+        result.and(BitSetPosition.whiteEarlyGameStrategicCells);
+        return result.cardinality();
+    }
+
     public static int kingStatus(BitSetState state) {
         //
         BitSet king = BitSetUtils.copy(state.getKing());
@@ -371,25 +378,25 @@ public class BitSetMove {
                 if (blacks.get(kingPos - 1))
                     menace++;
 
-                if (whites.get(kingPos - 1))
+                else if (whites.get(kingPos - 1))
                     menace--;
 
                 if (blacks.get(kingPos + 1))
                     menace++;
 
-                if (whites.get(kingPos -1))
+                else if (whites.get(kingPos - 1))
                     menace--;
 
                 if (blacks.get(kingPos - 9))
                     menace++;
 
-                if (whites.get(kingPos -9))
+                else if (whites.get(kingPos - 9))
                     menace--;
 
                 if (blacks.get(kingPos + 9))
                     menace++;
 
-                if (whites.get(kingPos-9))
+                else if (whites.get(kingPos - 9))
                     menace--;
 
                 return menace;

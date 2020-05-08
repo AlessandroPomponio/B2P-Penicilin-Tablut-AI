@@ -168,6 +168,14 @@ public enum BitSetPosition {
                                                 C6.ordinal(),                                           G6.ordinal(),
                                                                 D7.ordinal(),           F7.ordinal()
     };
+
+    //TODO: formattare
+    private static final int[] earlyGameStrategicWhiteCells = {
+
+            C3.ordinal(), G3.ordinal(), C7.ordinal(), G7.ordinal(),
+
+    };
+
     //endregion
 
     //region Special BitSets
@@ -182,6 +190,7 @@ public enum BitSetPosition {
     public static final BitSet kingInE6Surrounded = BitSetUtils.newFromPositions(kingInE6SurroundedCells);
     public static final BitSet kingInF5Surrounded = BitSetUtils.newFromPositions(kingInF5SurroundedCells);
     public static final BitSet blackStrategicCells = BitSetUtils.newFromPositions(strategicBlackCells);
+    public static final BitSet whiteEarlyGameStrategicCells = BitSetUtils.newFromPositions(earlyGameStrategicWhiteCells);
     //endregion
     
     public static final HashSet<String> escapeHashSet = new HashSet<>(Arrays.asList(

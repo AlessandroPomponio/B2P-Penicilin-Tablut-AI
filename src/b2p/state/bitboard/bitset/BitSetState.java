@@ -226,23 +226,23 @@ public class BitSetState implements IState {
 //        if (BitSetMove.kingHasMoreThanOneEscapePath(this))
 //            return Integer.MAX_VALUE;
 
-        //
 //        int bestQuadrant = BitSetPosition.findTargetQuadrantForWhites(this);
 //        int kingInBestQuadrantBonus = 0;
 //        if (king.intersects(BitSetStartingBoard.quadrants[bestQuadrant]))
-//            kingInBestQuadrantBonus = 10;
+//            kingInBestQuadrantBonus = 5;
 
         //
-        int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
+        int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality() + 7;
         //
-//        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
 
+//      int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
         // i turni sono x2
         if (turnAmt > 10) {
-            return (7+pieceDifference) - BitSetMove.dangerToKing(this);
+            // whitePawns.cardinality()
+            return pieceDifference - 2 * BitSetMove.dangerToKing(this) + (BitSetMove.kingHasMoreThanOneEscapePath(this) ? 15 : 0);
         }
-
-        return (7+pieceDifference) - 2*BitSetMove.dangerToKing(this);
+        // (5 * whitePawns.cardinality() - 3 * blackPawns.cardinality())
+        return pieceDifference - BitSetMove.dangerToKing(this) + BitSetMove.whiteCellInStrategicPosition(this);
 
     }
 
