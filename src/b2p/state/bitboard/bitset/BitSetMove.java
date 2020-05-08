@@ -1,9 +1,10 @@
 package b2p.state.bitboard.bitset;
 
-import b2p.model.Turn;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 public class BitSetMove {
 
@@ -121,20 +122,66 @@ public class BitSetMove {
         // Check if the king needs a special capture
         if (king.intersects(BitSetPosition.specialKingCells)) {
 
+            int kingPosition = king.nextSetBit(0);
+
             // If the king is in the castle, he must be
             // surrounded by 4 black soldiers
-            if (king.equals(BitSetPosition.castle)) {
+            if (kingPosition == BitSetPosition.E5.ordinal()) {
 
-                if (blacks.equals(BitSetPosition.kingSurrounded))
+                BitSet tempBlacks = BitSetUtils.copy(blacks);
+                tempBlacks.and(BitSetPosition.kingSurrounded);
+                if (tempBlacks.cardinality() == 4)
                     specialCaptures.set(BitSetPosition.E5.ordinal());
 
             } else  {
 
-                if (blacks.equals(BitSetPosition.kingInE4Surrounded) ||
-                    blacks.equals(BitSetPosition.kingInD5Surrounded) ||
-                    blacks.equals(BitSetPosition.kingInE6Surrounded) ||
-                    blacks.equals(BitSetPosition.kingInF5Surrounded))
-                    specialCaptures.set(king.nextSetBit(0));
+                switch (kingPosition) {
+
+                    // BitSetPosition.E4.ordinal() = 31
+                    case 31:
+
+                        BitSet e4Check = BitSetUtils.copy(blacks);
+                        e4Check.and(BitSetPosition.kingInE4Surrounded);
+
+                        if (e4Check.cardinality() == 3)
+                            specialCaptures.set(king.nextSetBit(0));
+
+                        break;
+
+                    // BitSetPosition.D5.ordinal() = 39
+                    case 39:
+
+                        BitSet d5Check = BitSetUtils.copy(blacks);
+                        d5Check.and(BitSetPosition.kingInD5Surrounded);
+
+                        if (d5Check.cardinality() == 3)
+                            specialCaptures.set(king.nextSetBit(0));
+
+                        break;
+
+                    // BitSetPosition.E6.ordinal() = 49
+                    case 49:
+
+                        BitSet e6Check = BitSetUtils.copy(blacks);
+                        e6Check.and(BitSetPosition.kingInE6Surrounded);
+
+                        if (e6Check.cardinality() == 3)
+                            specialCaptures.set(king.nextSetBit(0));
+
+                        break;
+
+                    // BitSetPosition.F5.ordinal() = 41
+                    case 41:
+
+                        BitSet f5Check = BitSetUtils.copy(blacks);
+                        f5Check.and(BitSetPosition.kingInF5Surrounded);
+
+                        if (f5Check.cardinality() == 3)
+                            specialCaptures.set(king.nextSetBit(0));
+
+                        break;
+
+                }
 
             }
 
@@ -246,5 +293,257 @@ public class BitSetMove {
 
         return captured;
     }
+
+    public static int kingEscapesInOneMove(BitSetState state) {
+
+        List<BitSetAction> moves = getMovesForPawn(state.getKing().nextSetBit(0), state);
+        int escapes = 0;
+
+        // Check if one of the escape cells is in our reach
+        for (BitSetAction move : moves) {
+            if (BitSetPosition.escapeHashSet.contains(move.getTo()))
+                escapes++;
+        }
+
+        return escapes;
+
+    }
+
+    public static boolean kingHasMoreThanOneEscapePath(BitSetState state) {
+
+        List<BitSetAction> moves = state.getAvailableKingMoves();
+        int escapes = 0;
+
+        // Check if one of the escape cells is in our reach
+        for (BitSetAction move : moves) {
+
+            BitSetState newState = (BitSetState) state.clone();
+            newState.performMove(move);
+
+            List<BitSetAction> newMoves = newState.getAvailableKingMoves();
+            escapes = 0;
+            for (BitSetAction newMove : newMoves) {
+
+                if (BitSetPosition.escapeHashSet.contains(newMove.getTo()))
+                    escapes++;
+
+            }
+
+            if (escapes > 1)
+                return true;
+
+        }
+
+        return false;
+
+    }
+
+    public static int kingStatus(BitSetState state) {
+        //
+        BitSet king = BitSetUtils.copy(state.getKing());
+        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+        BitSet whites = BitSetUtils.copy(state.getWhitePawns());
+
+        //
+        int enemies, allies;
+
+        // Special capture needed
+        if (king.intersects(BitSetPosition.specialKingCells)) {
+
+            // The king is in the castle:
+            // check how many allied and enemy
+            // pawns are surrounding it.
+            if (king.equals(BitSetPosition.castle)) {
+
+                blacks.and(BitSetPosition.kingSurrounded);
+                whites.and(BitSetPosition.kingSurrounded);
+
+                return blacks.cardinality() - whites.cardinality();
+
+
+//                return blacks.cardinality();
+
+            } else {
+
+                int menace = 0;
+                int kingPos = king.nextSetBit(0);
+
+                if (blacks.get(kingPos - 1))
+                    menace++;
+
+                if (whites.get(kingPos - 1))
+                    menace--;
+
+                if (blacks.get(kingPos + 1))
+                    menace++;
+
+                if (whites.get(kingPos -1))
+                    menace--;
+
+                if (blacks.get(kingPos - 9))
+                    menace++;
+
+                if (whites.get(kingPos -9))
+                    menace--;
+
+                if (blacks.get(kingPos + 9))
+                    menace++;
+
+                if (whites.get(kingPos-9))
+                    menace--;
+
+                return menace;
+
+            }
+
+        } else {
+
+            int menace = 0;
+            int kingPos = king.nextSetBit(0);
+
+            if (kingPos % 9 != 0) {
+
+                if (whites.get(kingPos - 1))
+                    menace--;
+                else if (blacks.get(kingPos - 1) || BitSetPosition.camps.get(kingPos - 1))
+                    menace++;
+
+            }
+
+            if (kingPos % 9 != 8) {
+
+                if (whites.get(kingPos + 1))
+                    menace--;
+                else if (blacks.get(kingPos + 1) || BitSetPosition.camps.get(kingPos + 1))
+                    menace++;
+
+            }
+
+            if (kingPos > 9) {
+
+                if (whites.get(kingPos - 9))
+                    menace--;
+                else if (blacks.get(kingPos - 9) || BitSetPosition.camps.get(kingPos - 9))
+                    menace++;
+
+            }
+
+            if (kingPos < 72) {
+
+                if (whites.get(kingPos + 9))
+                    menace--;
+                else if (blacks.get(kingPos + 9) || BitSetPosition.camps.get(kingPos + 9))
+                    menace++;
+
+            }
+
+            return menace * 2;
+
+        }
+
+    }
+
+    public static int dangerToKing(BitSetState state) {
+
+        //
+        BitSet king = BitSetUtils.copy(state.getKing());
+        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+
+        // Special capture needed
+        if (king.intersects(BitSetPosition.specialKingCells)) {
+
+            if (king.equals(BitSetPosition.castle)) {
+
+                blacks.and(BitSetPosition.kingSurrounded);
+                return blacks.cardinality();
+
+            } else {
+
+                int menace = 0;
+                int kingPos = king.nextSetBit(0);
+
+                if (blacks.get(kingPos - 1))
+                    menace++;
+
+                if (blacks.get(kingPos + 1))
+                    menace++;
+
+                if (blacks.get(kingPos - 9))
+                    menace++;
+
+                if (blacks.get(kingPos + 9))
+                    menace++;
+
+                return menace;
+
+            }
+
+        } else {
+
+            int menace = 0;
+            int kingPos = king.nextSetBit(0);
+
+            if (kingPos % 9 != 0 && (blacks.get(kingPos - 1) || BitSetPosition.camps.get(kingPos - 1)))
+                menace++;
+
+            if (kingPos % 9 != 8 && (blacks.get(kingPos + 1) || BitSetPosition.camps.get(kingPos + 1)))
+                menace++;
+
+            if (kingPos > 9 && (blacks.get(kingPos - 9) || BitSetPosition.camps.get(kingPos - 9)))
+                menace++;
+
+            if (kingPos < 72 && (blacks.get(kingPos + 9) || BitSetPosition.camps.get(kingPos + 9)))
+                menace++;
+
+            return menace * 2;
+
+        }
+    }
+
+    public static int movesNeededForKingEscape(BitSetState state) {
+        return movesNeededForKingEscape_rec(state, 1);
+    }
+
+    private static int movesNeededForKingEscape_rec(BitSetState state, int step) {
+
+        // Cutoff if we've searched already enough
+        if (step > 3)
+            return 50;
+
+        if (state.getKing().intersects(BitSetPosition.escape))
+            return step;
+
+        // King moves
+        ArrayList<BitSetAction> moves = getMovesForPawn(state.getKing().nextSetBit(0), state);
+
+        // Check if one of the escape cells is in our reach
+        for (BitSetAction move : moves) {
+            if (BitSetPosition.escapeHashSet.contains(move.getTo()))
+                return step;
+        }
+
+        // Needed for performMove
+        // This way, it'll actually move the king around
+        state.setTurn(Turn.WHITE);
+
+        // Perform iteratively all the moves the king has
+        // and check how long it takes us to get to an escape cell
+        int shortestEscape = 50;
+        for (BitSetAction move : moves) {
+
+            BitSetState newState = (BitSetState) state.clone();
+            newState.performMove(move);
+
+            int movesFromThisPosition = movesNeededForKingEscape_rec(newState, step+1);
+            if (movesFromThisPosition < shortestEscape) {
+                shortestEscape = movesFromThisPosition;
+            }
+
+        }
+
+        return shortestEscape;
+
+    }
+
 
 }

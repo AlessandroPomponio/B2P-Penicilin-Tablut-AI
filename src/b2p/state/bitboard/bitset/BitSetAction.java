@@ -1,20 +1,30 @@
 package b2p.state.bitboard.bitset;
 
+
 import b2p.model.IAction;
-import b2p.model.Turn;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.Objects;
 
 public class BitSetAction implements IAction {
 
-    private String from;
-    private String to;
-    private Turn turn;
+    private final String from;
+    private final String to;
+    private final Turn turn;
+    private int value;
 
     public BitSetAction(String from, String to, Turn turn) {
         this.from = from;
         this.to = to;
         this.turn = turn;
+        this.value = -1;
+    }
+
+    public BitSetAction(String from, String to, Turn turn, int value) {
+        this.from = from;
+        this.to = to;
+        this.turn = turn;
+        this.value = value;
     }
 
     @Override
@@ -33,11 +43,22 @@ public class BitSetAction implements IAction {
     }
 
     @Override
+    public int getValue() {
+        return this.value;
+    }
+
+    @Override
+    public void setValue(int value) {
+        this.value = value;
+    }
+
+    @Override
     public String toString() {
         return "BitSetAction{" +
                 "from='" + from + '\'' +
                 ", to='" + to + '\'' +
                 ", turn=" + turn +
+                ", value=" + value +
                 '}';
     }
 
@@ -54,5 +75,10 @@ public class BitSetAction implements IAction {
     @Override
     public int hashCode() {
         return Objects.hash(from, to, turn);
+    }
+
+    @Override
+    public int compareTo(IAction o) {
+        return this.value - o.getValue();
     }
 }

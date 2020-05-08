@@ -1,7 +1,11 @@
 package b2p.model;
 
-public interface IAction {
+import it.unibo.ai.didattica.competition.tablut.domain.State;
+
+public interface IAction extends Comparable<IAction> {
     String getFrom();
     String getTo();
-    Turn getTurn();
+    State.Turn getTurn();
+    int getValue();
+    void setValue(int value);
 }

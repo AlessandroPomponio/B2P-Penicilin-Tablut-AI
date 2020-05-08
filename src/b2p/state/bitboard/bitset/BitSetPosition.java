@@ -1,6 +1,8 @@
 package b2p.state.bitboard.bitset;
 
+import java.util.Arrays;
 import java.util.BitSet;
+import java.util.HashSet;
 
 public enum BitSetPosition {
     
@@ -144,6 +146,28 @@ public enum BitSetPosition {
 
 
     };
+
+//    private static final int[] strategicBlackCells = {
+//
+//                                            C2.ordinal(),                                                       G2.ordinal(),
+//                            B3.ordinal(),                                                                                       H3.ordinal(),
+//
+//
+//
+//
+//                            B7.ordinal(),                                                                                       H7.ordinal(),
+//                                            C8.ordinal(),                                                       G8.ordinal()
+//
+//    };
+
+    private static final int[] strategicBlackCells = {
+
+                                                                D3.ordinal(),           F3.ordinal(),
+                                                C4.ordinal(),                                           G4.ordinal(),
+
+                                                C6.ordinal(),                                           G6.ordinal(),
+                                                                D7.ordinal(),           F7.ordinal()
+    };
     //endregion
 
     //region Special BitSets
@@ -157,6 +181,79 @@ public enum BitSetPosition {
     public static final BitSet kingInD5Surrounded = BitSetUtils.newFromPositions(kingInD5SurroundedCells);
     public static final BitSet kingInE6Surrounded = BitSetUtils.newFromPositions(kingInE6SurroundedCells);
     public static final BitSet kingInF5Surrounded = BitSetUtils.newFromPositions(kingInF5SurroundedCells);
+    public static final BitSet blackStrategicCells = BitSetUtils.newFromPositions(strategicBlackCells);
     //endregion
+    
+    public static final HashSet<String> escapeHashSet = new HashSet<>(Arrays.asList(
+            "B1", "C1", "G1", "H1",
+            "A2", "I2",
+            "A3", "I3",
+
+
+            "A7", "I7",
+            "A8", "I8",
+            "B9", "C9", "G9", "H9"));
+
+    public static final int TOP_LEFT_QUADRANT = 0;
+    public static final int TOP_RIGHT_QUADRANT = 1;
+    public static final int BOTTOM_LEFT_QUADRANT = 2;
+    public static final int BOTTOM_RIGHT_QUADRANT = 3;
+
+    public static int findTargetQuadrantForWhites(BitSetState state) {
+
+        int maxDifference = -1;
+        int bestQuadrant = 0;
+        int pieceDifference = 0;
+
+        // top left
+        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+        BitSet whites = BitSetUtils.copy(state.getWhitePawns());
+        blacks.and(BitSetStartingBoard.topLeftQuadrant);
+        whites.and(BitSetStartingBoard.topLeftQuadrant);
+        pieceDifference = whites.cardinality() - blacks.cardinality();
+
+        if(pieceDifference > maxDifference) {
+            maxDifference = pieceDifference;
+            bestQuadrant = TOP_LEFT_QUADRANT;
+        }
+
+        // top left
+        blacks = BitSetUtils.copy(state.getBlackPawns());
+        whites = BitSetUtils.copy(state.getWhitePawns());
+        blacks.and(BitSetStartingBoard.topRightQuadrant);
+        whites.and(BitSetStartingBoard.topRightQuadrant);
+        pieceDifference = whites.cardinality() - blacks.cardinality();
+
+        if(pieceDifference > maxDifference) {
+            maxDifference = pieceDifference;
+            bestQuadrant = TOP_RIGHT_QUADRANT;
+        }
+
+        // bottom left
+        blacks = BitSetUtils.copy(state.getBlackPawns());
+        whites = BitSetUtils.copy(state.getWhitePawns());
+        blacks.and(BitSetStartingBoard.bottomLeftQuadrant);
+        whites.and(BitSetStartingBoard.bottomRightQuadrant);
+        pieceDifference = whites.cardinality() - blacks.cardinality();
+
+        if(pieceDifference > maxDifference) {
+            maxDifference = pieceDifference;
+            bestQuadrant = BOTTOM_LEFT_QUADRANT;
+        }
+
+        // bottom right
+        blacks = BitSetUtils.copy(state.getBlackPawns());
+        whites = BitSetUtils.copy(state.getWhitePawns());
+        blacks.and(BitSetStartingBoard.bottomRightQuadrant);
+        whites.and(BitSetStartingBoard.bottomRightQuadrant);
+        pieceDifference = whites.cardinality() - blacks.cardinality();
+
+        if(pieceDifference > maxDifference) {
+            bestQuadrant = BOTTOM_RIGHT_QUADRANT;
+        }
+
+        return bestQuadrant;
+
+    }
 
 }
