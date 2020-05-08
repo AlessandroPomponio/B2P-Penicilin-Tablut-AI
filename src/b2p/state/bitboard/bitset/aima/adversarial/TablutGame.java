@@ -42,8 +42,8 @@ public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {
     @Override
     public BitSetState getResult(BitSetState bitSetState, BitSetAction bitSetAction) {
         BitSetState result = (BitSetState) bitSetState.clone();
-        // TODO: CONTROLLARE, POTREBBE ESSERE INUTILE
-        result.setTurn(bitSetAction.getTurn());
+//        // TODO: CONTROLLARE, POTREBBE ESSERE INUTILE
+//        result.setTurn(bitSetAction.getTurn());
         result.performMove(bitSetAction);
         return result;
     }

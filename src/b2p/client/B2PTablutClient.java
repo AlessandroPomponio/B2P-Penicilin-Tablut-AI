@@ -4,7 +4,7 @@ import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
 import b2p.state.bitboard.bitset.BitSetUtils;
 import b2p.state.bitboard.bitset.aima.adversarial.TablutGame;
-import b2p.state.bitboard.bitset.aima.adversarial.TablutGameIterativeDeepeningAlphaBetaSearch;
+import b2p.state.bitboard.bitset.aima.adversarial.minmax.IterativeDeepening;
 import it.unibo.ai.didattica.competition.tablut.client.TablutClient;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
@@ -61,7 +61,7 @@ public class B2PTablutClient extends TablutClient {
         System.out.println("You are player " + this.getPlayer().toString() + "!");
 //        timeout = 10;
         TablutGame gameInstance = new TablutGame(new BitSetState());
-        TablutGameIterativeDeepeningAlphaBetaSearch search = new TablutGameIterativeDeepeningAlphaBetaSearch(gameInstance, Integer.MIN_VALUE, Integer.MAX_VALUE, timeout/1000 - 1, this.getPlayer());
+        IterativeDeepening search = new IterativeDeepening(gameInstance, Integer.MIN_VALUE, Integer.MAX_VALUE, timeout/1000 - 1, this.getPlayer());
 
         int turn = 0;
 
