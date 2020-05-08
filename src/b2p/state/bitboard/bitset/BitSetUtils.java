@@ -9,8 +9,6 @@ public class BitSetUtils {
 
     public static BitSetState newFromServer(StateTablut serverState, int turnAmt) {
 
-        State.Turn turn = serverState.getTurn();
-
         int[] blackPawns = new int[serverState.getNumberOf(State.Pawn.BLACK)];
         int[] whitePawns = new int[serverState.getNumberOf(State.Pawn.WHITE)];
         int[] kingPawn = new int[serverState.getNumberOf(State.Pawn.KING)];

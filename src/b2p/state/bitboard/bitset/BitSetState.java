@@ -208,7 +208,9 @@ public class BitSetState implements IState {
             return strategicBlacks + (pieceDifference-7);
         }
 
-
+        if (turnAmt > 15) {
+            return strategicBlacks + (pieceDifference-7)+ 2*BitSetMove.dangerToKing(this);
+        }
 
         return strategicBlacks + 2*(pieceDifference-7)+ BitSetMove.dangerToKing(this);
 
@@ -303,7 +305,7 @@ public class BitSetState implements IState {
         BitSet king = BitSetUtils.copy(this.king);
         Turn turn = this.turn;
 
-        return new BitSetState(turn, blacks, whites, king);
+        return new BitSetState(turn, blacks, whites, king, turnAmt);
 
     }
     //

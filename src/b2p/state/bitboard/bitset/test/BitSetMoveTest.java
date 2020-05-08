@@ -1,7 +1,9 @@
 package b2p.state.bitboard.bitset.test;
 
-import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import b2p.state.bitboard.bitset.*;
+import b2p.state.bitboard.bitset.aima.adversarial.TablutGame;
+import b2p.state.bitboard.bitset.aima.adversarial.TablutGameIterativeDeepeningAlphaBetaSearch;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import org.junit.jupiter.api.Assertions;
 
 import java.util.BitSet;
@@ -1248,6 +1250,80 @@ public class BitSetMoveTest {
         );
 
         assertEquals(3, BitSetMove.movesNeededForKingEscape(current));
+    }
+
+    @org.junit.Test
+    public void testKingCaptureForBlacksInGame() {
+
+//        OOOOOBOOO
+//        OOOOOOOOO
+//        OOOBBBOOO
+//        OOBOOOBOO
+//        BBOWKOOOB
+//        OOBOOOBOO
+//        OOOBOBOOO
+//        OOOOBOOOO
+//        OOOOBOOOO
+
+        BitSet blacks = BitSetUtils.newFromPositions(new BitSetPosition[]{
+                BitSetPosition.F1,
+
+                BitSetPosition.D3, BitSetPosition.E3, BitSetPosition.F3,
+                BitSetPosition.C4, BitSetPosition.G4,
+                BitSetPosition.A5, BitSetPosition.B5, BitSetPosition.I5,
+                BitSetPosition.C6,BitSetPosition.G6,
+                BitSetPosition.D7, BitSetPosition.F7,
+                BitSetPosition.E8,
+                BitSetPosition.E9
+        });
+
+        BitSet whites = BitSetUtils.newFromPositions(new BitSetPosition[]{BitSetPosition.D5});
+        BitSet king = BitSetUtils.newFromPositions(new BitSetPosition[]{BitSetPosition.E5});
+
+        BitSetState state = new BitSetState(Turn.BLACK ,blacks, whites, king, 25);
+        TablutGameIterativeDeepeningAlphaBetaSearch search = new TablutGameIterativeDeepeningAlphaBetaSearch(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 10, Turn.BLACK);
+        BitSetAction bestMove = search.makeDecision(state);
+
+
+    }
+
+    @org.junit.Test
+    public void testFakeWinningSituation() {
+
+//        OOOBBOOOO
+//        OOOOBOOOO
+//        OOOWOOWOO
+//        OOOBKWBOO
+//        BOBBTBOOB
+//        BOWOOWOOB
+//        OOWOOOOOO
+//        OOOOBOOOO
+//        OOOOBBOOO
+
+        BitSet blacks = BitSetUtils.newFromPositions(new BitSetPosition[]{
+                BitSetPosition.D1, BitSetPosition.E1,
+                BitSetPosition.E2,
+
+                BitSetPosition.D4, BitSetPosition.G4,
+                BitSetPosition.A5, BitSetPosition.C5, BitSetPosition.D5, BitSetPosition.F5, BitSetPosition.I5,
+                BitSetPosition.A6, BitSetPosition.I6,
+
+                BitSetPosition.E8,
+                BitSetPosition.E9, BitSetPosition.F9,
+        });
+
+        BitSet whites = BitSetUtils.newFromPositions(new BitSetPosition[] {
+                BitSetPosition.D3, BitSetPosition.G3,
+                BitSetPosition.F4,
+                BitSetPosition.C6, BitSetPosition.F6,
+                BitSetPosition.C7,
+        });
+
+        BitSet king = BitSetUtils.newFromPositions(new BitSetPosition[]{BitSetPosition.E4});
+
+        BitSetState state = new BitSetState(Turn.BLACK ,blacks, whites, king, 14);
+        TablutGameIterativeDeepeningAlphaBetaSearch search = new TablutGameIterativeDeepeningAlphaBetaSearch(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 0, Turn.BLACK);
+        BitSetAction bestMove = search.makeDecision(state);
     }
 
 }

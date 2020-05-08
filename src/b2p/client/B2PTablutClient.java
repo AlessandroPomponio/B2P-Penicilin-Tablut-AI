@@ -60,8 +60,8 @@ public class B2PTablutClient extends TablutClient {
         //Problem problem;
         System.out.println("You are player " + this.getPlayer().toString() + "!");
 //        timeout = 10;
-        TablutGame gameInstance = new TablutGame();
-        TablutGameIterativeDeepeningAlphaBetaSearch search = new TablutGameIterativeDeepeningAlphaBetaSearch(gameInstance, Integer.MIN_VALUE, Integer.MAX_VALUE, timeout/1000 - 1);
+        TablutGame gameInstance = new TablutGame(new BitSetState());
+        TablutGameIterativeDeepeningAlphaBetaSearch search = new TablutGameIterativeDeepeningAlphaBetaSearch(gameInstance, Integer.MIN_VALUE, Integer.MAX_VALUE, timeout/1000 - 1, this.getPlayer());
 
         int turn = 0;
 
@@ -84,6 +84,7 @@ public class B2PTablutClient extends TablutClient {
 
             // Traduco lo stato del server in uno stato bitboard
             state = BitSetUtils.newFromServer((StateTablut) serverState, turn);
+            search.setGameState(state);
 //          tieChecker.addState(bitboardState);
 /*
             problem = new Problem(

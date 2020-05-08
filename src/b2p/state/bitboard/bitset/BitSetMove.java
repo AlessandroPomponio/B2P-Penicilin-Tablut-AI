@@ -122,9 +122,11 @@ public class BitSetMove {
         // Check if the king needs a special capture
         if (king.intersects(BitSetPosition.specialKingCells)) {
 
+            int kingPosition = king.nextSetBit(0);
+
             // If the king is in the castle, he must be
             // surrounded by 4 black soldiers
-            if (king.equals(BitSetPosition.castle)) {
+            if (kingPosition == BitSetPosition.E5.ordinal()) {
 
                 BitSet tempBlacks = BitSetUtils.copy(blacks);
                 tempBlacks.and(BitSetPosition.kingSurrounded);
@@ -133,22 +135,53 @@ public class BitSetMove {
 
             } else  {
 
-                // Perform checks
-                BitSet e4Check = BitSetUtils.copy(blacks);
-                BitSet d5Check = BitSetUtils.copy(blacks);
-                BitSet e6Check = BitSetUtils.copy(blacks);
-                BitSet f5Check = BitSetUtils.copy(blacks);
+                switch (kingPosition) {
 
-                e4Check.and(BitSetPosition.kingInE4Surrounded);
-                d5Check.and(BitSetPosition.kingInD5Surrounded);
-                e6Check.and(BitSetPosition.kingInE6Surrounded);
-                f5Check.and(BitSetPosition.kingInF5Surrounded);
+                    // BitSetPosition.E4.ordinal() = 31
+                    case 31:
 
-                if (e4Check.cardinality() == 3 ||
-                        d5Check.cardinality() == 3 ||
-                        e6Check.cardinality() == 3 ||
-                        f5Check.cardinality() == 3)
-                    specialCaptures.set(king.nextSetBit(0));
+                        BitSet e4Check = BitSetUtils.copy(blacks);
+                        e4Check.and(BitSetPosition.kingInE4Surrounded);
+
+                        if (e4Check.cardinality() == 3)
+                            specialCaptures.set(king.nextSetBit(0));
+
+                        break;
+
+                    // BitSetPosition.D5.ordinal() = 39
+                    case 39:
+
+                        BitSet d5Check = BitSetUtils.copy(blacks);
+                        d5Check.and(BitSetPosition.kingInD5Surrounded);
+
+                        if (d5Check.cardinality() == 3)
+                            specialCaptures.set(king.nextSetBit(0));
+
+                        break;
+
+                    // BitSetPosition.E6.ordinal() = 49
+                    case 49:
+
+                        BitSet e6Check = BitSetUtils.copy(blacks);
+                        e6Check.and(BitSetPosition.kingInE6Surrounded);
+
+                        if (e6Check.cardinality() == 3)
+                            specialCaptures.set(king.nextSetBit(0));
+
+                        break;
+
+                    // BitSetPosition.F5.ordinal() = 41
+                    case 41:
+
+                        BitSet f5Check = BitSetUtils.copy(blacks);
+                        f5Check.and(BitSetPosition.kingInF5Surrounded);
+
+                        if (f5Check.cardinality() == 3)
+                            specialCaptures.set(king.nextSetBit(0));
+
+                        break;
+
+                }
 
             }
 

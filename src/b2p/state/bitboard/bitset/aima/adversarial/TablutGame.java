@@ -9,9 +9,19 @@ import java.util.List;
 
 public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {
 
+    private BitSetState state;
+
+    public TablutGame(BitSetState state) {
+        this.state = state;
+    }
+
+    public void setState(BitSetState state) {
+        this.state = state;
+    }
+
     @Override
     public BitSetState getInitialState() {
-        return new BitSetState();
+        return this.state;
     }
 
     @Override

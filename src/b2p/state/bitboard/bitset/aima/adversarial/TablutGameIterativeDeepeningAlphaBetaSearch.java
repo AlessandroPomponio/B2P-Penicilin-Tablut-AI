@@ -17,6 +17,8 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
 
     private int currDepthLimit;
     private Metrics metrics;
+
+    private Turn ourPlayer;
 /*
  *  TODO:
  *   - finire di scrivere le funzioni finali di questa classe
@@ -53,11 +55,16 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
      *                situations with a safe winner.
      * @param time    Maximum Duration of the search algorithm
      */
-    public TablutGameIterativeDeepeningAlphaBetaSearch(TablutGame game, int utilMin, int utilMax, int time) {
+    public TablutGameIterativeDeepeningAlphaBetaSearch(TablutGame game, int utilMin, int utilMax, int time, Turn ourPlayer) {
         this.game = game;
         this.utilMin = utilMin;
         this.utilMax = utilMax;
         this.timer = new TablutGameIterativeDeepeningAlphaBetaSearch.Timer(time);
+        this.ourPlayer = ourPlayer;
+    }
+
+    public void setGameState(BitSetState state) {
+        game.setState(state);
     }
 
     /**
@@ -111,17 +118,18 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
                 if (heuristicsResults.size() > 0) {
                 availableActions = heuristicsResults.actions;
 
-/*              // Codice potenzialmente inutile per il nostro gioco
+              // Codice potenzialmente inutile per il nostro gioco
                 // If we have a safe winning value, we can stop the search
-                if (hasSafeWinner(heuristicsResults.utilValues.get(0))) {
-                    break;
-                } else if (heuristicsResults.size() > 1) {
-                    if (isSignificantlyBetter(heuristicsResults.utilValues.get(0), heuristicsResults.utilValues.get(1))) {
-                        break;
-                    }
+//                if (hasSafeWinner(heuristicsResults.utilValues.get(0))) {
+//                    break;
+//                }
+//                else if (heuristicsResults.size() > 1) {
+//                    if (isSignificantlyBetter(heuristicsResults.utilValues.get(0), heuristicsResults.utilValues.get(1))) {
+//                        break;
+//                    }
+//
+//                }
 
-                }
-*/
 
                 System.out.println("MAXVALUE: " + Collections.max(heuristicsResults.utilValues));
             }
@@ -209,22 +217,22 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
      * situations where a clear best action exists. This implementation returns
      * always false.
      */
-/*
-    protected boolean isSignificantlyBetter(double newUtility, double utility) {
-        return false;
+
+    protected boolean isSignificantlyBetter(int newUtility, int utility) {
+        return newUtility/utility > 10;
     }
-*/
+
     /**
      * Primitive operation which is used to stop iterative deepening search in
      * situations where a safe winner has been identified. This implementation
      * returns true if the given value (for the currently preferred action
      * result) is the highest or lowest utility value possible.
      */
-/*
-    protected boolean hasSafeWinner(double resultUtility) {
+
+    protected boolean hasSafeWinner(int resultUtility) {
         return resultUtility <= utilMin || resultUtility >= utilMax;
     }
-*/
+
     /**
      * Primitive operation, which estimates the value for (not necessarily
      * terminal) states. This implementation returns the utility value for
@@ -237,14 +245,20 @@ public class TablutGameIterativeDeepeningAlphaBetaSearch implements IAdversarial
             return game.getUtility(state, player);
         }
 
-        /*
-         * Quando scatta il timeout, il nodo che stiamo analizzando non deve essere considerato nella scelta
-         */
-        if ((depth & 1) == 0)                // se è pari, equivalente a ((depth % 2) == 0), profondità per massimizzante
+        if (player == ourPlayer) {
             return Integer.MIN_VALUE;
-        else                                // se è dispari, equivalente a ((depth % 2) == 1, profondità per minimizzante
-            return Integer.MAX_VALUE;
-        // faceva (utilMin + utilMax) / 2 = -0.5 usando dei double
+        }
+
+        return Integer.MAX_VALUE;
+
+//        /*
+//         * Quando scatta il timeout, il nodo che stiamo analizzando non deve essere considerato nella scelta
+//         */
+//        if ((depth & 1) == 0)                // se è pari, equivalente a ((depth % 2) == 0), profondità per massimizzante
+//            return Integer.MIN_VALUE;
+//        else                                // se è dispari, equivalente a ((depth % 2) == 1, profondità per minimizzante
+//            return Integer.MAX_VALUE;
+//        // faceva (utilMin + utilMax) / 2 = -0.5 usando dei double
 
     }
 
