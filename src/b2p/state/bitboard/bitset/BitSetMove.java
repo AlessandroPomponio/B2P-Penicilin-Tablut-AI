@@ -30,7 +30,7 @@ public class BitSetMove {
         } else {
 
             // Blacks can't go back on the camps
-            if (!BitSetUtils.newFromPositions(new int[]{pawnPosition}).intersects(BitSetPosition.camps)){
+            if (!BitSetPosition.camps.get(pawnPosition)) {
                 forbiddenCells.or(BitSetPosition.camps);
             }
 
@@ -448,6 +448,50 @@ public class BitSetMove {
 
         }
 
+    }
+
+    public static int whitePawnsAdjacentKing(BitSetState state) {
+
+        //
+        BitSet king = BitSetUtils.copy(state.getKing());
+        BitSet whites = BitSetUtils.copy(state.getWhitePawns());
+        int kingPosition = king.nextSetBit(0);
+        int kingColumn = kingPosition % 9;
+        int result = 0;
+
+        // Up
+        if (kingPosition > 9) {
+            if (whites.get(kingPosition - 9)) {
+                result++;
+            }
+        }
+
+        // Down
+        if (kingPosition < 72) {
+            if(whites.get(kingPosition + 9)) {
+                result++;
+            }
+        }
+
+        // Left
+        if(kingColumn > 0) {
+            if(whites.get(kingPosition - 1)) {
+                result++;
+            }
+        }
+
+        // Right
+        if(kingColumn < 8) {
+            if (whites.get(kingPosition + 1)) {
+                result++;
+            }
+        }
+
+        if (result >= 1  && result <= 3) {
+            return 1;
+        }
+
+        return 0;
     }
 
     public static int dangerToKing(BitSetState state) {

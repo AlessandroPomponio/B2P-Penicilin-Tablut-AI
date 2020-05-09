@@ -239,10 +239,11 @@ public class BitSetState implements IState {
         // i turni sono x2
         if (turnAmt > 10) {
             // whitePawns.cardinality()
-            return pieceDifference - 2 * BitSetMove.dangerToKing(this) + (BitSetMove.kingHasMoreThanOneEscapePath(this) ? 15 : 0);
+            // freeColumnsOrRows()
+            return 15 * pieceDifference - 7 * BitSetMove.dangerToKing(this) + 5 * BitSetMove.whitePawnsAdjacentKing(this); // + 3 * (BitSetMove.kingHasMoreThanOneEscapePath(this) ? 15 : 0);
         }
         // (5 * whitePawns.cardinality() - 3 * blackPawns.cardinality())
-        return pieceDifference - BitSetMove.dangerToKing(this) + BitSetMove.whiteCellInStrategicPosition(this);
+        return 5 * whitePawns.cardinality() - 3 * blackPawns.cardinality() - BitSetMove.dangerToKing(this); //  + BitSetMove.whiteCellInStrategicPosition(this)
 
     }
 
