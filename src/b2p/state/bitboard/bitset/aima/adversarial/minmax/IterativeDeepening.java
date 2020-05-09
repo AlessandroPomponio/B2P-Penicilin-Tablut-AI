@@ -81,7 +81,7 @@ public class IterativeDeepening implements IAdversarialSearch {
         this.ourPlayer = ourPlayer;
 
         //
-        executor = Executors.newCachedThreadPool();
+        executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     }
 
@@ -161,29 +161,29 @@ public class IterativeDeepening implements IAdversarialSearch {
 
             }
 
-            for (int i = 0; i < availableActions.size(); i++) {
-
-//                System.out.print("Future : " + i + " is done? " + futureResults.get(i).isDone());
-                if (!futureResults.get(i).isDone()) {
-                    futureResults.get(i).cancel(true);
-                    continue;
-                }
-//                System.out.println();
-
-                try {
-
-                    BitSetAction action = availableActions.get(i);
-                    int heuristicValue = futureResults.get(i).get();
-
-                    action.setValue(heuristicValue);
-                    heuristicsResults.add(action, heuristicValue);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                }
-            }
+//            for (int i = 0; i < availableActions.size(); i++) {
+//
+////                System.out.print("Future : " + i + " is done? " + futureResults.get(i).isDone());
+//                if (!futureResults.get(i).isDone()) {
+//                    futureResults.get(i).cancel(true);
+//                    continue;
+//                }
+////                System.out.println();
+//
+//                try {
+//
+//                    BitSetAction action = availableActions.get(i);
+//                    int heuristicValue = futureResults.get(i).get();
+//
+//                    action.setValue(heuristicValue);
+//                    heuristicsResults.add(action, heuristicValue);
+//
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                } catch (ExecutionException e) {
+//                    e.printStackTrace();
+//                }
+//            }
 
 
             // TODO: CONTROLLARE
