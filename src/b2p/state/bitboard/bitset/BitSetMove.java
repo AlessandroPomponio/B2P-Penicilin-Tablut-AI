@@ -338,6 +338,76 @@ public class BitSetMove {
 
     }
 
+    public static int positionWeights(BitSetState state) {
+
+        int sumOfWeights = 0;
+        BitSet whiteMask, blackMask;
+
+        whiteMask = BitSetUtils.copy(state.getWhitePawns());
+        blackMask = BitSetUtils.copy(state.getBlackPawns());
+
+        for (int i = whiteMask.nextSetBit(0); i >= 0; i = whiteMask.nextSetBit(i + 1)) {
+
+            sumOfWeights += BitSetPosition.whitePawnCellWeight[i];
+        }
+        for (int i = blackMask.nextSetBit(0); i >= 0; i = blackMask.nextSetBit(i + 1)) {
+
+            sumOfWeights -= BitSetPosition.blackPawnCellWeight[i];
+        }
+
+        return sumOfWeights;
+
+    }
+
+//    public static int quadrant_pseudocode(BitSetState state) {
+//
+//        /*
+//         * Manca la scacchiera del re e manca il risultato che comunichi il quadrante migliore
+//         */
+//
+//
+//        BitSet quadrantMask;
+//        int index, result, tempIndex = 0;
+//        int[] sumOfWeights = new int[4];
+//
+//        BitSet whiteMask, blackMask;
+//
+//        for(int quadrant = 0; quadrant < 4; quadrant++) {
+//
+//            sumOfWeights[quadrant] = 0;
+//
+//            whiteMask = BitSetUtils.copy(state.getWhitePawns());
+//            blackMask = BitSetUtils.copy(state.getBlackPawns());
+//
+//            quadrantMask = BitSetStartingBoard.quadrants[quadrant];
+//            whiteMask.and(quadrantMask);
+//            blackMask.and(quadrantMask);
+//
+//            for (int i = whiteMask.nextSetBit(0); i >= 0; i = whiteMask.nextSetBit(i + 1)) {
+//
+//                sumOfWeights[quadrant] += whitePawnCellWeight[i];
+//            }
+//            for (int i = blackMask.nextSetBit(0); i >= 0; i = blackMask.nextSetBit(i + 1)) {
+//
+//                sumOfWeights[quadrant] -= blackPawnCellWeightForWhite[i];
+//            }
+//        }
+//
+//        result = sumOfWeights[0];
+//        tempIndex = 0;
+//        for(index = 1; index < 4; index++)
+//        {
+//
+//            if (sumOfWeights[index] > result) {
+//                result = sumOfWeights[index];
+//                tempIndex = index;
+//            }
+//        }
+//
+//        return tempIndex;
+//
+//    }
+
     public static int whiteCellInStrategicPosition(BitSetState state) {
         //
         BitSet result = BitSetUtils.copy(state.getWhitePawns());

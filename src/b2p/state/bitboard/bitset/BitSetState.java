@@ -235,7 +235,11 @@ public class BitSetState implements IState {
         int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality() + 7;
         //
         int GAME_PROG = 100;
-        return (GAME_PROG - turnAmt) * 61 * pieceDifference - (turnAmt) * 31 * BitSetMove.dangerToKing(this) + (GAME_PROG - turnAmt) * 23 * BitSetMove.whitePawnsAdjacentKing(this);
+//        return (GAME_PROG - turnAmt) * 61 * pieceDifference - (turnAmt) * 31 * BitSetMove.dangerToKing(this) + (GAME_PROG - turnAmt)
+//                * 23 * BitSetMove.whitePawnsAdjacentKing(this);
+
+        return 61 * pieceDifference - 31 * BitSetMove.dangerToKing(this) +
+                17 * BitSetMove.whitePawnsAdjacentKing(this) + 5 * BitSetMove.positionWeights(this);
 
 ////      int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
 //        // i turni sono x2
