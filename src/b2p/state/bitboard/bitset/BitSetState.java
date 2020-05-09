@@ -234,16 +234,17 @@ public class BitSetState implements IState {
         //
         int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality() + 7;
         //
+        return 61 * pieceDifference - 31 * BitSetMove.dangerToKing(this) + 23 * BitSetMove.whitePawnsAdjacentKing(this);
 
-//      int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
-        // i turni sono x2
-        if (turnAmt > 10) {
-            // whitePawns.cardinality()
-            // freeColumnsOrRows()
-            return 15 * pieceDifference - 7 * BitSetMove.dangerToKing(this) + 5 * BitSetMove.whitePawnsAdjacentKing(this); // + 3 * (BitSetMove.kingHasMoreThanOneEscapePath(this) ? 15 : 0);
-        }
-        // (5 * whitePawns.cardinality() - 3 * blackPawns.cardinality())
-        return 5 * whitePawns.cardinality() - 3 * blackPawns.cardinality() - BitSetMove.dangerToKing(this); //  + BitSetMove.whiteCellInStrategicPosition(this)
+////      int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
+//        // i turni sono x2
+//        if (turnAmt > 10) {
+//            // whitePawns.cardinality()
+//            // freeColumnsOrRows()
+//            return 15 * pieceDifference - 7 * BitSetMove.dangerToKing(this) + 5 * BitSetMove.whitePawnsAdjacentKing(this); // + 3 * (BitSetMove.kingHasMoreThanOneEscapePath(this) ? 15 : 0);
+//        }
+//        // (5 * whitePawns.cardinality() - 3 * blackPawns.cardinality())
+//        return 5 * whitePawns.cardinality() - 3 * blackPawns.cardinality() - BitSetMove.dangerToKing(this); //  + BitSetMove.whiteCellInStrategicPosition(this)
 
     }
 
