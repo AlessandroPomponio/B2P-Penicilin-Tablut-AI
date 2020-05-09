@@ -16,7 +16,7 @@ public class BitSetMove {
         BitSetPosition from = BitSetPosition.values()[pawnPosition];
 
         //
-        BitSet forbiddenCells = state.getBoard();
+        BitSet forbiddenCells = BitSetUtils.copy(state.getBoard());
 
         // The castle cell is forbidden to step on
         forbiddenCells.set(BitSetPosition.E5.ordinal());
