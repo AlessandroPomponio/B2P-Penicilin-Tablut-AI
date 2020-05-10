@@ -178,7 +178,8 @@ public class BitSetState implements IState {
         if (player == Turn.BLACK)
             return blackHeuristic();
 
-        return whiteHeuristic();
+        return -blackHeuristic();
+//        return whiteHeuristic();
 
     }
 
