@@ -1287,6 +1287,47 @@ public class BitSetMoveTest {
 
     }
 
+    /*
+    OOOOBOOWO
+OOOOOOOOW
+OOOBOBOOW
+OOBOBOBOO
+OOOBKBOOB
+OOBOOOBOO
+OOOBOBOOO
+OOOOBOOOO
+OWWOBOOOO
+     */
+
+
+    @org.junit.Test
+    public void testKingInThroneCapture() {
+
+//        OOOOBOOWO
+//        OOOOOOOOW
+//        OOOBOBOOW
+//        OOBOBOBOO
+//        OOOBKBOOB
+//        OOBOOOBOO
+//        OOOBOBOOO
+//        OOOOBOOOO
+//        OWWOBOOOO
+
+        BitSetState state = BitSetUtils.newFromServerString(
+                "OOOOBOOWO" +
+                "OOOOOOOOW" +
+                "OOOBOBOOW" +
+                "OOBOBOBOO" +
+                "OOOBKBOOB" +
+                "OOBOOOBOO" +
+                "OOOBOBOOO" +
+                "OOOOBOOOO" +
+                "OWWOBOOOO", Turn.BLACK, 31);
+
+        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 15, Turn.BLACK);
+        BitSetAction bestMove = search.makeDecision(state);
+    }
+
     @org.junit.Test
     public void testFakeWinningSituation() {
 

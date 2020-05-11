@@ -340,22 +340,41 @@ public class BitSetMove {
 
     public static int positionWeights(BitSetState state) {
 
-        int sumOfWeights = 0;
-        BitSet whiteMask, blackMask;
+        final int KING_MULTIPLIER = 1;
+            final int WHITE_PAWNS_MULTIPLIER = 1;
+            final int BLACK_PAWNS_MULTIPLIER = 1;
 
-        whiteMask = BitSetUtils.copy(state.getWhitePawns());
-        blackMask = BitSetUtils.copy(state.getBlackPawns());
+//            int quadrant;
+            int sumOfWeights = 0;
+            BitSet whiteMask = BitSetUtils.copy(state.getWhitePawns());
+            BitSet blackMask = BitSetUtils.copy(state.getBlackPawns());
+//            BitSet kingMask = BitSetUtils.copy(state.getKing());
+            BitSet mask;
 
-        for (int i = whiteMask.nextSetBit(0); i >= 0; i = whiteMask.nextSetBit(i + 1)) {
+//            for (quadrant = 0; quadrant < 4; quadrant++) {
+//
+//                mask = BitSetUtils.copy(BitSetStartingBoard.quadrants[quadrant]);
+//                mask.and(kingMask);
+//
+//                if (mask.nextSetBit(0) != -1) {
+//
+//                    mask = BitSetUtils.copy(BitSetStartingBoard.quadrants[quadrant]);
+//                    break;
+//                }
+//            }
 
-            sumOfWeights += BitSetPosition.whitePawnCellWeight[i];
-        }
-        for (int i = blackMask.nextSetBit(0); i >= 0; i = blackMask.nextSetBit(i + 1)) {
+//        sumOfWeights += KING_MULTIPLIER * BitSetPosition.kingCellWeight[kingMask.nextSetBit(0)];
 
-            sumOfWeights -= BitSetPosition.blackPawnCellWeight[i];
-        }
+            for (int i = whiteMask.nextSetBit(0); i >= 0; i = whiteMask.nextSetBit(i + 1)) {
 
-        return sumOfWeights;
+                sumOfWeights += WHITE_PAWNS_MULTIPLIER * (BitSetPosition.whitePawnCellWeight[i] /*+ BitSetPosition.kingBuff[quadrant][i]*/);
+            }
+
+            for (int i = blackMask.nextSetBit(0); i >= 0; i = blackMask.nextSetBit(i + 1)) {
+
+                sumOfWeights -= BLACK_PAWNS_MULTIPLIER * (BitSetPosition.blackPawnCellWeight[i] /*+ BitSetPosition.kingBuff[quadrant][i]*/);
+            }
+            return sumOfWeights;
 
     }
 
@@ -520,6 +539,61 @@ public class BitSetMove {
 
     }
 
+    public static int kingMoves(BitSetState state) {
+        return state.getAvailableKingMoves().size();
+    }
+
+    public static int blackPawnsOutOfCamps(BitSetState state) {
+
+        //
+        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+        blacks.and(BitSetPosition.camps);
+
+        return 16 - blacks.cardinality();
+    }
+
+    public static int diagonalBlackCouples(BitSetState state) {
+
+        //
+        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+        int iColumn, iRow;
+        int result = 0;
+
+        for (int i = blacks.nextSetBit(0); i >= 0; i = blacks.nextSetBit(i + 1)) {
+            iColumn = i % 9;
+            iRow = i / 9;
+
+            // Up Left
+            if (iColumn > 0 && iRow > 0) {
+                if(blacks.get(i - 9 - 1)) {
+                    result++;
+                }
+            }
+
+            // Up Right
+            if (iColumn < 8 && iRow > 0) {
+                if(blacks.get(i - 9 + 1)) {
+                    result++;
+                }
+            }
+
+            // Down Left
+            if (iColumn > 0 && iRow < 8) {
+                if(blacks.get(i + 9 - 1)) {
+                    result++;
+                }
+            }
+
+            // Down Right
+            if (iColumn < 8 && iRow < 8) {
+                if(blacks.get(i + 9 + 1))
+                    result++;
+            }
+        }
+
+        return result >> 1;
+    }
+
     public static int whitePawnsAdjacentKing(BitSetState state) {
 
         //
@@ -557,9 +631,11 @@ public class BitSetMove {
             }
         }
 
-        if (result >= 1  && result <= 3) {
+        if(result == 1 || result == 3)
             return 1;
-        }
+
+        if(result == 2)
+            return result;
 
         return 0;
     }

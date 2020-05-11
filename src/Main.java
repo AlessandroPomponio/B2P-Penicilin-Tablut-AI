@@ -4,8 +4,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String player = "white";
-        int timeout = 60000;
+        String player = "black";
+        int timeout = 30000;
 
         if (args.length > 0) {
             player = args[0];
