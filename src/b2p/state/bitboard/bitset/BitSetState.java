@@ -176,9 +176,9 @@ public class BitSetState implements IState {
     public int getHeuristicValueForPlayer(Turn player) {
 
         if (player == Turn.BLACK)
-            return -whiteHeuristic();
+            return blackHeuristic();
 
-        return whiteHeuristic();
+        return -blackHeuristic();
 //        return whiteHeuristic();
 
     }
@@ -205,13 +205,13 @@ public class BitSetState implements IState {
         //
 //        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
         // I TURNI SONO x2
-        if (turnAmt < 6) {
-            return strategicBlacks + (pieceDifference-7);
-        }
+//        if (turnAmt < 6) {
+//            return strategicBlacks + (pieceDifference-7);
+//        }
 
-        if (turnAmt > 15) {
-            return strategicBlacks + (pieceDifference-7)+ 2*BitSetMove.dangerToKing(this);
-        }
+//        if (turnAmt > 15) {
+//            return strategicBlacks + (pieceDifference-7)+ 2*BitSetMove.dangerToKing(this);
+//        }
 
         return strategicBlacks + 2*(pieceDifference-7)+ BitSetMove.dangerToKing(this);
 
