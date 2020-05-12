@@ -1,17 +1,15 @@
-package b2p.state.bitboard.bitset.aima.adversarial.minmax;
+package b2p.search.aima.minmax;
 
 import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
-import b2p.state.bitboard.bitset.aima.adversarial.ActionStore;
-import b2p.state.bitboard.bitset.aima.adversarial.IAdversarialSearch;
-import b2p.state.bitboard.bitset.aima.adversarial.Metrics;
-import b2p.state.bitboard.bitset.aima.adversarial.TablutGame;
+import b2p.search.aima.ActionStore;
+import b2p.search.aima.IAdversarialSearch;
+import b2p.search.aima.Metrics;
+import b2p.search.aima.TablutGame;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

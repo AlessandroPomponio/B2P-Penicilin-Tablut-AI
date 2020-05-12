@@ -1,10 +1,7 @@
-package b2p.state.bitboard.bitset.aima.adversarial;
-
-import b2p.state.bitboard.bitset.BitSetAction;
+package b2p.search.aima;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PriorityQueue;
 
 public class ActionStore<ACTION> {
 

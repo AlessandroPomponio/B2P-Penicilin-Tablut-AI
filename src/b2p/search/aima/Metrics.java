@@ -1,4 +1,4 @@
-package b2p.state.bitboard.bitset.aima.adversarial;
+package b2p.search.aima;
 
 public class Metrics {
     private int nodeExpanded;

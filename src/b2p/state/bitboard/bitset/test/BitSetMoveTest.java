@@ -1,8 +1,8 @@
 package b2p.state.bitboard.bitset.test;
 
 import b2p.state.bitboard.bitset.*;
-import b2p.state.bitboard.bitset.aima.adversarial.TablutGame;
-import b2p.state.bitboard.bitset.aima.adversarial.minmax.IterativeDeepening;
+import b2p.search.aima.TablutGame;
+import b2p.search.aima.minmax.IterativeDeepening;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import org.junit.jupiter.api.Assertions;
 

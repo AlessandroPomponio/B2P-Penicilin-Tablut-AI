@@ -1,10 +1,9 @@
-package b2p.state.bitboard.bitset.aima.adversarial;
+package b2p.search.aima;
 
 import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
-import java.util.BitSet;
 import java.util.List;
 
 public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {

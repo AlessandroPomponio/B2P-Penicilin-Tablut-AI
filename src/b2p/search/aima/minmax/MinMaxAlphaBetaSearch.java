@@ -1,8 +1,8 @@
-package b2p.state.bitboard.bitset.aima.adversarial.minmax;
+package b2p.search.aima.minmax;
 
 import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
-import b2p.state.bitboard.bitset.aima.adversarial.TablutGame;
+import b2p.search.aima.TablutGame;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 
 import java.util.concurrent.*;
