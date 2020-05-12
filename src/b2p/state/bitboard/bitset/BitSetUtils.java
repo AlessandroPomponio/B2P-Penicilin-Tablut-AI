@@ -60,6 +60,37 @@ public class BitSetUtils {
 
     }
 
+    public static BitSetState newFromServerString(String serverString, State.Turn turn, int turnAmt) {
+
+        BitSet blacks = new BitSet(BitSetState.boardDimension);
+        BitSet whites = new BitSet(BitSetState.boardDimension);
+        BitSet king = new BitSet(BitSetState.boardDimension);
+
+        serverString = serverString.replaceAll("\n", "");
+        for (int i = 0; i < serverString.length(); i++) {
+
+            char curr = serverString.charAt(i);
+
+            switch (serverString.charAt(i)) {
+                case 'B':
+                    blacks.set(i);
+                    break;
+
+                case 'W':
+                    whites.set(i);
+                    break;
+
+                case 'K':
+                    king.set(i);
+                    break;
+            }
+
+        }
+
+        return new BitSetState(turn, blacks, whites, king, turnAmt);
+
+    }
+
     public static String toByteString(BitSet bitSet) {
 
         StringBuilder builder = new StringBuilder();

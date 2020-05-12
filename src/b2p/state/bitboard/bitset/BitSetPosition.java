@@ -168,7 +168,102 @@ public enum BitSetPosition {
                                                 C6.ordinal(),                                           G6.ordinal(),
                                                                 D7.ordinal(),           F7.ordinal()
     };
+
+    //TODO: formattare
+    private static final int[] earlyGameStrategicWhiteCells = {
+
+            C3.ordinal(), G3.ordinal(), C7.ordinal(), G7.ordinal(),
+
+    };
+
     //endregion
+
+    //osarracino
+//    public static final int[] kingCellWeight = {
+//            5,  3,  3,  0,  0,  0, 10, 10,  0,
+//            3,  2,  2,  1,  0,  1,  2,  3, 10,
+//            3,  2,  2,  2,  2,  2,  2,  2, 10,
+//            0,  5,  2,  0,  0,  0,  2,  1,  0,
+//            0,  0,  5,  5, -9,  0,  2,  0,  0,
+//            0,  1,  2,  0,  0,  0,  2,  1,  0,
+//            10,  3,  2,  2,  2,  2,  2,  3, 10,
+//            10,  1,  2,  1,  0,  1,  2,  1, 10,
+//            0, 10, 10,  0,  0,  0, 10, 10,  0,
+//    };
+
+    public static final int[] whitePawnCellWeight = {
+            5,  5,  5,  0,  0,  0,  5,  5,  5,
+            5,  1,  1,  4,  0,  4,  1,  1,  5,
+            5,  1,  2,  1,  3,  1,  2,  1,  5,
+            0,  4,  1,  1,  3,  1,  1,  5,  0,
+            0,  0,  3,  3,  0,  3,  3,  0,  0,
+            0,  4,  1,  1,  3,  1,  1,  5,  0,
+            5,  1,  2,  1,  3,  1,  2,  1,  3,
+            5,  1,  1,  4,  0,  4,  1,  1,  5,
+            5,  5,  5,  0,  0,  0,  5,  5,  5,
+    };
+    // TODO: aggiornare valori (positivi)
+    public static final int[] blackPawnCellWeight = {
+            1,  3,  2,  3,  3,  3,  2,  3,  1,
+            3,  2,  5,  1,  3,  1,  5,  2,  3,
+            2,  5,  1,  5,  2,  5,  1,  5,  2,
+            3,  1,  5,  1,  2,  1,  5,  1,  3,
+            3,  3,  2,  2,  0,  2,  2,  3,  3,
+            3,  1,  5,  1,  2,  1,  5,  1,  3,
+            2,  5,  1,  5,  2,  5,  1,  5,  2,
+            3,  2,  5,  1,  3,  1,  5,  2,  3,
+            1,  3,  2,  3,  3,  3,  2,  3,  1,
+    };
+
+    public static final int[] kingTopLeftWeight = {
+            1,  1,  1,  1,  1,  0,  0,  0,  0,
+            1,  1,  1,  1,  1,  0,  0,  0,  0,
+            1,  1,  1,  1,  1,  0,  0,  0,  0,
+            1,  1,  1,  1,  1,  0,  0,  0,  0,
+            1,  1,  1,  1,  0, -1, -1, -1, -1,
+            0,  0,  0,  0, -1, -1, -1, -1, -1,
+            0,  0,  0,  0, -1, -1, -1, -1, -1,
+            0,  0,  0,  0, -1, -1, -1, -1, -1,
+            0,  0,  0,  0, -1, -1, -1, -1, -1,
+    };
+
+    public static final int[] kingTopRightWeight = {
+             0,  0,  0,  0,  1,  1,  1,  1,  1,
+             0,  0,  0,  0,  1,  1,  1,  1,  1,
+             0,  0,  0,  0,  1,  1,  1,  1,  1,
+             0,  0,  0,  0,  1,  1,  1,  1,  1,
+            -1, -1, -1, -1,  0,  1,  1,  1,  1,
+            -1, -1, -1, -1, -1,  0,  0,  0,  0,
+            -1, -1, -1, -1, -1,  0,  0,  0,  0,
+            -1, -1, -1, -1, -1,  0,  0,  0,  0,
+            -1, -1, -1, -1, -1,  0,  0,  0,  0,
+    };
+
+    public static final int[] kingBottomLeftWeight = {
+            0,  0,  0,  0, -1, -1, -1, -1, -1,
+            0,  0,  0,  0, -1, -1, -1, -1, -1,
+            0,  0,  0,  0, -1, -1, -1, -1, -1,
+            0,  0,  0,  0, -1, -1, -1, -1, -1,
+            1,  1,  1,  1,  0, -1, -1, -1, -1,
+            1,  1,  1,  1,  1,  0,  0,  0,  0,
+            1,  1,  1,  1,  1,  0,  0,  0,  0,
+            1,  1,  1,  1,  1,  0,  0,  0,  0,
+            1,  1,  1,  1,  1,  0,  0,  0,  0,
+    };
+
+    public static final int[] kingBottomRightWeight = {
+            -1, -1, -1, -1, -1,  0,  0,  0,  0,
+            -1, -1, -1, -1, -1,  0,  0,  0,  0,
+            -1, -1, -1, -1, -1,  0,  0,  0,  0,
+            -1, -1, -1, -1, -1,  0,  0,  0,  0,
+            -1, -1, -1, -1,  0,  1,  1,  1,  1,
+             0,  0,  0,  0,  1,  1,  1,  1,  1,
+             0,  0,  0,  0,  1,  1,  1,  1,  1,
+             0,  0,  0,  0,  1,  1,  1,  1,  1,
+             0,  0,  0,  0,  1,  1,  1,  1,  1,
+    };
+
+    public static final int[][] kingBuff = { kingTopLeftWeight, kingTopRightWeight, kingBottomLeftWeight, kingBottomRightWeight };
 
     //region Special BitSets
     public static final BitSet camps = BitSetUtils.newFromPositions(campCells);
@@ -182,6 +277,7 @@ public enum BitSetPosition {
     public static final BitSet kingInE6Surrounded = BitSetUtils.newFromPositions(kingInE6SurroundedCells);
     public static final BitSet kingInF5Surrounded = BitSetUtils.newFromPositions(kingInF5SurroundedCells);
     public static final BitSet blackStrategicCells = BitSetUtils.newFromPositions(strategicBlackCells);
+    public static final BitSet whiteEarlyGameStrategicCells = BitSetUtils.newFromPositions(earlyGameStrategicWhiteCells);
     //endregion
     
     public static final HashSet<String> escapeHashSet = new HashSet<>(Arrays.asList(

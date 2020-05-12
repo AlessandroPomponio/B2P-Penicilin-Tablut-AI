@@ -16,7 +16,7 @@ public class BitSetMove {
         BitSetPosition from = BitSetPosition.values()[pawnPosition];
 
         //
-        BitSet forbiddenCells = state.getBoard();
+        BitSet forbiddenCells = BitSetUtils.copy(state.getBoard());
 
         // The castle cell is forbidden to step on
         forbiddenCells.set(BitSetPosition.E5.ordinal());
@@ -30,7 +30,7 @@ public class BitSetMove {
         } else {
 
             // Blacks can't go back on the camps
-            if (!BitSetUtils.newFromPositions(new int[]{pawnPosition}).intersects(BitSetPosition.camps)){
+            if (!BitSetPosition.camps.get(pawnPosition)) {
                 forbiddenCells.or(BitSetPosition.camps);
             }
 
@@ -338,6 +338,102 @@ public class BitSetMove {
 
     }
 
+    public static int positionWeights(BitSetState state) {
+
+        final int KING_MULTIPLIER = 1;
+            final int WHITE_PAWNS_MULTIPLIER = 1;
+            final int BLACK_PAWNS_MULTIPLIER = 1;
+
+//            int quadrant;
+            int sumOfWeights = 0;
+            BitSet whiteMask = BitSetUtils.copy(state.getWhitePawns());
+            BitSet blackMask = BitSetUtils.copy(state.getBlackPawns());
+//            BitSet kingMask = BitSetUtils.copy(state.getKing());
+            BitSet mask;
+
+//            for (quadrant = 0; quadrant < 4; quadrant++) {
+//
+//                mask = BitSetUtils.copy(BitSetStartingBoard.quadrants[quadrant]);
+//                mask.and(kingMask);
+//
+//                if (mask.nextSetBit(0) != -1) {
+//
+//                    mask = BitSetUtils.copy(BitSetStartingBoard.quadrants[quadrant]);
+//                    break;
+//                }
+//            }
+
+//        sumOfWeights += KING_MULTIPLIER * BitSetPosition.kingCellWeight[kingMask.nextSetBit(0)];
+
+            for (int i = whiteMask.nextSetBit(0); i >= 0; i = whiteMask.nextSetBit(i + 1)) {
+
+                sumOfWeights += WHITE_PAWNS_MULTIPLIER * (BitSetPosition.whitePawnCellWeight[i] /*+ BitSetPosition.kingBuff[quadrant][i]*/);
+            }
+
+            for (int i = blackMask.nextSetBit(0); i >= 0; i = blackMask.nextSetBit(i + 1)) {
+
+                sumOfWeights -= BLACK_PAWNS_MULTIPLIER * (BitSetPosition.blackPawnCellWeight[i] /*+ BitSetPosition.kingBuff[quadrant][i]*/);
+            }
+            return sumOfWeights;
+
+    }
+
+//    public static int quadrant_pseudocode(BitSetState state) {
+//
+//        /*
+//         * Manca la scacchiera del re e manca il risultato che comunichi il quadrante migliore
+//         */
+//
+//
+//        BitSet quadrantMask;
+//        int index, result, tempIndex = 0;
+//        int[] sumOfWeights = new int[4];
+//
+//        BitSet whiteMask, blackMask;
+//
+//        for(int quadrant = 0; quadrant < 4; quadrant++) {
+//
+//            sumOfWeights[quadrant] = 0;
+//
+//            whiteMask = BitSetUtils.copy(state.getWhitePawns());
+//            blackMask = BitSetUtils.copy(state.getBlackPawns());
+//
+//            quadrantMask = BitSetStartingBoard.quadrants[quadrant];
+//            whiteMask.and(quadrantMask);
+//            blackMask.and(quadrantMask);
+//
+//            for (int i = whiteMask.nextSetBit(0); i >= 0; i = whiteMask.nextSetBit(i + 1)) {
+//
+//                sumOfWeights[quadrant] += whitePawnCellWeight[i];
+//            }
+//            for (int i = blackMask.nextSetBit(0); i >= 0; i = blackMask.nextSetBit(i + 1)) {
+//
+//                sumOfWeights[quadrant] -= blackPawnCellWeightForWhite[i];
+//            }
+//        }
+//
+//        result = sumOfWeights[0];
+//        tempIndex = 0;
+//        for(index = 1; index < 4; index++)
+//        {
+//
+//            if (sumOfWeights[index] > result) {
+//                result = sumOfWeights[index];
+//                tempIndex = index;
+//            }
+//        }
+//
+//        return tempIndex;
+//
+//    }
+
+    public static int whiteCellInStrategicPosition(BitSetState state) {
+        //
+        BitSet result = BitSetUtils.copy(state.getWhitePawns());
+        result.and(BitSetPosition.whiteEarlyGameStrategicCells);
+        return result.cardinality();
+    }
+
     public static int kingStatus(BitSetState state) {
         //
         BitSet king = BitSetUtils.copy(state.getKing());
@@ -371,25 +467,25 @@ public class BitSetMove {
                 if (blacks.get(kingPos - 1))
                     menace++;
 
-                if (whites.get(kingPos - 1))
+                else if (whites.get(kingPos - 1))
                     menace--;
 
                 if (blacks.get(kingPos + 1))
                     menace++;
 
-                if (whites.get(kingPos -1))
+                else if (whites.get(kingPos - 1))
                     menace--;
 
                 if (blacks.get(kingPos - 9))
                     menace++;
 
-                if (whites.get(kingPos -9))
+                else if (whites.get(kingPos - 9))
                     menace--;
 
                 if (blacks.get(kingPos + 9))
                     menace++;
 
-                if (whites.get(kingPos-9))
+                else if (whites.get(kingPos - 9))
                     menace--;
 
                 return menace;
@@ -441,6 +537,107 @@ public class BitSetMove {
 
         }
 
+    }
+
+    public static int kingMoves(BitSetState state) {
+        return state.getAvailableKingMoves().size();
+    }
+
+    public static int blackPawnsOutOfCamps(BitSetState state) {
+
+        //
+        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+        blacks.and(BitSetPosition.camps);
+
+        return 16 - blacks.cardinality();
+    }
+
+    public static int diagonalBlackCouples(BitSetState state) {
+
+        //
+        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+        int iColumn, iRow;
+        int result = 0;
+
+        for (int i = blacks.nextSetBit(0); i >= 0; i = blacks.nextSetBit(i + 1)) {
+            iColumn = i % 9;
+            iRow = i / 9;
+
+            // Up Left
+            if (iColumn > 0 && iRow > 0) {
+                if(blacks.get(i - 9 - 1)) {
+                    result++;
+                }
+            }
+
+            // Up Right
+            if (iColumn < 8 && iRow > 0) {
+                if(blacks.get(i - 9 + 1)) {
+                    result++;
+                }
+            }
+
+            // Down Left
+            if (iColumn > 0 && iRow < 8) {
+                if(blacks.get(i + 9 - 1)) {
+                    result++;
+                }
+            }
+
+            // Down Right
+            if (iColumn < 8 && iRow < 8) {
+                if(blacks.get(i + 9 + 1))
+                    result++;
+            }
+        }
+
+        return result >> 1;
+    }
+
+    public static int whitePawnsAdjacentKing(BitSetState state) {
+
+        //
+        BitSet king = BitSetUtils.copy(state.getKing());
+        BitSet whites = BitSetUtils.copy(state.getWhitePawns());
+        int kingPosition = king.nextSetBit(0);
+        int kingColumn = kingPosition % 9;
+        int result = 0;
+
+        // Up
+        if (kingPosition > 9) {
+            if (whites.get(kingPosition - 9)) {
+                result++;
+            }
+        }
+
+        // Down
+        if (kingPosition < 72) {
+            if(whites.get(kingPosition + 9)) {
+                result++;
+            }
+        }
+
+        // Left
+        if(kingColumn > 0) {
+            if(whites.get(kingPosition - 1)) {
+                result++;
+            }
+        }
+
+        // Right
+        if(kingColumn < 8) {
+            if (whites.get(kingPosition + 1)) {
+                result++;
+            }
+        }
+
+        if(result == 1 || result == 3)
+            return 1;
+
+        if(result == 2)
+            return result;
+
+        return 0;
     }
 
     public static int dangerToKing(BitSetState state) {

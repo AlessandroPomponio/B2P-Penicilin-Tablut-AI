@@ -40,15 +40,15 @@ public class ActionStore<ACTION> {
 //                '}';
 //    }
 
-    protected List<ACTION> actions;
-    protected List<Integer> utilValues;
+    private List<ACTION> actions;
+    private List<Integer> utilValues;
 
     public ActionStore(int capacity) {
         actions  = new ArrayList<>(capacity);
         utilValues  = new ArrayList<>(capacity);
     }
 
-    void add(ACTION action, int utilValue) {
+    public synchronized void add(ACTION action, int utilValue) {
         int idx;
         for (idx = 0; idx < actions.size() && utilValue <= utilValues.get(idx); idx++)
             ;                   // da completare
@@ -56,8 +56,16 @@ public class ActionStore<ACTION> {
         utilValues.add(idx, utilValue);
     }
 
-    int size() {
+    public int size() {
         return actions.size();
+    }
+
+    public List<ACTION> getActions() {
+        return actions;
+    }
+
+    public List<Integer> getUtilValues() {
+        return utilValues;
     }
 
 }

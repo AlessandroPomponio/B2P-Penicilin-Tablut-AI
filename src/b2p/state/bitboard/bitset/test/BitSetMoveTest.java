@@ -2,7 +2,7 @@ package b2p.state.bitboard.bitset.test;
 
 import b2p.state.bitboard.bitset.*;
 import b2p.state.bitboard.bitset.aima.adversarial.TablutGame;
-import b2p.state.bitboard.bitset.aima.adversarial.TablutGameIterativeDeepeningAlphaBetaSearch;
+import b2p.state.bitboard.bitset.aima.adversarial.minmax.IterativeDeepening;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import org.junit.jupiter.api.Assertions;
 
@@ -1281,10 +1281,51 @@ public class BitSetMoveTest {
         BitSet king = BitSetUtils.newFromPositions(new BitSetPosition[]{BitSetPosition.E5});
 
         BitSetState state = new BitSetState(Turn.BLACK ,blacks, whites, king, 25);
-        TablutGameIterativeDeepeningAlphaBetaSearch search = new TablutGameIterativeDeepeningAlphaBetaSearch(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 10, Turn.BLACK);
+        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 10, Turn.BLACK);
         BitSetAction bestMove = search.makeDecision(state);
 
 
+    }
+
+    /*
+    OOOOBOOWO
+OOOOOOOOW
+OOOBOBOOW
+OOBOBOBOO
+OOOBKBOOB
+OOBOOOBOO
+OOOBOBOOO
+OOOOBOOOO
+OWWOBOOOO
+     */
+
+
+    @org.junit.Test
+    public void testKingInThroneCapture() {
+
+//        OOOOBOOWO
+//        OOOOOOOOW
+//        OOOBOBOOW
+//        OOBOBOBOO
+//        OOOBKBOOB
+//        OOBOOOBOO
+//        OOOBOBOOO
+//        OOOOBOOOO
+//        OWWOBOOOO
+
+        BitSetState state = BitSetUtils.newFromServerString(
+                "OOOOBOOWO" +
+                "OOOOOOOOW" +
+                "OOOBOBOOW" +
+                "OOBOBOBOO" +
+                "OOOBKBOOB" +
+                "OOBOOOBOO" +
+                "OOOBOBOOO" +
+                "OOOOBOOOO" +
+                "OWWOBOOOO", Turn.BLACK, 31);
+
+        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 15, Turn.BLACK);
+        BitSetAction bestMove = search.makeDecision(state);
     }
 
     @org.junit.Test
@@ -1322,7 +1363,7 @@ public class BitSetMoveTest {
         BitSet king = BitSetUtils.newFromPositions(new BitSetPosition[]{BitSetPosition.E4});
 
         BitSetState state = new BitSetState(Turn.BLACK ,blacks, whites, king, 14);
-        TablutGameIterativeDeepeningAlphaBetaSearch search = new TablutGameIterativeDeepeningAlphaBetaSearch(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 0, Turn.BLACK);
+        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 0, Turn.BLACK);
         BitSetAction bestMove = search.makeDecision(state);
     }
 

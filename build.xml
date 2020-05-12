@@ -11,7 +11,7 @@
         <fileset dir="${lib.dir}" includes="**/*.jar"/>
     </path>
 
-    <property name="main-class"  value="main"/>
+    <property name="main-class"  value="Main"/>
 
     <target name="clean">
         <delete dir="${build.dir}"/>

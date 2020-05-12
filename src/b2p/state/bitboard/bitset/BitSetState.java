@@ -178,7 +178,8 @@ public class BitSetState implements IState {
         if (player == Turn.BLACK)
             return blackHeuristic();
 
-        return whiteHeuristic();
+        return -blackHeuristic();
+//        return whiteHeuristic();
 
     }
 
@@ -204,13 +205,13 @@ public class BitSetState implements IState {
         //
 //        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
         // I TURNI SONO x2
-        if (turnAmt < 6) {
-            return strategicBlacks + (pieceDifference-7);
-        }
+//        if (turnAmt < 6) {
+//            return strategicBlacks + (pieceDifference-7);
+//        }
 
-        if (turnAmt > 15) {
-            return strategicBlacks + (pieceDifference-7)+ 2*BitSetMove.dangerToKing(this);
-        }
+//        if (turnAmt > 15) {
+//            return strategicBlacks + (pieceDifference-7)+ 2*BitSetMove.dangerToKing(this);
+//        }
 
         return strategicBlacks + 2*(pieceDifference-7)+ BitSetMove.dangerToKing(this);
 
@@ -226,23 +227,36 @@ public class BitSetState implements IState {
 //        if (BitSetMove.kingHasMoreThanOneEscapePath(this))
 //            return Integer.MAX_VALUE;
 
-        //
 //        int bestQuadrant = BitSetPosition.findTargetQuadrantForWhites(this);
 //        int kingInBestQuadrantBonus = 0;
 //        if (king.intersects(BitSetStartingBoard.quadrants[bestQuadrant]))
-//            kingInBestQuadrantBonus = 10;
+//            kingInBestQuadrantBonus = 5;
 
         //
-        int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
-        //
-//        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
 
-        // i turni sono x2
-        if (turnAmt > 10) {
-            return (7+pieceDifference) - BitSetMove.dangerToKing(this);
+        //
+        int GAME_PROG = 100;
+//        return (GAME_PROG - turnAmt) * 61 * pieceDifference - (turnAmt) * 31 * BitSetMove.dangerToKing(this) + (GAME_PROG - turnAmt)
+//                * 23 * BitSetMove.whitePawnsAdjacentKing(this);
+        if(turnAmt < 30) {
+            int pieceDifference = 2 * whitePawns.cardinality() - blackPawns.cardinality();
+            return 7 * pieceDifference - 5 * BitSetMove.dangerToKing(this)
+                    - 3 * BitSetMove.diagonalBlackCouples(this); // + 3 * BitSetMove.positionWeights(this);
         }
+        int pieceDifference = whitePawns.cardinality() + 8 - blackPawns.cardinality();
+        return 7 * pieceDifference - 5 * BitSetMove.dangerToKing(this) -
+                - 3 * BitSetMove.diagonalBlackCouples(this) + BitSetMove.blackPawnsOutOfCamps(this);
+                 // + 3 * BitSetMove.positionWeights(this);
 
-        return (7+pieceDifference) - 2*BitSetMove.dangerToKing(this);
+////      int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
+//        // i turni sono x2
+//        if (turnAmt > 10) {
+//            // whitePawns.cardinality()
+//            // freeColumnsOrRows()
+//            return 15 * pieceDifference - 7 * BitSetMove.dangerToKing(this) + 5 * BitSetMove.whitePawnsAdjacentKing(this); // + 3 * (BitSetMove.kingHasMoreThanOneEscapePath(this) ? 15 : 0);
+//        }
+//        // (5 * whitePawns.cardinality() - 3 * blackPawns.cardinality())
+//        return 5 * whitePawns.cardinality() - 3 * blackPawns.cardinality() - BitSetMove.dangerToKing(this); //  + BitSetMove.whiteCellInStrategicPosition(this)
 
     }
 
