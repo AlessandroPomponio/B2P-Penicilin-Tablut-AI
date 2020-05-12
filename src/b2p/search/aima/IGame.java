@@ -9,10 +9,6 @@ import java.util.List;
  */
 public interface IGame<BitSetState, BitSetAction, Turn> {
 
-    BitSetState getInitialState();
-
-    Turn[] getPlayers();
-
     Turn getPlayer(BitSetState state);
 
     List<BitSetAction> getActions(BitSetState state);

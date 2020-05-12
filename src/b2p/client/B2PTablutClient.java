@@ -61,7 +61,7 @@ public class B2PTablutClient extends TablutClient {
         System.out.println("You are player " + this.getPlayer().toString() + "!");
 //        timeout = 10;
         TablutGame gameInstance = new TablutGame(new BitSetState());
-        IterativeDeepening search = new IterativeDeepening(gameInstance, Integer.MIN_VALUE, Integer.MAX_VALUE, timeout/1000 - 1, this.getPlayer());
+        IterativeDeepening search = new IterativeDeepening(gameInstance, Integer.MIN_VALUE, Integer.MAX_VALUE, timeout/1000 - 1);
 
         int turn = 0;
 

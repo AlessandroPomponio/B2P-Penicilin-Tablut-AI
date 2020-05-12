@@ -1281,7 +1281,7 @@ public class BitSetMoveTest {
         BitSet king = BitSetUtils.newFromPositions(new BitSetPosition[]{BitSetPosition.E5});
 
         BitSetState state = new BitSetState(Turn.BLACK ,blacks, whites, king, 25);
-        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 10, Turn.BLACK);
+        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 10);
         BitSetAction bestMove = search.makeDecision(state);
 
 
@@ -1324,7 +1324,7 @@ OWWOBOOOO
                 "OOOOBOOOO" +
                 "OWWOBOOOO", Turn.BLACK, 31);
 
-        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 15, Turn.BLACK);
+        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 15);
         BitSetAction bestMove = search.makeDecision(state);
     }
 
@@ -1363,7 +1363,7 @@ OWWOBOOOO
         BitSet king = BitSetUtils.newFromPositions(new BitSetPosition[]{BitSetPosition.E4});
 
         BitSetState state = new BitSetState(Turn.BLACK ,blacks, whites, king, 14);
-        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 0, Turn.BLACK);
+        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 0);
         BitSetAction bestMove = search.makeDecision(state);
     }
 
