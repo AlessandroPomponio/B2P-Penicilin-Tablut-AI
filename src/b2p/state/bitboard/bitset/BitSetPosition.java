@@ -18,7 +18,7 @@ public enum BitSetPosition {
 
     private final String name;
 
-    private BitSetPosition(String name) {
+    BitSetPosition(String name) {
         this.name = name;
     }
 
@@ -147,19 +147,6 @@ public enum BitSetPosition {
 
     };
 
-//    private static final int[] strategicBlackCells = {
-//
-//                                            C2.ordinal(),                                                       G2.ordinal(),
-//                            B3.ordinal(),                                                                                       H3.ordinal(),
-//
-//
-//
-//
-//                            B7.ordinal(),                                                                                       H7.ordinal(),
-//                                            C8.ordinal(),                                                       G8.ordinal()
-//
-//    };
-
     private static final int[] strategicBlackCells = {
 
                                                                 D3.ordinal(),           F3.ordinal(),
@@ -169,27 +156,16 @@ public enum BitSetPosition {
                                                                 D7.ordinal(),           F7.ordinal()
     };
 
-    //TODO: formattare
     private static final int[] earlyGameStrategicWhiteCells = {
 
-            C3.ordinal(), G3.ordinal(), C7.ordinal(), G7.ordinal(),
+                                                C3.ordinal(),                                           G3.ordinal(),
+
+
+
+                                                C7.ordinal(),                                           G7.ordinal(),
 
     };
-
     //endregion
-
-    //osarracino
-//    public static final int[] kingCellWeight = {
-//            5,  3,  3,  0,  0,  0, 10, 10,  0,
-//            3,  2,  2,  1,  0,  1,  2,  3, 10,
-//            3,  2,  2,  2,  2,  2,  2,  2, 10,
-//            0,  5,  2,  0,  0,  0,  2,  1,  0,
-//            0,  0,  5,  5, -9,  0,  2,  0,  0,
-//            0,  1,  2,  0,  0,  0,  2,  1,  0,
-//            10,  3,  2,  2,  2,  2,  2,  3, 10,
-//            10,  1,  2,  1,  0,  1,  2,  1, 10,
-//            0, 10, 10,  0,  0,  0, 10, 10,  0,
-//    };
 
     public static final int[] whitePawnCellWeight = {
             5,  5,  5,  0,  0,  0,  5,  5,  5,
@@ -202,7 +178,7 @@ public enum BitSetPosition {
             5,  1,  1,  4,  0,  4,  1,  1,  5,
             5,  5,  5,  0,  0,  0,  5,  5,  5,
     };
-    // TODO: aggiornare valori (positivi)
+
     public static final int[] blackPawnCellWeight = {
             1,  3,  2,  3,  3,  3,  2,  3,  1,
             3,  2,  5,  1,  3,  1,  5,  2,  3,
@@ -299,7 +275,7 @@ public enum BitSetPosition {
 
         int maxDifference = -1;
         int bestQuadrant = 0;
-        int pieceDifference = 0;
+        int pieceDifference ;
 
         // top left
         BitSet blacks = BitSetUtils.copy(state.getBlackPawns());

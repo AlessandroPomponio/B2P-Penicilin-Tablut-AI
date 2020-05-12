@@ -1,43 +1,42 @@
 package b2p.client;
 
+import b2p.search.aima.TablutGame;
+import b2p.search.aima.minmax.IterativeDeepening;
 import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
 import b2p.state.bitboard.bitset.BitSetUtils;
-import b2p.search.aima.TablutGame;
-import b2p.search.aima.minmax.IterativeDeepening;
 import it.unibo.ai.didattica.competition.tablut.client.TablutClient;
 import it.unibo.ai.didattica.competition.tablut.domain.Action;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 public class B2PTablutClient extends TablutClient {
 
-    private int timeout;
+    private final int timeout;
 
-    public B2PTablutClient(String player, String name, int timeout, String ipAddress) throws UnknownHostException, IOException {
+    public B2PTablutClient(String player, String name, int timeout, String ipAddress) throws IOException {
         super(player, name, timeout, ipAddress);
         this.timeout = timeout;
     }
 
-    public B2PTablutClient(String player, int timeout, String ipAddress) throws UnknownHostException, IOException {
+    public B2PTablutClient(String player, int timeout, String ipAddress) throws IOException {
         super(player, "B2P", timeout, ipAddress);
         this.timeout = timeout;
     }
 
-    public B2PTablutClient(String player, String ipAddress) throws UnknownHostException, IOException {
+    public B2PTablutClient(String player, String ipAddress) throws IOException {
         super(player, "B2P", 60000, ipAddress);
         this.timeout = 60000;
     }
 
-    public B2PTablutClient(String player) throws UnknownHostException, IOException {
+    public B2PTablutClient(String player) throws IOException {
         super(player, "B2P", 60000);
         this.timeout = 60000;
     }
 
-    public B2PTablutClient(String player, int timeout) throws UnknownHostException, IOException {
+    public B2PTablutClient(String player, int timeout) throws IOException {
         super(player, "B2P", timeout);
         this.timeout = timeout;
     }
@@ -53,15 +52,12 @@ public class B2PTablutClient extends TablutClient {
         }
 
         // States
-        BitSetState state = null;
-        State serverState = new StateTablut();
+        BitSetState state;
+        State serverState;
 
-        // Algoritmo di ricerca
-        //Problem problem;
         System.out.println("You are player " + this.getPlayer().toString() + "!");
-//        timeout = 10;
         TablutGame gameInstance = new TablutGame(new BitSetState());
-        IterativeDeepening search = new IterativeDeepening(gameInstance, Integer.MIN_VALUE, Integer.MAX_VALUE, timeout/1000 - 1, this.getPlayer());
+        IterativeDeepening search = new IterativeDeepening(gameInstance, Integer.MIN_VALUE, Integer.MAX_VALUE, timeout / 1000 - 1, this.getPlayer());
 
         int turn = 0;
 
@@ -69,10 +65,8 @@ public class B2PTablutClient extends TablutClient {
 
             turn++;
             try {
-                // Leggo lo stato mandato dal server
                 this.read();
             } catch (ClassNotFoundException | IOException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
                 System.exit(1);
             }
@@ -82,120 +76,59 @@ public class B2PTablutClient extends TablutClient {
             serverState = this.getCurrentState();
             System.out.println(serverState.toString());
 
-            // Traduco lo stato del server in uno stato bitboard
             state = BitSetUtils.newFromServer((StateTablut) serverState, turn);
             search.setGameState(state);
-//          tieChecker.addState(bitboardState);
-/*
-            problem = new Problem(
-                    state,
-                    new BitSetActionsFunction(),
-                    new BitSetResultFunction(),
-                    new BitSetGoalTest(),
-                    new BitSetStepCostFunction()
-            );
-*/
 
             if (this.getPlayer().equals(State.Turn.WHITE)) {
-                /** TURNO BIANCO **/
+
                 if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
 
-//                    long curMillis = System.currentTimeMillis();
-                    try {
-//                        long millis = timeout - (System.currentTimeMillis() - curMillis);
-/*
-                        while (millis > 3000) {
-                            curMillis = System.currentTimeMillis();
-                            try {
-                                Thread.sleep(1000);
-                            } catch (InterruptedException e) {
-                                System.out.println("Shouldn't happen...");
-                                e.printStackTrace();
-                            }
-                            millis -= System.currentTimeMillis() - curMillis;
-
-                        }
-*/
-
-                        BitSetAction bestMove = search.makeDecision(state);
-//                        millis -= System.currentTimeMillis() - curMillis;
-//                        System.out.println("Thread time duration: " + millis);
-
-                        System.out.println("Selected move: " + bestMove.toString());
-                        // Create move readible from the server
-                        Action a = new Action(bestMove.getFrom(), bestMove.getTo(), StateTablut.Turn.valueOf(bestMove.getTurn().name()));
-
-                        this.write(a);
-
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                        System.exit(1);
-                    } }
-
-                //  il turno dell'avversario
-                else if (state.getTurn().equals(StateTablut.Turn.WHITE)) {
-                    System.out.println("Waiting for your opponent move... ");
-                } else if (state.getTurn().equals(StateTablut.Turn.WHITEWIN)) {
-                    System.out.println("YOU WIN!");
-                    System.exit(0);
-                } else if (state.getTurn().equals(StateTablut.Turn.BLACKWIN)) {
-                    System.out.println("YOU LOSE!");
-                    System.exit(0);
-                } else if (state.getTurn().equals(StateTablut.Turn.DRAW)) {
-                    System.out.println("DRAW!");
-                    System.exit(0);
+                    searchAndSubmitAction(state, search);
+                } else {
+                    printTurnComment(state, "YOU WIN!", "YOU LOSE!");
                 }
 
             } else {
-                /**    TURNO NERO 	**/
+
                 if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
 
-                    long curMillis = System.currentTimeMillis();
-                    try {
-//                        long millis = timeout - (System.currentTimeMillis() - curMillis);
-/*
-                    while (millis > 3000) {
-                        curMillis = System.currentTimeMillis();
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            System.out.println("Shouldn't happen...");
-                            e.printStackTrace();
-                        }
-                        millis -= System.currentTimeMillis() - curMillis;
-
-                    }
-*/
-
-                        BitSetAction bestMove = search.makeDecision(state);
-//                        millis -= System.currentTimeMillis() - curMillis;
-//                        System.out.println("Thread time duration: " + millis);
-
-                        System.out.println("Selected move: " + bestMove.toString());
-                        // Create move readible from the server
-                        Action a = new Action(bestMove.getFrom(), bestMove.getTo(), StateTablut.Turn.valueOf(bestMove.getTurn().name()));
-
-                        this.write(a);
-
-                    } catch (Exception e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                        System.exit(1);
-                    }
-                } else if (state.getTurn().equals(StateTablut.Turn.WHITE)) {
-                    System.out.println("Waiting for your opponent move... ");
-                } else if (state.getTurn().equals(StateTablut.Turn.WHITEWIN)) {
-                    System.out.println("YOU LOSE!");
-                    System.exit(0);
-                } else if (state.getTurn().equals(StateTablut.Turn.BLACKWIN)) {
-                    System.out.println("YOU WIN!");
-                    System.exit(0);
-                } else if (state.getTurn().equals(StateTablut.Turn.DRAW)) {
-                    System.out.println("DRAW!");
-                    System.exit(0);
+                    searchAndSubmitAction(state, search);
+                } else {
+                    printTurnComment(state, "YOU LOSE!", "YOU WIN!");
                 }
             }
+        }
+    }
+
+    private void searchAndSubmitAction(BitSetState state, IterativeDeepening search) {
+        try {
+
+            BitSetAction bestMove = search.makeDecision(state);
+
+            System.out.println("Selected move: " + bestMove.toString());
+
+            Action a = new Action(bestMove.getFrom(), bestMove.getTo(), StateTablut.Turn.valueOf(bestMove.getTurn().name()));
+
+            this.write(a);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    private void printTurnComment(BitSetState state, String whiteWins, String blackWins) {
+        if (state.getTurn().equals(StateTablut.Turn.WHITE)) {
+            System.out.println("Waiting for your opponent move... ");
+        } else if (state.getTurn().equals(StateTablut.Turn.WHITEWIN)) {
+            System.out.println(whiteWins);
+            System.exit(0);
+        } else if (state.getTurn().equals(StateTablut.Turn.BLACKWIN)) {
+            System.out.println(blackWins);
+            System.exit(0);
+        } else if (state.getTurn().equals(StateTablut.Turn.DRAW)) {
+            System.out.println("DRAW!");
+            System.exit(0);
         }
     }
 

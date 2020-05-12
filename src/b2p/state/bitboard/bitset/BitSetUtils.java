@@ -69,8 +69,6 @@ public class BitSetUtils {
         serverString = serverString.replaceAll("\n", "");
         for (int i = 0; i < serverString.length(); i++) {
 
-            char curr = serverString.charAt(i);
-
             switch (serverString.charAt(i)) {
                 case 'B':
                     blacks.set(i);
