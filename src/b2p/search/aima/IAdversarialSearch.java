@@ -11,7 +11,6 @@ public interface IAdversarialSearch {
     BitSetAction makeDecision(BitSetState state);
 
     /**
-     *
      * Returns the metrics of the adversarial search.
      */
     Metrics getMetrics();

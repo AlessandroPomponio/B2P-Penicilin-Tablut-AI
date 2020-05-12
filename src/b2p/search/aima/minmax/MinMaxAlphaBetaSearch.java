@@ -24,9 +24,6 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     private final int utilMin, utilMax;
     private final int depthLimit;
 
-    //
-    private int result;
-
     protected MinMaxAlphaBetaSearch(IterativeDeepening strategy, BitSetState state, BitSetAction action, State.Turn player) {
 
         //
@@ -55,11 +52,8 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     // Maximizer for Minimax with alpha/beta pruning
     public int maxValue(BitSetState state, State.Turn player, int alpha, int beta, int depth) {
 
-        //
-//        strategy.updateMetrics(depth);
-
         if (game.isTerminal(state) || depth >= depthLimit || strategy.getTimer().timeOutOccurred())
-            return eval(state, player, depth);
+            return eval(state, player);
 
         // The worst case for the maximizer is the minimum value
         int value = utilMin;
@@ -86,11 +80,8 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     // Minimizer for Minimax with alpha/beta pruning
     public int minValue(BitSetState state, State.Turn player, int alpha, int beta, int depth) {
 
-        //
-//        strategy.updateMetrics(depth);
-
         if (game.isTerminal(state) || depth >= depthLimit || strategy.getTimer().timeOutOccurred())
-            return eval(state, player, depth);
+            return eval(state, player);
 
         // The worst case scenario for the minimizer is Maxvalue
         int value = utilMax;
@@ -114,24 +105,14 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
 
     }
 
-    private int eval(BitSetState state, State.Turn player, int depth) {
+    private int eval(BitSetState state, State.Turn player) {
 
         return game.getUtility(state, player);
-//
-//        if ((game.isTerminal(state) || depth >= strategy.getCurrDepthLimit()) && !strategy.getTimer().timeOutOccurred()) {
-//            return game.getUtility(state, player);
-//        }
-//
-//        if (player == strategy.getOurPlayer()) {
-//            return Integer.MIN_VALUE;
-//        }
-//
-//        return Integer.MAX_VALUE;
 
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         return minValue(game.getResult(state, action), player, utilMin, utilMax, 1);
     }
 
