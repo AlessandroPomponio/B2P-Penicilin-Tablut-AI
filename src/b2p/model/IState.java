@@ -11,7 +11,7 @@ public interface IState {
     // Turn getters and setters
     State.Turn getTurn();
     void setTurn(State.Turn turn);
-    
+
     BitSet getBlackPawns();
     BitSet getWhitePawns() ;
     BitSet getKing();
@@ -35,8 +35,5 @@ public interface IState {
 
     // Utility functions
     IState clone();
-
-
-
 
 }
