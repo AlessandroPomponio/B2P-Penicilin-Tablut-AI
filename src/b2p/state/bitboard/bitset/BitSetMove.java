@@ -312,7 +312,7 @@ public class BitSetMove {
     public static boolean kingHasMoreThanOneEscapePath(BitSetState state) {
 
         List<BitSetAction> moves = state.getAvailableKingMoves();
-        int escapes = 0;
+        int escapes;
 
         // Check if one of the escape cells is in our reach
         for (BitSetAction move : moves) {
@@ -340,30 +340,12 @@ public class BitSetMove {
 
     public static int positionWeights(BitSetState state) {
 
-        final int KING_MULTIPLIER = 1;
             final int WHITE_PAWNS_MULTIPLIER = 1;
             final int BLACK_PAWNS_MULTIPLIER = 1;
 
-//            int quadrant;
             int sumOfWeights = 0;
             BitSet whiteMask = BitSetUtils.copy(state.getWhitePawns());
             BitSet blackMask = BitSetUtils.copy(state.getBlackPawns());
-//            BitSet kingMask = BitSetUtils.copy(state.getKing());
-            BitSet mask;
-
-//            for (quadrant = 0; quadrant < 4; quadrant++) {
-//
-//                mask = BitSetUtils.copy(BitSetStartingBoard.quadrants[quadrant]);
-//                mask.and(kingMask);
-//
-//                if (mask.nextSetBit(0) != -1) {
-//
-//                    mask = BitSetUtils.copy(BitSetStartingBoard.quadrants[quadrant]);
-//                    break;
-//                }
-//            }
-
-//        sumOfWeights += KING_MULTIPLIER * BitSetPosition.kingCellWeight[kingMask.nextSetBit(0)];
 
             for (int i = whiteMask.nextSetBit(0); i >= 0; i = whiteMask.nextSetBit(i + 1)) {
 
@@ -378,55 +360,6 @@ public class BitSetMove {
 
     }
 
-//    public static int quadrant_pseudocode(BitSetState state) {
-//
-//        /*
-//         * Manca la scacchiera del re e manca il risultato che comunichi il quadrante migliore
-//         */
-//
-//
-//        BitSet quadrantMask;
-//        int index, result, tempIndex = 0;
-//        int[] sumOfWeights = new int[4];
-//
-//        BitSet whiteMask, blackMask;
-//
-//        for(int quadrant = 0; quadrant < 4; quadrant++) {
-//
-//            sumOfWeights[quadrant] = 0;
-//
-//            whiteMask = BitSetUtils.copy(state.getWhitePawns());
-//            blackMask = BitSetUtils.copy(state.getBlackPawns());
-//
-//            quadrantMask = BitSetStartingBoard.quadrants[quadrant];
-//            whiteMask.and(quadrantMask);
-//            blackMask.and(quadrantMask);
-//
-//            for (int i = whiteMask.nextSetBit(0); i >= 0; i = whiteMask.nextSetBit(i + 1)) {
-//
-//                sumOfWeights[quadrant] += whitePawnCellWeight[i];
-//            }
-//            for (int i = blackMask.nextSetBit(0); i >= 0; i = blackMask.nextSetBit(i + 1)) {
-//
-//                sumOfWeights[quadrant] -= blackPawnCellWeightForWhite[i];
-//            }
-//        }
-//
-//        result = sumOfWeights[0];
-//        tempIndex = 0;
-//        for(index = 1; index < 4; index++)
-//        {
-//
-//            if (sumOfWeights[index] > result) {
-//                result = sumOfWeights[index];
-//                tempIndex = index;
-//            }
-//        }
-//
-//        return tempIndex;
-//
-//    }
-
     public static int whiteCellInStrategicPosition(BitSetState state) {
         //
         BitSet result = BitSetUtils.copy(state.getWhitePawns());
@@ -440,9 +373,6 @@ public class BitSetMove {
         BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
         BitSet whites = BitSetUtils.copy(state.getWhitePawns());
 
-        //
-        int enemies, allies;
-
         // Special capture needed
         if (king.intersects(BitSetPosition.specialKingCells)) {
 
@@ -455,9 +385,6 @@ public class BitSetMove {
                 whites.and(BitSetPosition.kingSurrounded);
 
                 return blacks.cardinality() - whites.cardinality();
-
-
-//                return blacks.cardinality();
 
             } else {
 

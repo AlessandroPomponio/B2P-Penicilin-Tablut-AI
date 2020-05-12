@@ -1,31 +1,23 @@
 package b2p.state.bitboard.bitset.test;
 
-import b2p.state.bitboard.bitset.*;
+import b2p.state.bitboard.bitset.BitSetAction;
+import b2p.state.bitboard.bitset.BitSetPosition;
+import b2p.state.bitboard.bitset.BitSetState;
+import b2p.state.bitboard.bitset.BitSetUtils;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
-
-import java.util.ArrayList;
-import java.util.BitSet;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BitSetStateTest {
 
-    /*
-     * TODO:
-     * - Test vittoria se un giocatore non può muovere pedine
-     *
-     */
-
-    /*
-     * Test di getAvailablePawnMoves
-     */
+    //region getAvailablePawnMoves
 
     /**
      * funzione : testGetAvailablePawnMovesEmpty
      * testa la funzione getAvailablePawnMoves per verificare che non restituisca mosse quando non deve restituirle
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -45,8 +37,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testGetAvailablePawnMovesEmpty() {
@@ -79,8 +70,8 @@ public class BitSetStateTest {
     /**
      * funzione : testCollisionGetAvailablePawnMoves
      * testa la funzione getAvailablePawnMoves per verificare che valuti le collisioni correttamente
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -100,8 +91,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A | B |   | B |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testCollisionGetAvailablePawnMoves() {
@@ -132,16 +122,15 @@ public class BitSetStateTest {
 
         assertArrayEquals(expected, actual);
     }
+    //endregion
 
-    /*
-     * Test di performMoveAction
-     */
+    //region performMoveAction
 
     /**
      * funzione : testPerformMoveAction
      * testa la funzione performMove(IAction) per verificare che esegua correttamente la mossa
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -161,8 +150,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testPerformMoveAction() {
@@ -196,15 +184,15 @@ public class BitSetStateTest {
 
         fromState.performMove(new BitSetAction(from, to, Turn.WHITE));
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
+        assert (fromState.getTurn() == toState.getTurn());
     }
 
 
     /**
      * funzione : testPerformMoveString
      * testa la funzione performMove(String, String) per verificare che esegua correttamente la mossa
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -224,8 +212,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testPerformMoveString() {
@@ -259,15 +246,15 @@ public class BitSetStateTest {
 
         fromState.performMove(from, to);
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
+        assert (fromState.getTurn() == toState.getTurn());
     }
 
 
     /**
      * funzione : testPerformMoveStandard
      * testa la funzione performMove(int, int) per verificare che esegua correttamente la mossa
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -287,8 +274,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testPerformMoveStandard() {
@@ -321,7 +307,7 @@ public class BitSetStateTest {
 
         fromState.performMove(BitSetPosition.D3.ordinal(), BitSetPosition.F3.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
+        assert (fromState.getTurn() == toState.getTurn());
     }
 
 
@@ -330,7 +316,7 @@ public class BitSetStateTest {
      * testa la funzione performMove(int, int) per verificare che gli stati siano coerenti, in seguito ad un errore
      * nel match.
      * (da completare)
-     *
+     * <p>
      * Stato 1, turno Nero
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | N | N | N |   |   |   |  1
@@ -351,10 +337,10 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | N | N | N |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
+     * <p>
      * Mossa D1 -> C1
-     *
+     * <p>
      * Stato 2, turno Bianco
      * +---+---+---+---+---+---+---+---+---+
      * |   |   | N | A | N | N |   |   |   |  1
@@ -375,10 +361,10 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | N | N | N |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
+     * <p>
      * Mossa E5 -> E3
-     *
+     * <p>
      * Stato 3, turno Nero
      * +---+---+---+---+---+---+---+---+---+
      * |   |   | N | A | N | N |   |   |   |  1
@@ -399,9 +385,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | N | N | N |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
-     *
+     * A   B   C   D   E   F   G   H   I
      */
 
     @org.junit.Test
@@ -480,18 +464,17 @@ public class BitSetStateTest {
         initialState.performMove(new BitSetAction("D1", "C1", Turn.BLACK));
         initialState.performMove(new BitSetAction("E5", "E3", Turn.WHITE));
         assertEquals(BitSetUtils.toBitString(initialState.getBoard()), BitSetUtils.toBitString(finalState.getBoard()));
-        assert(initialState.getTurn() == finalState.getTurn());
+        assert (initialState.getTurn() == finalState.getTurn());
 
     }
-
 
 
     /**
      * funzione : testPerformMoveNoCaptureBetweenPawns
      * testa la funzione performMove(int, int) per verificare che la pedina mossa, quando si sposti tra due pedine del
      * colore opposto, non venga catturata
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -511,8 +494,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testPerformMoveNoCaptureBetweenPawns() {
@@ -547,7 +529,7 @@ public class BitSetStateTest {
 
         fromState.performMove(BitSetPosition.E4.ordinal(), BitSetPosition.E3.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
+        assert (fromState.getTurn() == toState.getTurn());
     }
 
 
@@ -555,8 +537,8 @@ public class BitSetStateTest {
      * funzione : testPerformMoveNoCaptureBetweenPawnAndCamp
      * testa la funzione performMove(int, int) per verificare che la pedina mossa, quando si sposti tra una pedina del
      * colore opposto ed un accampamento, non venga catturata
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -576,8 +558,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testPerformMoveNoCaptureBetweenPawnAndCamp() {
@@ -610,7 +591,7 @@ public class BitSetStateTest {
 
         fromState.performMove(BitSetPosition.I2.ordinal(), BitSetPosition.F2.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
+        assert (fromState.getTurn() == toState.getTurn());
     }
 
 
@@ -618,8 +599,8 @@ public class BitSetStateTest {
      * funzione : testPerformMoveNoCaptureBetweenPawnAndCastle
      * testa la funzione performMove(int, int) per verificare che la pedina mossa, quando si sposti tra una pedina del
      * colore opposto ed il castello, non venga catturata, ma che catturi l'altra.
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -639,8 +620,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testPerformMoveNoCaptureBetweenPawnAndCastle() {
@@ -673,7 +653,7 @@ public class BitSetStateTest {
 
         fromState.performMove(BitSetPosition.F8.ordinal(), BitSetPosition.F5.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
+        assert (fromState.getTurn() == toState.getTurn());
     }
 
 
@@ -682,8 +662,8 @@ public class BitSetStateTest {
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
      * si trova nel castello
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -703,8 +683,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testKingInCastleIllegalCapture() {
@@ -738,8 +717,8 @@ public class BitSetStateTest {
         );
         fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
-        assert(!fromState.blackHasWon());
+        assert (fromState.getTurn() == toState.getTurn());
+        assert (!fromState.blackHasWon());
     }
 
 
@@ -748,8 +727,8 @@ public class BitSetStateTest {
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
      * si trova nel castello
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -769,8 +748,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testKingInCastleIllegalSpecialCapture() {
@@ -806,19 +784,18 @@ public class BitSetStateTest {
         );
         fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
-        assert(!fromState.blackHasWon());
+        assert (fromState.getTurn() == toState.getTurn());
+        assert (!fromState.blackHasWon());
     }
+    //endregion
 
-    /*
-     * Test di hasWhiteWon
-     */
+    //region hasWhiteWon
 
     /**
      * funzione : testWhiteWinningCondition
      * testa la funzione whiteHasWon per verificare le condizioni di vittoria del giocatore bianco,
      * simulando la mossa tramite performeMove, per testare anch'essa sul re
-     *
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -838,8 +815,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testWhiteStandardWinningCondition() {
@@ -854,7 +830,7 @@ public class BitSetStateTest {
 
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
-                    from,
+                        from,
                 })
         );
 
@@ -867,27 +843,26 @@ public class BitSetStateTest {
 
                 }),
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
-                    to,
+                        to,
                 })
         );
 
         fromState.performMove(from.ordinal(), to.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
-        assert(toState.whiteHasWon());
+        assert (fromState.getTurn() == toState.getTurn());
+        assert (toState.whiteHasWon());
     }
+    //endregion
 
-    /*
-     * Test di hasBlackWon
-     */
+    //region hasBlackWon
 
     /**
      * funzione : testBlackStandardWinningCondition
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura standard del re circondato da due pedine nere quando il re
      * non si trova nè in una posizione adiacente al castello, nè dentro di esso
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -907,8 +882,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testBlackStandardWinningCondition() {
@@ -942,8 +916,8 @@ public class BitSetStateTest {
         );
         fromState.performMove(BitSetPosition.A3.ordinal(), BitSetPosition.G3.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
-        assert(fromState.blackHasWon());
+        assert (fromState.getTurn() == toState.getTurn());
+        assert (fromState.blackHasWon());
     }
 
 
@@ -952,8 +926,8 @@ public class BitSetStateTest {
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
      * si trova in una posizione adiacente al castello
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -973,8 +947,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testKingNearCastleBlackWinningCondition() {
@@ -1010,8 +983,8 @@ public class BitSetStateTest {
         );
         fromState.performMove(BitSetPosition.A3.ordinal(), BitSetPosition.E3.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
-        assert(fromState.blackHasWon());
+        assert (fromState.getTurn() == toState.getTurn());
+        assert (fromState.blackHasWon());
     }
 
 
@@ -1020,8 +993,8 @@ public class BitSetStateTest {
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
      * si trova nel castello
-     *
-     *
+     * <p>
+     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -1041,8 +1014,7 @@ public class BitSetStateTest {
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  9
      * +---+---+---+---+---+---+---+---+---+
-     *   A   B   C   D   E   F   G   H   I
-     *
+     * A   B   C   D   E   F   G   H   I
      */
     @org.junit.Test
     public void testKingInCastleBlackWinningCondition() {
@@ -1080,8 +1052,8 @@ public class BitSetStateTest {
         );
         fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
-        assert(fromState.getTurn() == toState.getTurn());
-        assert(fromState.blackHasWon());
+        assert (fromState.getTurn() == toState.getTurn());
+        assert (fromState.blackHasWon());
     }
-
+    //endregion
 }
