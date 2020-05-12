@@ -19,16 +19,6 @@ public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {
     }
 
     @Override
-    public BitSetState getInitialState() {
-        return this.state;
-    }
-
-    @Override
-    public Turn[] getPlayers() {
-        return new Turn[]{Turn.WHITE, Turn.BLACK};
-    }
-
-    @Override
     public Turn getPlayer(BitSetState bitSetState) {
         return bitSetState.getTurn();
     }

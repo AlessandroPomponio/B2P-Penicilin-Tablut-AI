@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActionStore<ACTION> {
-    private List<ACTION> actions;
-    private List<Integer> utilValues;
+    private final List<ACTION> actions;
+    private final List<Integer> utilValues;
 
     public ActionStore(int capacity) {
         actions = new ArrayList<>(capacity);
@@ -26,10 +26,6 @@ public class ActionStore<ACTION> {
 
     public List<ACTION> getActions() {
         return actions;
-    }
-
-    public List<Integer> getUtilValues() {
-        return utilValues;
     }
 
 }

@@ -29,30 +29,26 @@ public class IterativeDeepening implements IAdversarialSearch {
     private int currDepthLimit;
     private Metrics metrics;
 
-    private Turn ourPlayer;
-
     //
-    private ExecutorService executor;
+    private final ExecutorService executor;
 
     /**
      * Creates a new search object for a given game.
-     *
-     * @param game    The game.
+     *  @param game    The game.
      * @param utilMin Utility value of worst state for this player. Supports
      *                evaluation of non-terminal states and early termination in
      *                situations with a safe winner.
      * @param utilMax Utility value of best state for this player. Supports
-     *                evaluation of non-terminal states and early termination in
-     *                situations with a safe winner.
+ *                evaluation of non-terminal states and early termination in
+ *                situations with a safe winner.
      * @param time    Maximum Duration of the search algorithm
      */
-    public IterativeDeepening(TablutGame game, int utilMin, int utilMax, int time, Turn ourPlayer) {
+    public IterativeDeepening(TablutGame game, int utilMin, int utilMax, int time) {
 
         this.game = game;
         this.utilMin = utilMin;
         this.utilMax = utilMax;
         this.timer = new IterativeDeepening.Timer(time);
-        this.ourPlayer = ourPlayer;
 
         //
         executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -76,7 +72,7 @@ public class IterativeDeepening implements IAdversarialSearch {
         Turn player = game.getPlayer(state);
         System.out.println("CURRENT PLAYER: " + game.getPlayer(state));
         metrics = new Metrics();
-        List<BitSetAction> availableActions = orderActions(state, game.getActions(state), player, 0);
+        List<BitSetAction> availableActions = game.getActions(state);
 
         //
         timer.start();
@@ -90,7 +86,7 @@ public class IterativeDeepening implements IAdversarialSearch {
             currDepthLimit++;
             System.out.println("DEPTH LIMIT:" + currDepthLimit);
             heuristicsResults = new ActionStore<>(availableActions.size());
-            ArrayList<Future<Integer>> futureResults = new ArrayList<Future<Integer>>();
+            ArrayList<Future<Integer>> futureResults = new ArrayList<>();
 
             for (BitSetAction action : availableActions) {
 
@@ -154,42 +150,9 @@ public class IterativeDeepening implements IAdversarialSearch {
         return currDepthLimit;
     }
 
-    public Turn getOurPlayer() {
-        return ourPlayer;
-    }
-
     @Override
     public Metrics getMetrics() {
         return metrics;
-    }
-
-    /**
-     * Primitive operation which is used to stop iterative deepening search in
-     * situations where a clear best action exists. This implementation returns
-     * always false.
-     */
-
-    protected boolean isSignificantlyBetter(int newUtility, int utility) {
-        return newUtility / utility > 10;
-    }
-
-    /**
-     * Primitive operation which is used to stop iterative deepening search in
-     * situations where a safe winner has been identified. This implementation
-     * returns true if the given value (for the currently preferred action
-     * result) is the highest or lowest utility value possible.
-     */
-
-    protected boolean hasSafeWinner(int resultUtility) {
-        return resultUtility <= utilMin || resultUtility >= utilMax;
-    }
-
-    /**
-     * Primitive operation for action ordering. This implementation preserves
-     * the original order (provided by the game).
-     */
-    public List<BitSetAction> orderActions(BitSetState state, List<BitSetAction> actions, Turn player, int depth) {
-        return actions;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////
