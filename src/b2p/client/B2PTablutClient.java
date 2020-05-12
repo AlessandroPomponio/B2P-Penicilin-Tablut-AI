@@ -100,9 +100,9 @@ public class B2PTablutClient extends TablutClient {
                 /** TURNO BIANCO **/
                 if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
 
-                    long curMillis = System.currentTimeMillis();
+//                    long curMillis = System.currentTimeMillis();
                     try {
-                        long millis = timeout - (System.currentTimeMillis() - curMillis);
+//                        long millis = timeout - (System.currentTimeMillis() - curMillis);
 /*
                         while (millis > 3000) {
                             curMillis = System.currentTimeMillis();
@@ -117,11 +117,11 @@ public class B2PTablutClient extends TablutClient {
                         }
 */
 
-                        BitSetAction bestMove = (BitSetAction) search.makeDecision(state);
-                        millis -= System.currentTimeMillis() - curMillis;
-                        System.out.println("Thread time duration: " + millis);
+                        BitSetAction bestMove = search.makeDecision(state);
+//                        millis -= System.currentTimeMillis() - curMillis;
+//                        System.out.println("Thread time duration: " + millis);
 
-                        System.out.println("Chosen move: " + bestMove.toString());
+                        System.out.println("Selected move: " + bestMove.toString());
                         // Create move readible from the server
                         Action a = new Action(bestMove.getFrom(), bestMove.getTo(), StateTablut.Turn.valueOf(bestMove.getTurn().name()));
 
@@ -153,7 +153,7 @@ public class B2PTablutClient extends TablutClient {
 
                     long curMillis = System.currentTimeMillis();
                     try {
-                        long millis = timeout - (System.currentTimeMillis() - curMillis);
+//                        long millis = timeout - (System.currentTimeMillis() - curMillis);
 /*
                     while (millis > 3000) {
                         curMillis = System.currentTimeMillis();
@@ -168,11 +168,11 @@ public class B2PTablutClient extends TablutClient {
                     }
 */
 
-                        BitSetAction bestMove = (BitSetAction) search.makeDecision(state);
-                        millis -= System.currentTimeMillis() - curMillis;
-                        System.out.println("Thread time duration: " + millis);
+                        BitSetAction bestMove = search.makeDecision(state);
+//                        millis -= System.currentTimeMillis() - curMillis;
+//                        System.out.println("Thread time duration: " + millis);
 
-                        System.out.println("Chosen move: " + bestMove.toString());
+                        System.out.println("Selected move: " + bestMove.toString());
                         // Create move readible from the server
                         Action a = new Action(bestMove.getFrom(), bestMove.getTo(), StateTablut.Turn.valueOf(bestMove.getTurn().name()));
 

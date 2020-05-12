@@ -56,7 +56,7 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     public int maxValue(BitSetState state, State.Turn player, int alpha, int beta, int depth) {
 
         //
-        strategy.updateMetrics(depth);
+//        strategy.updateMetrics(depth);
 
         if (game.isTerminal(state) || depth >= depthLimit || strategy.getTimer().timeOutOccurred())
             return eval(state, player, depth);
@@ -87,7 +87,7 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     public int minValue(BitSetState state, State.Turn player, int alpha, int beta, int depth) {
 
         //
-        strategy.updateMetrics(depth);
+//        strategy.updateMetrics(depth);
 
         if (game.isTerminal(state) || depth >= depthLimit || strategy.getTimer().timeOutOccurred())
             return eval(state, player, depth);

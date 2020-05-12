@@ -161,6 +161,14 @@ public class IterativeDeepening implements IAdversarialSearch {
 
             }
 
+            for (int i = 0; i < availableActions.size(); i++) {
+
+                if (!futureResults.get(i).isDone()) {
+                    futureResults.get(i).cancel(true);
+                }
+
+            }
+
 //            for (int i = 0; i < availableActions.size(); i++) {
 //
 ////                System.out.print("Future : " + i + " is done? " + futureResults.get(i).isDone());
@@ -205,21 +213,21 @@ public class IterativeDeepening implements IAdversarialSearch {
 //                }
 
 
-                System.out.println("MAXVALUE: " + Collections.max(heuristicsResults.getUtilValues()));
+//                System.out.println("MAXVALUE: " + Collections.max(heuristicsResults.getUtilValues()));
             }
 
 
         } while(!timer.timeOutOccurred());
 
-        System.out.println("Current depth: " + metrics.getCurrDepthLimit() + " Nodes Explored: " + metrics.getNodeExpanded());
-        System.out.println(availableActions);
+//        System.out.println("Current depth: " + metrics.getCurrDepthLimit() + " Nodes Explored: " + metrics.getNodeExpanded());
+//        System.out.println(availableActions);
         return availableActions.get(0);
 
     }
 
-    public synchronized void updateMetrics(int depth) {
-        metrics.updateMetrics(depth);
-    }
+//    public synchronized void updateMetrics(int depth) {
+//        metrics.updateMetrics(depth);
+//    }
 
     public int getUtilMin() {
         return utilMin;
