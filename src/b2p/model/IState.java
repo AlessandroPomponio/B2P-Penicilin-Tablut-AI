@@ -4,12 +4,18 @@ import b2p.state.bitboard.bitset.BitSetAction;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 
 public interface IState {
 
     // Turn getters and setters
     State.Turn getTurn();
     void setTurn(State.Turn turn);
+    
+    BitSet getBlackPawns();
+    BitSet getWhitePawns() ;
+    BitSet getKing();
+    BitSet getBoard();
 
     // Win conditions
     boolean isWinningState();
@@ -25,8 +31,12 @@ public interface IState {
 
     // Heuristics-related functions
     int getHeuristicValue();
+    int getHeuristicValueForPlayer(State.Turn player);
 
     // Utility functions
     IState clone();
+
+
+
 
 }
