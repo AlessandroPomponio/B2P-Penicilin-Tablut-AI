@@ -4,45 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ActionStore<ACTION> {
-
-//    private final PriorityQueue<BitSetAction> actions;
-//
-//    // TODO: CONTROLLARE CHE IL COMPARATORE DI IACTION
-//    // FACCIA IL SUO DOVERE
-//    public ActionStore(int capacity) {
-//        actions = new PriorityQueue<>(capacity);
-//    }
-//
-//    public void add(BitSetAction action, int value) {
-//        action.setValue(value);
-//        actions.add(action);
-//    }
-//
-//    public BitSetAction peekFirstAction() {
-//        return actions.peek();
-//    }
-//
-//    public BitSetAction takeFirstAction() {
-//        return actions.poll();
-//    }
-//
-//    public int size() {
-//        return actions.size();
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "ActionStore{" +
-//                "actions=" + actions.toString() +
-//                '}';
-//    }
-
     private List<ACTION> actions;
     private List<Integer> utilValues;
 
     public ActionStore(int capacity) {
-        actions  = new ArrayList<>(capacity);
-        utilValues  = new ArrayList<>(capacity);
+        actions = new ArrayList<>(capacity);
+        utilValues = new ArrayList<>(capacity);
     }
 
     public synchronized void add(ACTION action, int utilValue) {

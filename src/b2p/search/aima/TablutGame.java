@@ -25,7 +25,7 @@ public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {
 
     @Override
     public Turn[] getPlayers() {
-        return new Turn[] {Turn.WHITE, Turn.BLACK};
+        return new Turn[]{Turn.WHITE, Turn.BLACK};
     }
 
     @Override
@@ -41,8 +41,6 @@ public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {
     @Override
     public BitSetState getResult(BitSetState bitSetState, BitSetAction bitSetAction) {
         BitSetState result = (BitSetState) bitSetState.clone();
-//        // TODO: CONTROLLARE, POTREBBE ESSERE INUTILE
-//        result.setTurn(bitSetAction.getTurn());
         result.performMove(bitSetAction);
         return result;
     }
@@ -60,8 +58,7 @@ public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {
                 return Integer.MIN_VALUE;
             else if (bitSetState.blackHasWon())
                 return Integer.MAX_VALUE;
-        }
-        else {
+        } else {
             if (bitSetState.whiteHasWon())
                 return Integer.MAX_VALUE;
             else if (bitSetState.blackHasWon())
