@@ -14,30 +14,26 @@ import java.io.IOException;
 
 public class B2PTablutClient extends TablutClient {
 
+    private static final String PLAYER_NAME = "B2P";
     private final int timeout;
 
-    public B2PTablutClient(String player, String name, int timeout, String ipAddress) throws IOException {
-        super(player, name, timeout, ipAddress);
-        this.timeout = timeout;
-    }
-
     public B2PTablutClient(String player, int timeout, String ipAddress) throws IOException {
-        super(player, "B2P", timeout, ipAddress);
+        super(player, PLAYER_NAME, timeout, ipAddress);
         this.timeout = timeout;
     }
 
     public B2PTablutClient(String player, String ipAddress) throws IOException {
-        super(player, "B2P", 60000, ipAddress);
+        super(player, PLAYER_NAME, 60000, ipAddress);
         this.timeout = 60000;
     }
 
     public B2PTablutClient(String player) throws IOException {
-        super(player, "B2P", 60000);
+        super(player, PLAYER_NAME, 60000);
         this.timeout = 60000;
     }
 
     public B2PTablutClient(String player, int timeout) throws IOException {
-        super(player, "B2P", timeout);
+        super(player, PLAYER_NAME, timeout);
         this.timeout = timeout;
     }
 
