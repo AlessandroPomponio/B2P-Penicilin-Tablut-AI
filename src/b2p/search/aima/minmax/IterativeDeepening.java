@@ -1,7 +1,7 @@
 package b2p.search.aima.minmax;
 
-import b2p.state.bitboard.bitset.BitSetAction;
-import b2p.state.bitboard.bitset.BitSetState;
+import b2p.model.IAction;
+import b2p.model.IState;
 import b2p.search.aima.ActionStore;
 import b2p.search.aima.IAdversarialSearch;
 import b2p.search.aima.Metrics;
@@ -55,7 +55,7 @@ public class IterativeDeepening implements IAdversarialSearch {
 
     }
 
-    public void setGameState(BitSetState state) {
+    public void setGameState(IState state) {
         game.setState(state);
     }
 
@@ -66,20 +66,20 @@ public class IterativeDeepening implements IAdversarialSearch {
      * subsequent depth-limited search runs.
      */
     @Override
-    public BitSetAction makeDecision(BitSetState state) {
+    public IAction makeDecision(IState state) {
 
         //
         Turn player = game.getPlayer(state);
         System.out.println("CURRENT PLAYER: " + game.getPlayer(state));
         metrics = new Metrics();
-        List<BitSetAction> availableActions = game.getActions(state);
+        List<IAction> availableActions = game.getActions(state);
 
         //
         timer.start();
         currDepthLimit = 0;
 
         //
-        ActionStore<BitSetAction> heuristicsResults;
+        ActionStore<IAction> heuristicsResults;
 
         do {
 
@@ -88,7 +88,7 @@ public class IterativeDeepening implements IAdversarialSearch {
             heuristicsResults = new ActionStore<>(availableActions.size());
             ArrayList<Future<Integer>> futureResults = new ArrayList<>();
 
-            for (BitSetAction action : availableActions) {
+            for (IAction action : availableActions) {
 
                 futureResults.add(executor.submit(new MinMaxAlphaBetaSearch(this, state, action, player)));
 
@@ -98,7 +98,7 @@ public class IterativeDeepening implements IAdversarialSearch {
 
                 try {
 
-                    BitSetAction action = availableActions.get(i);
+                    IAction action = availableActions.get(i);
                     int heuristicValue = futureResults.get(i).get();
 
                     action.setValue(heuristicValue);

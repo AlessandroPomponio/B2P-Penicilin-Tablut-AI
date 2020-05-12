@@ -6,11 +6,9 @@ import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 public class BitSetState implements IState {
-
-    //
-    public static final int boardDimension = 9 * 9;
 
     //
     private Turn turn;
@@ -121,9 +119,9 @@ public class BitSetState implements IState {
     }
 
     @Override
-    public ArrayList<BitSetAction> getAvailablePawnMoves() {
+    public List<IAction> getAvailablePawnMoves() {
 
-        ArrayList<BitSetAction> moves;
+        List<IAction> moves;
 
         if (turn == Turn.BLACK) {
 
@@ -148,7 +146,7 @@ public class BitSetState implements IState {
     }
 
     @Override
-    public ArrayList<BitSetAction> getAvailableKingMoves() {
+    public List<IAction> getAvailableKingMoves() {
 
         // We need this for tests but do we need it
         // in production?
@@ -240,6 +238,8 @@ public class BitSetState implements IState {
     public BitSet getBoard() {
         return board;
     }
+
+    public static int getBoardDimension() { return boardDimension; }
 
     @Override
     public Turn getTurn() {

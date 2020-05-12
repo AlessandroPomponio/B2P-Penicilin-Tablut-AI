@@ -1,12 +1,14 @@
 package b2p.model;
 
-import b2p.state.bitboard.bitset.BitSetAction;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 
-import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 public interface IState {
+
+    //
+    int boardDimension = 9 * 9;
 
     // Turn getters and setters
     State.Turn getTurn();
@@ -26,8 +28,8 @@ public interface IState {
     void performMove(IAction action);
     void performMove(String from, String to);
     void performMove(int from, int to);
-    ArrayList<BitSetAction> getAvailablePawnMoves();
-    ArrayList<BitSetAction> getAvailableKingMoves();
+    List<IAction> getAvailablePawnMoves();
+    List<IAction> getAvailableKingMoves();
 
     // Heuristics-related functions
     int getHeuristicValue();

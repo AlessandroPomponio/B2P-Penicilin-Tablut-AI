@@ -1,5 +1,7 @@
 package b2p.state.bitboard.bitset;
 
+import b2p.model.IAction;
+import b2p.model.IState;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.ArrayList;
@@ -8,11 +10,11 @@ import java.util.List;
 
 public class BitSetMove {
 
-    public static ArrayList<BitSetAction> getMovesForPawn(int pawnPosition, BitSetState state) {
+    public static List<IAction> getMovesForPawn(int pawnPosition, IState state) {
 
         // 16 is the maximum amount of moves we can possibly have:
         // it ensures no further allocations are needed
-        ArrayList<BitSetAction> moves = new ArrayList<>(16);
+        List<IAction> moves = new ArrayList<>(16);
         BitSetPosition from = BitSetPosition.values()[pawnPosition];
 
         //
@@ -49,7 +51,7 @@ public class BitSetMove {
         }
 
         // Down
-        for (int cell = pawnPosition + 9; cell < BitSetState.boardDimension; cell += 9) {
+        for (int cell = pawnPosition + 9; cell < IState.boardDimension; cell += 9) {
 
             // When we find a forbidden cell, we can stop
             if (forbiddenCells.get(cell))
@@ -81,7 +83,7 @@ public class BitSetMove {
 
             // Make sure we don't end up out of the board
             // or one row below in column A
-            for (int cell = pawnPosition + 1; cell < BitSetState.boardDimension && cell % 9 != 0; cell++) {
+            for (int cell = pawnPosition + 1; cell < IState.boardDimension && cell % 9 != 0; cell++) {
 
                 // When we find a forbidden cell, we can stop
                 if (forbiddenCells.get(cell))
@@ -97,7 +99,7 @@ public class BitSetMove {
 
     }
 
-    public static BitSet getCapturedPawns(int from, int to, BitSetState state) {
+    public static BitSet getCapturedPawns(int from, int to, IState state) {
 
         if (state.getTurn() == Turn.BLACK)
             return getCapturesForBlack(from, to, state);
@@ -106,7 +108,7 @@ public class BitSetMove {
 
     }
 
-    private static BitSet getCapturesForBlack(int from, int to, BitSetState state) {
+    private static BitSet getCapturesForBlack(int from, int to, IState state) {
 
         //
         BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
@@ -116,7 +118,7 @@ public class BitSetMove {
         BitSet whites = BitSetUtils.copy(state.getWhitePawns());
 
         //
-        BitSet specialCaptures = new BitSet(BitSetState.boardDimension);
+        BitSet specialCaptures = new BitSet(IState.boardDimension);
         blacks.set(to);
 
         // Check if the king needs a special capture
@@ -196,7 +198,7 @@ public class BitSetMove {
 
     }
 
-    private static BitSet getCapturesForWhite(int from, int to, BitSetState state) {
+    private static BitSet getCapturesForWhite(int from, int to, IState state) {
 
         BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
         BitSet whites = BitSetUtils.copy(state.getWhitePawns());
@@ -209,7 +211,7 @@ public class BitSetMove {
 
     private static BitSet getNormalCaptures(int position, BitSet attack, BitSet defense) {
 
-        BitSet captured = new BitSet(BitSetState.boardDimension);
+        BitSet captured = new BitSet(IState.boardDimension);
 
         //Check UP
         int oneUpCell = position - 9;
@@ -253,14 +255,14 @@ public class BitSetMove {
 
         //Check DOWN
         int oneDownCell = position + 9;
-        if (oneDownCell < BitSetState.boardDimension && defense.get(oneDownCell)) {
+        if (oneDownCell < IState.boardDimension && defense.get(oneDownCell)) {
 
             // If the defense pawn isn't in the last row
             // to be captured it can:
             //   - have an attack pawn below
             //   - have the castle below
             //   - be inside of a camp
-            if (oneDownCell < BitSetState.boardDimension - 8) {
+            if (oneDownCell < IState.boardDimension - 8) {
 
                 int twoDownCell = oneDownCell + 9;
                 if (attack.get(twoDownCell) || BitSetPosition.obstacles.get(twoDownCell)) {
@@ -294,13 +296,13 @@ public class BitSetMove {
         return captured;
     }
 
-    public static int kingEscapesInOneMove(BitSetState state) {
+    public static int kingEscapesInOneMove(IState state) {
 
-        List<BitSetAction> moves = getMovesForPawn(state.getKing().nextSetBit(0), state);
+        List<IAction> moves = getMovesForPawn(state.getKing().nextSetBit(0), state);
         int escapes = 0;
 
         // Check if one of the escape cells is in our reach
-        for (BitSetAction move : moves) {
+        for (IAction move : moves) {
             if (BitSetPosition.escapeHashSet.contains(move.getTo()))
                 escapes++;
         }
@@ -309,20 +311,20 @@ public class BitSetMove {
 
     }
 
-    public static boolean kingHasMoreThanOneEscapePath(BitSetState state) {
+    public static boolean kingHasMoreThanOneEscapePath(IState state) {
 
-        List<BitSetAction> moves = state.getAvailableKingMoves();
+        List<IAction> moves = state.getAvailableKingMoves();
         int escapes;
 
         // Check if one of the escape cells is in our reach
-        for (BitSetAction move : moves) {
+        for (IAction move : moves) {
 
-            BitSetState newState = (BitSetState) state.clone();
+            IState newState = state.clone();
             newState.performMove(move);
 
-            List<BitSetAction> newMoves = newState.getAvailableKingMoves();
+            List<IAction> newMoves = newState.getAvailableKingMoves();
             escapes = 0;
-            for (BitSetAction newMove : newMoves) {
+            for (IAction newMove : newMoves) {
 
                 if (BitSetPosition.escapeHashSet.contains(newMove.getTo()))
                     escapes++;
@@ -338,7 +340,7 @@ public class BitSetMove {
 
     }
 
-    public static int positionWeights(BitSetState state) {
+    public static int positionWeights(IState state) {
 
             final int WHITE_PAWNS_MULTIPLIER = 1;
             final int BLACK_PAWNS_MULTIPLIER = 1;
@@ -360,14 +362,14 @@ public class BitSetMove {
 
     }
 
-    public static int whiteCellInStrategicPosition(BitSetState state) {
+    public static int whiteCellInStrategicPosition(IState state) {
         //
         BitSet result = BitSetUtils.copy(state.getWhitePawns());
         result.and(BitSetPosition.whiteEarlyGameStrategicCells);
         return result.cardinality();
     }
 
-    public static int kingStatus(BitSetState state) {
+    public static int kingStatus(IState state) {
         //
         BitSet king = BitSetUtils.copy(state.getKing());
         BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
@@ -466,11 +468,11 @@ public class BitSetMove {
 
     }
 
-    public static int kingMoves(BitSetState state) {
+    public static int kingMoves(IState state) {
         return state.getAvailableKingMoves().size();
     }
 
-    public static int blackPawnsOutOfCamps(BitSetState state) {
+    public static int blackPawnsOutOfCamps(IState state) {
 
         //
         BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
@@ -479,7 +481,7 @@ public class BitSetMove {
         return 16 - blacks.cardinality();
     }
 
-    public static int diagonalBlackCouples(BitSetState state) {
+    public static int diagonalBlackCouples(IState state) {
 
         //
         BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
@@ -521,7 +523,7 @@ public class BitSetMove {
         return result >> 1;
     }
 
-    public static int whitePawnsAdjacentKing(BitSetState state) {
+    public static int whitePawnsAdjacentKing(IState state) {
 
         //
         BitSet king = BitSetUtils.copy(state.getKing());
@@ -567,7 +569,7 @@ public class BitSetMove {
         return 0;
     }
 
-    public static int dangerToKing(BitSetState state) {
+    public static int dangerToKing(IState state) {
 
         //
         BitSet king = BitSetUtils.copy(state.getKing());
@@ -624,11 +626,11 @@ public class BitSetMove {
         }
     }
 
-    public static int movesNeededForKingEscape(BitSetState state) {
+    public static int movesNeededForKingEscape(IState state) {
         return movesNeededForKingEscape_rec(state, 1);
     }
 
-    private static int movesNeededForKingEscape_rec(BitSetState state, int step) {
+    private static int movesNeededForKingEscape_rec(IState state, int step) {
 
         // Cutoff if we've searched already enough
         if (step > 3)
@@ -638,10 +640,10 @@ public class BitSetMove {
             return step;
 
         // King moves
-        ArrayList<BitSetAction> moves = getMovesForPawn(state.getKing().nextSetBit(0), state);
+        List<IAction> moves = getMovesForPawn(state.getKing().nextSetBit(0), state);
 
         // Check if one of the escape cells is in our reach
-        for (BitSetAction move : moves) {
+        for (IAction move : moves) {
             if (BitSetPosition.escapeHashSet.contains(move.getTo()))
                 return step;
         }
@@ -653,9 +655,9 @@ public class BitSetMove {
         // Perform iteratively all the moves the king has
         // and check how long it takes us to get to an escape cell
         int shortestEscape = 50;
-        for (BitSetAction move : moves) {
+        for (IAction move : moves) {
 
-            BitSetState newState = (BitSetState) state.clone();
+            IState newState = state.clone();
             newState.performMove(move);
 
             int movesFromThisPosition = movesNeededForKingEscape_rec(newState, step+1);

@@ -1,47 +1,47 @@
 package b2p.search.aima;
 
-import b2p.state.bitboard.bitset.BitSetAction;
-import b2p.state.bitboard.bitset.BitSetState;
+import b2p.model.IAction;
+import b2p.model.IState;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.List;
 
-public class TablutGame implements IGame<BitSetState, BitSetAction, Turn> {
+public class TablutGame implements IGame<IState, IAction, Turn> {
 
-    private BitSetState state;
+    private IState state;
 
-    public TablutGame(BitSetState state) {
+    public TablutGame(IState state) {
         this.state = state;
     }
 
-    public void setState(BitSetState state) {
+    public void setState(IState state) {
         this.state = state;
     }
 
     @Override
-    public Turn getPlayer(BitSetState bitSetState) {
+    public Turn getPlayer(IState bitSetState) {
         return bitSetState.getTurn();
     }
 
     @Override
-    public List<BitSetAction> getActions(BitSetState bitSetState) {
+    public List<IAction> getActions(IState bitSetState) {
         return bitSetState.getAvailablePawnMoves();
     }
 
     @Override
-    public BitSetState getResult(BitSetState bitSetState, BitSetAction bitSetAction) {
-        BitSetState result = (BitSetState) bitSetState.clone();
+    public IState getResult(IState bitSetState, IAction bitSetAction) {
+        IState result = bitSetState.clone();
         result.performMove(bitSetAction);
         return result;
     }
 
     @Override
-    public boolean isTerminal(BitSetState bitSetState) {
+    public boolean isTerminal(IState bitSetState) {
         return bitSetState.isWinningState();
     }
 
     @Override
-    public int getUtility(BitSetState bitSetState, Turn turn) {
+    public int getUtility(IState bitSetState, Turn turn) {
 
         if (turn == Turn.BLACK) {
             if (bitSetState.whiteHasWon())

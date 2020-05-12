@@ -1,5 +1,6 @@
 package b2p.client;
 
+import b2p.model.IAction;
 import b2p.search.aima.TablutGame;
 import b2p.search.aima.minmax.IterativeDeepening;
 import b2p.state.bitboard.bitset.BitSetAction;
@@ -99,7 +100,7 @@ public class B2PTablutClient extends TablutClient {
     private void searchAndSubmitAction(BitSetState state, IterativeDeepening search) {
         try {
 
-            BitSetAction bestMove = search.makeDecision(state);
+            IAction bestMove = search.makeDecision(state);
 
             System.out.println("Selected move: " + bestMove.toString());
 

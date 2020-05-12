@@ -1,7 +1,7 @@
 package b2p.state.bitboard.bitset.test;
 
-import b2p.search.aima.TablutGame;
-import b2p.search.aima.minmax.IterativeDeepening;
+import b2p.model.IAction;
+import b2p.model.IState;
 import b2p.state.bitboard.bitset.*;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +14,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BitSetMoveTest {
 
     //region getMovesForPawn
-
     /**
      * funzione : testGetMovesForWhitePawnsAtStart
      * testa la funzione getMovesForPawn per tutte le pedine bianche allo stato iniziale della partita
@@ -44,11 +43,11 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetMovesForWhitePawnsAtStart() {
 
-        BitSetState start = new BitSetState();
-        BitSetAction[] expected;
-        BitSetAction[] actual;
+        IState start = new BitSetState();
+        IAction[] expected;
+        IAction[] actual;
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("E3", "D3", Turn.WHITE),
                 new BitSetAction("E3", "C3", Turn.WHITE),
                 new BitSetAction("E3", "B3", Turn.WHITE),
@@ -58,10 +57,10 @@ public class BitSetMoveTest {
                 new BitSetAction("E3", "H3", Turn.WHITE),
                 new BitSetAction("E3", "I3", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.E3.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E3.ordinal(), start).toArray(new IAction[0]);
         Assertions.assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("E4", "D4", Turn.WHITE),
                 new BitSetAction("E4", "C4", Turn.WHITE),
                 new BitSetAction("E4", "B4", Turn.WHITE),
@@ -69,10 +68,10 @@ public class BitSetMoveTest {
                 new BitSetAction("E4", "G4", Turn.WHITE),
                 new BitSetAction("E4", "H4", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.E4.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E4.ordinal(), start).toArray(new IAction[0]);
         assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("C5", "C4", Turn.WHITE),
                 new BitSetAction("C5", "C3", Turn.WHITE),
                 new BitSetAction("C5", "C2", Turn.WHITE),
@@ -82,10 +81,10 @@ public class BitSetMoveTest {
                 new BitSetAction("C5", "C8", Turn.WHITE),
                 new BitSetAction("C5", "C9", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.C5.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.C5.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("D5", "D4", Turn.WHITE),
                 new BitSetAction("D5", "D3", Turn.WHITE),
                 new BitSetAction("D5", "D2", Turn.WHITE),
@@ -93,16 +92,16 @@ public class BitSetMoveTest {
                 new BitSetAction("D5", "D7", Turn.WHITE),
                 new BitSetAction("D5", "D8", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.D5.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.D5.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
 
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.E5.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E5.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("F5", "F4", Turn.WHITE),
                 new BitSetAction("F5", "F3", Turn.WHITE),
                 new BitSetAction("F5", "F2", Turn.WHITE),
@@ -110,10 +109,10 @@ public class BitSetMoveTest {
                 new BitSetAction("F5", "F7", Turn.WHITE),
                 new BitSetAction("F5", "F8", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.F5.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.F5.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("G5", "G4", Turn.WHITE),
                 new BitSetAction("G5", "G3", Turn.WHITE),
                 new BitSetAction("G5", "G2", Turn.WHITE),
@@ -123,10 +122,10 @@ public class BitSetMoveTest {
                 new BitSetAction("G5", "G8", Turn.WHITE),
                 new BitSetAction("G5", "G9", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("E6", "D6", Turn.WHITE),
                 new BitSetAction("E6", "C6", Turn.WHITE),
                 new BitSetAction("E6", "B6", Turn.WHITE),
@@ -134,10 +133,10 @@ public class BitSetMoveTest {
                 new BitSetAction("E6", "G6", Turn.WHITE),
                 new BitSetAction("E6", "H6", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.E6.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E6.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("E7", "D7", Turn.WHITE),
                 new BitSetAction("E7", "C7", Turn.WHITE),
                 new BitSetAction("E7", "B7", Turn.WHITE),
@@ -147,7 +146,7 @@ public class BitSetMoveTest {
                 new BitSetAction("E7", "H7", Turn.WHITE),
                 new BitSetAction("E7", "I7", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.E7.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E7.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
     }
 
@@ -181,13 +180,13 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetMovesForBlackPawnsAtStart() {
 
-        BitSetState start = new BitSetState();
-        BitSetAction[] expected;
-        BitSetAction[] actual;
+        IState start = new BitSetState();
+        IAction[] expected;
+        IAction[] actual;
 
         start.setTurn(Turn.BLACK);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("D1", "D2", Turn.BLACK),
                 new BitSetAction("D1", "D3", Turn.BLACK),
                 new BitSetAction("D1", "D4", Turn.BLACK),
@@ -195,16 +194,16 @@ public class BitSetMoveTest {
                 new BitSetAction("D1", "B1", Turn.BLACK),
                 new BitSetAction("D1", "A1", Turn.BLACK),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.D1.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.D1.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
 
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.E1.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E1.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("F1", "F2", Turn.BLACK),
                 new BitSetAction("F1", "F3", Turn.BLACK),
                 new BitSetAction("F1", "F4", Turn.BLACK),
@@ -212,10 +211,10 @@ public class BitSetMoveTest {
                 new BitSetAction("F1", "H1", Turn.BLACK),
                 new BitSetAction("F1", "I1", Turn.BLACK),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.F1.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.F1.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("E2", "D2", Turn.BLACK),
                 new BitSetAction("E2", "C2", Turn.BLACK),
                 new BitSetAction("E2", "B2", Turn.BLACK),
@@ -225,7 +224,7 @@ public class BitSetMoveTest {
                 new BitSetAction("E2", "H2", Turn.BLACK),
                 new BitSetAction("E2", "I2", Turn.BLACK),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.E2.ordinal(), start).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.E2.ordinal(), start).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
     }
 
@@ -260,10 +259,10 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testCampCollision() {
 
-        BitSetAction[] expected;
-        BitSetAction[] actual;
+        IAction[] expected;
+        IAction[] actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.I2,
@@ -277,13 +276,13 @@ public class BitSetMoveTest {
                 })
         );
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("H2", "H3", Turn.WHITE),
                 new BitSetAction("H2", "H4", Turn.WHITE),
                 new BitSetAction("H2", "G2", Turn.WHITE),
                 new BitSetAction("H2", "F2", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.H2.ordinal(), current).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.H2.ordinal(), current).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
     }
 
@@ -317,10 +316,10 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testCastleCollision() {
 
-        BitSetAction[] expected;
-        BitSetAction[] actual;
+        IAction[] expected;
+        IAction[] actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.G3,
@@ -334,12 +333,12 @@ public class BitSetMoveTest {
                 })
         );
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("G5", "G4", Turn.WHITE),
                 new BitSetAction("G5", "G6", Turn.WHITE),
                 new BitSetAction("G5", "F5", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
     }
 
@@ -373,10 +372,10 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testBorderCollision() {
 
-        BitSetAction[] expected;
-        BitSetAction[] actual;
+        IAction[] expected;
+        IAction[] actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
@@ -389,13 +388,13 @@ public class BitSetMoveTest {
                 })
         );
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("I1", "I2", Turn.WHITE),
                 new BitSetAction("I1", "I3", Turn.WHITE),
                 new BitSetAction("I1", "H1", Turn.WHITE),
                 new BitSetAction("I1", "G1", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.I1.ordinal(), current).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.I1.ordinal(), current).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
     }
 
@@ -429,10 +428,10 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testKingCollisions() {
 
-        BitSetAction[] expected;
-        BitSetAction[] actual;
+        IAction[] expected;
+        IAction[] actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
@@ -456,7 +455,7 @@ public class BitSetMoveTest {
                 new BitSetAction("G5", "G9", Turn.WHITE),
                 new BitSetAction("G5", "F5", Turn.WHITE),
         };
-        actual = BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(new BitSetAction[]{});
+        actual = BitSetMove.getMovesForPawn(BitSetPosition.G5.ordinal(), current).toArray(new IAction[]{});
         assertArrayEquals(expected, actual);
     }
     //endregion
@@ -496,7 +495,7 @@ public class BitSetMoveTest {
         BitSet expected;
         BitSet actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.F3,
@@ -550,7 +549,7 @@ public class BitSetMoveTest {
         BitSet expected;
         BitSet actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.F3,
@@ -605,7 +604,7 @@ public class BitSetMoveTest {
         BitSet expected;
         BitSet actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.F3,
@@ -663,7 +662,7 @@ public class BitSetMoveTest {
         BitSet expected;
         BitSet actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.F3,
@@ -724,7 +723,7 @@ public class BitSetMoveTest {
         BitSet expected;
         BitSet actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.F5,
@@ -778,7 +777,7 @@ public class BitSetMoveTest {
         BitSet expected;
         BitSet actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.H5,
@@ -834,7 +833,7 @@ public class BitSetMoveTest {
         BitSet expected;
         BitSet actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.I4,
@@ -889,7 +888,7 @@ public class BitSetMoveTest {
         BitSet expected;
         BitSet actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.G5,
@@ -943,7 +942,7 @@ public class BitSetMoveTest {
         BitSet expected;
         BitSet actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.E4,
@@ -1000,7 +999,7 @@ public class BitSetMoveTest {
         BitSet expected;
         BitSet actual;
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.E3,
@@ -1057,7 +1056,7 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testMovesNeededForKingEscapeNoMoves() {
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.F2,
@@ -1107,7 +1106,7 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testMovesNeededForKingEscapeOneMove() {
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
@@ -1154,7 +1153,7 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testMovesNeededForKingEscapeTwoMoves() {
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
@@ -1201,7 +1200,7 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testMovesNeededForKingEscapeThreeMoves() {
 
-        BitSetState current = new BitSetState(
+        IState current = new BitSetState(
                 Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.F2,
@@ -1223,80 +1222,4 @@ public class BitSetMoveTest {
     }
     //endregion
 
-
-    //region full game tests
-    @org.junit.Test
-    public void testKingCaptureForBlacksInGame() {
-
-
-        BitSet blacks = BitSetUtils.newFromPositions(new BitSetPosition[]{
-                BitSetPosition.F1,
-
-                BitSetPosition.D3, BitSetPosition.E3, BitSetPosition.F3,
-                BitSetPosition.C4, BitSetPosition.G4,
-                BitSetPosition.A5, BitSetPosition.B5, BitSetPosition.I5,
-                BitSetPosition.C6, BitSetPosition.G6,
-                BitSetPosition.D7, BitSetPosition.F7,
-                BitSetPosition.E8,
-                BitSetPosition.E9
-        });
-
-        BitSet whites = BitSetUtils.newFromPositions(new BitSetPosition[]{BitSetPosition.D5});
-        BitSet king = BitSetUtils.newFromPositions(new BitSetPosition[]{BitSetPosition.E5});
-
-        BitSetState state = new BitSetState(Turn.BLACK, blacks, whites, king, 25);
-        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 10, Turn.BLACK);
-        BitSetAction bestMove = search.makeDecision(state);
-
-
-    }
-
-
-    @org.junit.Test
-    public void testKingInThroneCapture() {
-
-        BitSetState state = BitSetUtils.newFromServerString(
-                "OOOOBOOWO" +
-                        "OOOOOOOOW" +
-                        "OOOBOBOOW" +
-                        "OOBOBOBOO" +
-                        "OOOBKBOOB" +
-                        "OOBOOOBOO" +
-                        "OOOBOBOOO" +
-                        "OOOOBOOOO" +
-                        "OWWOBOOOO", Turn.BLACK, 31);
-
-        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 15, Turn.BLACK);
-        BitSetAction bestMove = search.makeDecision(state);
-    }
-
-    @org.junit.Test
-    public void testFakeWinningSituation() {
-
-        BitSet blacks = BitSetUtils.newFromPositions(new BitSetPosition[]{
-                BitSetPosition.D1, BitSetPosition.E1,
-                BitSetPosition.E2,
-
-                BitSetPosition.D4, BitSetPosition.G4,
-                BitSetPosition.A5, BitSetPosition.C5, BitSetPosition.D5, BitSetPosition.F5, BitSetPosition.I5,
-                BitSetPosition.A6, BitSetPosition.I6,
-
-                BitSetPosition.E8,
-                BitSetPosition.E9, BitSetPosition.F9,
-        });
-
-        BitSet whites = BitSetUtils.newFromPositions(new BitSetPosition[]{
-                BitSetPosition.D3, BitSetPosition.G3,
-                BitSetPosition.F4,
-                BitSetPosition.C6, BitSetPosition.F6,
-                BitSetPosition.C7,
-        });
-
-        BitSet king = BitSetUtils.newFromPositions(new BitSetPosition[]{BitSetPosition.E4});
-
-        BitSetState state = new BitSetState(Turn.BLACK, blacks, whites, king, 14);
-        IterativeDeepening search = new IterativeDeepening(new TablutGame(state), Integer.MIN_VALUE, Integer.MAX_VALUE, 0, Turn.BLACK);
-        BitSetAction bestMove = search.makeDecision(state);
-    }
-    //endregion
 }

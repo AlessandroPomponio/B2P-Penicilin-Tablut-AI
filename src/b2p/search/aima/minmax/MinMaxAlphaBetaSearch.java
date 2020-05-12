@@ -1,7 +1,7 @@
 package b2p.search.aima.minmax;
 
-import b2p.state.bitboard.bitset.BitSetAction;
-import b2p.state.bitboard.bitset.BitSetState;
+import b2p.model.IAction;
+import b2p.model.IState;
 import b2p.search.aima.TablutGame;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 
@@ -16,15 +16,15 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     private TablutGame game;
 
     //
-    private BitSetState state;
-    private BitSetAction action;
+    private IState state;
+    private IAction action;
     private State.Turn player;
 
     //
     private final int utilMin, utilMax;
     private final int depthLimit;
 
-    protected MinMaxAlphaBetaSearch(IterativeDeepening strategy, BitSetState state, BitSetAction action, State.Turn player) {
+    protected MinMaxAlphaBetaSearch(IterativeDeepening strategy, IState state, IAction action, State.Turn player) {
 
         //
         super();
@@ -50,7 +50,7 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     }
 
     // Maximizer for Minimax with alpha/beta pruning
-    public int maxValue(BitSetState state, State.Turn player, int alpha, int beta, int depth) {
+    public int maxValue(IState state, State.Turn player, int alpha, int beta, int depth) {
 
         if (game.isTerminal(state) || depth >= depthLimit || strategy.getTimer().timeOutOccurred())
             return eval(state, player);
@@ -58,7 +58,7 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
         // The worst case for the maximizer is the minimum value
         int value = utilMin;
 
-        for (BitSetAction action : game.getActions(state)) {
+        for (IAction action : game.getActions(state)) {
 
             // Min/Max depth-first
             int minimizerValue = minValue(game.getResult(state, action), player, alpha, beta, depth + 1);
@@ -78,7 +78,7 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     }
 
     // Minimizer for Minimax with alpha/beta pruning
-    public int minValue(BitSetState state, State.Turn player, int alpha, int beta, int depth) {
+    public int minValue(IState state, State.Turn player, int alpha, int beta, int depth) {
 
         if (game.isTerminal(state) || depth >= depthLimit || strategy.getTimer().timeOutOccurred())
             return eval(state, player);
@@ -86,7 +86,7 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
         // The worst case scenario for the minimizer is Maxvalue
         int value = utilMax;
 
-        for (BitSetAction action : game.getActions(state)) {
+        for (IAction action : game.getActions(state)) {
 
             // Min/Max depth-first
             int maximizerValue = maxValue(game.getResult(state, action), player, alpha, beta, depth + 1);
@@ -105,7 +105,7 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
 
     }
 
-    private int eval(BitSetState state, State.Turn player) {
+    private int eval(IState state, State.Turn player) {
 
         return game.getUtility(state, player);
 
