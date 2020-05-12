@@ -46,17 +46,14 @@ public class BitSetStateTest {
         BitSetAction[] actual;
 
         BitSetState current = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.H3,
                         BitSetPosition.G4,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.H4,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
         expected = new BitSetAction[]{
 
@@ -100,19 +97,16 @@ public class BitSetStateTest {
         BitSetAction[] actual;
 
         BitSetState current = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.G8,
                         BitSetPosition.H8,
                         BitSetPosition.I8,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.G9,
                         BitSetPosition.I9,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
         expected = new BitSetAction[]{
                 new BitSetAction("G9", "H9", Turn.WHITE),
@@ -157,29 +151,23 @@ public class BitSetStateTest {
 
         String from = "D3", to = "F3";
         BitSetState fromState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.D3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.F3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.BLACK
         );
 
         fromState.performMove(new BitSetAction(from, to, Turn.WHITE));
@@ -219,29 +207,23 @@ public class BitSetStateTest {
 
         String from = "D7", to = "F7";
         BitSetState fromState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.D7,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.F7,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.BLACK
         );
 
         fromState.performMove(from, to);
@@ -280,29 +262,23 @@ public class BitSetStateTest {
     public void testPerformMoveStandard() {
 
         BitSetState fromState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.D3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.F3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.BLACK
         );
 
         fromState.performMove(BitSetPosition.D3.ordinal(), BitSetPosition.F3.ordinal());
@@ -392,7 +368,6 @@ public class BitSetStateTest {
     public void testPerformMoveFromMatch() {
 
         BitSetState initialState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.D1,
                         BitSetPosition.E1,
@@ -410,8 +385,7 @@ public class BitSetStateTest {
                         BitSetPosition.D9,
                         BitSetPosition.E9,
                         BitSetPosition.F9,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.D2,
                         BitSetPosition.D4,
                         BitSetPosition.C5,
@@ -420,14 +394,12 @@ public class BitSetStateTest {
                         BitSetPosition.G5,
                         BitSetPosition.E6,
                         BitSetPosition.E7,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         BitSetPosition.E5
-                })
+                }), Turn.BLACK
         );
 
         BitSetState finalState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.C1,
                         BitSetPosition.E1,
@@ -445,8 +417,7 @@ public class BitSetStateTest {
                         BitSetPosition.D9,
                         BitSetPosition.E9,
                         BitSetPosition.F9,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.D2,
                         BitSetPosition.D4,
                         BitSetPosition.C5,
@@ -455,10 +426,9 @@ public class BitSetStateTest {
                         BitSetPosition.G5,
                         BitSetPosition.E6,
                         BitSetPosition.E7,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         BitSetPosition.E3,
-                })
+                }), Turn.BLACK
         );
 
         initialState.performMove(new BitSetAction("D1", "C1", Turn.BLACK));
@@ -500,31 +470,25 @@ public class BitSetStateTest {
     public void testPerformMoveNoCaptureBetweenPawns() {
 
         BitSetState fromState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.D3,
                         BitSetPosition.F3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.E4,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.D3,
                         BitSetPosition.F3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.E3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.BLACK
         );
 
         fromState.performMove(BitSetPosition.E4.ordinal(), BitSetPosition.E3.ordinal());
@@ -564,29 +528,23 @@ public class BitSetStateTest {
     public void testPerformMoveNoCaptureBetweenPawnAndCamp() {
 
         BitSetState fromState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.F3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.I2,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.F3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.F2,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.BLACK
         );
 
         fromState.performMove(BitSetPosition.I2.ordinal(), BitSetPosition.F2.ordinal());
@@ -626,29 +584,23 @@ public class BitSetStateTest {
     public void testPerformMoveNoCaptureBetweenPawnAndCastle() {
 
         BitSetState fromState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.G5,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.F8,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
                         BitSetPosition.F5,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.BLACK
         );
 
         fromState.performMove(BitSetPosition.F8.ordinal(), BitSetPosition.F5.ordinal());
@@ -689,31 +641,25 @@ public class BitSetStateTest {
     public void testKingInCastleIllegalCapture() {
 
         BitSetState fromState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.A4,
                         BitSetPosition.E6,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         BitSetPosition.E5,
-                })
+                }), Turn.BLACK
         );
 
         BitSetState toState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.E4,
                         BitSetPosition.E6,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         BitSetPosition.E5
-                })
+                }), Turn.WHITE
         );
         fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
@@ -754,33 +700,27 @@ public class BitSetStateTest {
     public void testKingInCastleIllegalSpecialCapture() {
 
         BitSetState fromState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.D5,
                         BitSetPosition.F5,
                         BitSetPosition.A4,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         BitSetPosition.E5,
-                })
+                }), Turn.BLACK
         );
 
         BitSetState toState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.E4,
                         BitSetPosition.D5,
                         BitSetPosition.F5,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         BitSetPosition.E5
-                })
+                }), Turn.WHITE
         );
         fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
@@ -822,29 +762,23 @@ public class BitSetStateTest {
         BitSetPosition from = BitSetPosition.D3, to = BitSetPosition.I3;
 
         BitSetState fromState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         from,
-                })
+                }), Turn.WHITE
         );
 
         BitSetState toState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         to,
-                })
+                }), Turn.BLACK
         );
 
         fromState.performMove(from.ordinal(), to.ordinal());
@@ -888,31 +822,25 @@ public class BitSetStateTest {
     public void testBlackStandardWinningCondition() {
 
         BitSetState fromState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.A3,
                         BitSetPosition.I3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         BitSetPosition.H3,
-                })
+                }), Turn.BLACK
         );
 
         BitSetState toState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.G3,
                         BitSetPosition.I3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
         fromState.performMove(BitSetPosition.A3.ordinal(), BitSetPosition.G3.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
@@ -953,33 +881,27 @@ public class BitSetStateTest {
     public void testKingNearCastleBlackWinningCondition() {
 
         BitSetState fromState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.D4,
                         BitSetPosition.F4,
                         BitSetPosition.A3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         BitSetPosition.E4,
-                })
+                }), Turn.BLACK
         );
 
         BitSetState toState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.D4,
                         BitSetPosition.F4,
                         BitSetPosition.E3,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
         fromState.performMove(BitSetPosition.A3.ordinal(), BitSetPosition.E3.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));
@@ -1020,35 +942,29 @@ public class BitSetStateTest {
     public void testKingInCastleBlackWinningCondition() {
 
         BitSetState fromState = new BitSetState(
-                Turn.BLACK,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.D5,
                         BitSetPosition.F5,
                         BitSetPosition.A4,
                         BitSetPosition.E6,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
                         BitSetPosition.E5,
-                })
+                }), Turn.BLACK
         );
 
         BitSetState toState = new BitSetState(
-                Turn.WHITE,
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
                         BitSetPosition.D5,
                         BitSetPosition.F5,
                         BitSetPosition.E4,
                         BitSetPosition.E6,
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine bianche
 
-                }),
-                BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
+                }), BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizione della pedina king
 
-                })
+                }), Turn.WHITE
         );
         fromState.performMove(BitSetPosition.A4.ordinal(), BitSetPosition.E4.ordinal());
         assertEquals(BitSetUtils.toBitString(toState.getBoard()), BitSetUtils.toBitString(fromState.getBoard()));

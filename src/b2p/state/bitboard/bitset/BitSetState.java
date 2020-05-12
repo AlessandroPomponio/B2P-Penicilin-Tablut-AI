@@ -15,38 +15,42 @@ public class BitSetState implements IState {
     private int turnAmt = 0;
 
     //
-    private final BitSet blackPawns;
-    private final BitSet whitePawns;
-    private final BitSet king;
-    private final BitSet board;
+    private final B2PBitSet blackPawns;
+    private final B2PBitSet whitePawns;
+    private final B2PBitSet king;
+    private final B2PBitSet board;
 
-    public BitSetState(Turn turn, BitSet blackPawns, BitSet whitePawns, BitSet king) {
+    // region Constructors
+    public BitSetState(B2PBitSet blackPawns, B2PBitSet whitePawns, B2PBitSet king, Turn turn) {
 
+        //
         this.turn = turn;
         this.blackPawns = blackPawns;
         this.whitePawns = whitePawns;
         this.king = king;
-        this.board = new BitSet(boardDimension);
 
+        //
+        this.board = new B2PBitSet(boardDimension);
         board.or(blackPawns);
         board.or(whitePawns);
         board.or(king);
 
     }
 
-    public BitSetState(Turn turn, BitSet blackPawns, BitSet whitePawns, BitSet king, int turnAmt) {
-        this(turn, blackPawns, whitePawns, king);
+    public BitSetState(B2PBitSet blackPawns, B2PBitSet whitePawns, B2PBitSet king, Turn turn, int turnAmt) {
+        this(blackPawns, whitePawns, king, turn);
         this.turnAmt = turnAmt;
     }
 
     public BitSetState() {
         this(
-                Turn.WHITE,
                 BitSetStartingBoard.blackStartingBitSet,
                 BitSetStartingBoard.whiteStartingBitSet,
-                BitSetStartingBoard.kingStartingBitSet
+                BitSetStartingBoard.kingStartingBitSet,
+                Turn.WHITE
         );
     }
+    //endregion
 
     //region Win conditions
     @Override
@@ -118,6 +122,12 @@ public class BitSetState implements IState {
 
     }
 
+    public BitSetState simulateMove(IAction action) {
+        BitSetState result = (BitSetState) this.clone();
+        result.performMove(action);
+        return result;
+    }
+
     @Override
     public List<IAction> getAvailablePawnMoves() {
 
@@ -148,8 +158,6 @@ public class BitSetState implements IState {
     @Override
     public List<IAction> getAvailableKingMoves() {
 
-        // We need this for tests but do we need it
-        // in production?
         int kingPosition = king.nextSetBit(0);
         if (kingPosition == -1)
             return new ArrayList<>();
@@ -184,12 +192,9 @@ public class BitSetState implements IState {
 
         //
         int pieceDifference =  blackPawns.cardinality() - (whitePawns.cardinality() + king.cardinality());
+        int strategicBlacks = blackPawns.getAndResult(BitSetPosition.blackStrategicCells).cardinality();
 
         //
-        BitSet blacks = BitSetUtils.copy(blackPawns);
-        blacks.and(BitSetPosition.blackStrategicCells);
-        int strategicBlacks = blacks.cardinality();
-
         return strategicBlacks + 2*(pieceDifference-7)+ BitSetMove.dangerToKing(this);
 
     }
@@ -211,14 +216,11 @@ public class BitSetState implements IState {
     // Utility functions
     @Override
     public IState clone() {
-
-        BitSet blacks = BitSetUtils.copy(this.blackPawns);
-        BitSet whites = BitSetUtils.copy(this.whitePawns);
-        BitSet king = BitSetUtils.copy(this.king);
-        Turn turn = this.turn;
-
-        return new BitSetState(turn, blacks, whites, king, turnAmt);
-
+        return new BitSetState(blackPawns.clone(),
+                whitePawns.clone(),
+                king.clone(),
+                turn,
+                turnAmt);
     }
     //
 
@@ -238,8 +240,6 @@ public class BitSetState implements IState {
     public BitSet getBoard() {
         return board;
     }
-
-    public static int getBoardDimension() { return boardDimension; }
 
     @Override
     public Turn getTurn() {

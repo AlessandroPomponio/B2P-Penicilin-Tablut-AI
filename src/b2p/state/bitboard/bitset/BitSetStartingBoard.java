@@ -85,17 +85,17 @@ public class BitSetStartingBoard {
     //endregion
 
     //region Starting BitSets
-    public static final BitSet blackStartingBitSet = BitSetUtils.newFromPositions(blackStartingBoard);
-    public static final BitSet whiteStartingBitSet = BitSetUtils.newFromPositions(whiteStartingBoard);
-    public static final BitSet kingStartingBitSet = BitSetUtils.newFromPositions(kingStartingBoard);
+    public static final B2PBitSet blackStartingBitSet = BitSetUtils.newFromPositions(blackStartingBoard);
+    public static final B2PBitSet whiteStartingBitSet = BitSetUtils.newFromPositions(whiteStartingBoard);
+    public static final B2PBitSet kingStartingBitSet = BitSetUtils.newFromPositions(kingStartingBoard);
     //endregion
 
     // region quadrant bitsets
-    public static final BitSet topLeftQuadrant = BitSetUtils.newFromPositions(topLeftQuadrantMask);
-    public static final BitSet topRightQuadrant = BitSetUtils.newFromPositions(topRightQuadrantMask);
-    public static final BitSet bottomLeftQuadrant = BitSetUtils.newFromPositions(bottomLeftQuadrantMask);
-    public static final BitSet bottomRightQuadrant = BitSetUtils.newFromPositions(bottomRightQuadrantMask);
-    public static final BitSet[] quadrants = {topLeftQuadrant, topRightQuadrant, bottomLeftQuadrant, bottomRightQuadrant};
+    public static final B2PBitSet topLeftQuadrant = BitSetUtils.newFromPositions(topLeftQuadrantMask);
+    public static final B2PBitSet topRightQuadrant = BitSetUtils.newFromPositions(topRightQuadrantMask);
+    public static final B2PBitSet bottomLeftQuadrant = BitSetUtils.newFromPositions(bottomLeftQuadrantMask);
+    public static final B2PBitSet bottomRightQuadrant = BitSetUtils.newFromPositions(bottomRightQuadrantMask);
+    public static final B2PBitSet[] quadrants = {topLeftQuadrant, topRightQuadrant, bottomLeftQuadrant, bottomRightQuadrant};
     //endregion
 
 }

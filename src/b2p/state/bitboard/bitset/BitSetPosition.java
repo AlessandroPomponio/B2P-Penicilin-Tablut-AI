@@ -242,18 +242,18 @@ public enum BitSetPosition {
     public static final int[][] kingBuff = { kingTopLeftWeight, kingTopRightWeight, kingBottomLeftWeight, kingBottomRightWeight };
 
     //region Special BitSets
-    public static final BitSet camps = BitSetUtils.newFromPositions(campCells);
-    public static final BitSet escape = BitSetUtils.newFromPositions(escapeCells);
-    public static final BitSet castle = BitSetUtils.newFromPositions(castleCells);
-    public static final BitSet obstacles = BitSetUtils.newFromPositions(obstacleCells);
-    public static final BitSet specialKingCells = BitSetUtils.newFromPositions(kingSpecialCells);
-    public static final BitSet kingSurrounded = BitSetUtils.newFromPositions(kingSurroundedCells);
-    public static final BitSet kingInE4Surrounded = BitSetUtils.newFromPositions(kingInE4SurroundedCells);
-    public static final BitSet kingInD5Surrounded = BitSetUtils.newFromPositions(kingInD5SurroundedCells);
-    public static final BitSet kingInE6Surrounded = BitSetUtils.newFromPositions(kingInE6SurroundedCells);
-    public static final BitSet kingInF5Surrounded = BitSetUtils.newFromPositions(kingInF5SurroundedCells);
-    public static final BitSet blackStrategicCells = BitSetUtils.newFromPositions(strategicBlackCells);
-    public static final BitSet whiteEarlyGameStrategicCells = BitSetUtils.newFromPositions(earlyGameStrategicWhiteCells);
+    public static final B2PBitSet camps = BitSetUtils.newFromPositions(campCells);
+    public static final B2PBitSet escape = BitSetUtils.newFromPositions(escapeCells);
+    public static final B2PBitSet castle = BitSetUtils.newFromPositions(castleCells);
+    public static final B2PBitSet obstacles = BitSetUtils.newFromPositions(obstacleCells);
+    public static final B2PBitSet specialKingCells = BitSetUtils.newFromPositions(kingSpecialCells);
+    public static final B2PBitSet kingSurrounded = BitSetUtils.newFromPositions(kingSurroundedCells);
+    public static final B2PBitSet kingInE4Surrounded = BitSetUtils.newFromPositions(kingInE4SurroundedCells);
+    public static final B2PBitSet kingInD5Surrounded = BitSetUtils.newFromPositions(kingInD5SurroundedCells);
+    public static final B2PBitSet kingInE6Surrounded = BitSetUtils.newFromPositions(kingInE6SurroundedCells);
+    public static final B2PBitSet kingInF5Surrounded = BitSetUtils.newFromPositions(kingInF5SurroundedCells);
+    public static final B2PBitSet blackStrategicCells = BitSetUtils.newFromPositions(strategicBlackCells);
+    public static final B2PBitSet whiteEarlyGameStrategicCells = BitSetUtils.newFromPositions(earlyGameStrategicWhiteCells);
     //endregion
     
     public static final HashSet<String> escapeHashSet = new HashSet<>(Arrays.asList(
