@@ -1,4 +1,4 @@
-<project name="B2P - Tablut AI" basedir="." default="test">
+<project name="B2P-Penicillin" basedir="." default="test">
 
     <property name="src.dir"     value="src"/>
     <property name="galassi.dir" value="AGalassi"/>
@@ -53,10 +53,10 @@
         <junit printsummary="yes" haltonfailure="yes">
             <classpath refid="classpath" />
             <classpath>
-                <pathelement location="${build.dir}/jar/B2P - Tablut AI.jar" />
+                <pathelement location="${build.dir}/jar/B2P-Penicillin.jar" />
             </classpath>
             <batchtest fork="no">
-                <zipfileset src="${build.dir}/jar/B2P - Tablut AI.jar" includes="**/test/*Test.class" />
+                <zipfileset src="${build.dir}/jar/B2P-Penicillin.jar" includes="**/test/*Test.class" />
             </batchtest>
         </junit>
     </target>
