@@ -6,8 +6,6 @@ import b2p.state.bitboard.bitset.*;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 import org.junit.jupiter.api.Assertions;
 
-import java.util.BitSet;
-
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -432,7 +430,7 @@ public class BitSetMoveTest {
                 }), Turn.WHITE
         );
 
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("G5", "G4", Turn.WHITE),
                 new BitSetAction("G5", "G3", Turn.WHITE),
                 new BitSetAction("G5", "G2", Turn.WHITE),

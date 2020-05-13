@@ -1,5 +1,6 @@
 package b2p.state.bitboard.bitset.test;
 
+import b2p.model.IAction;
 import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetPosition;
 import b2p.state.bitboard.bitset.BitSetState;
@@ -42,8 +43,8 @@ public class BitSetStateTest {
     @org.junit.Test
     public void testGetAvailablePawnMovesEmpty() {
 
-        BitSetAction[] expected;
-        BitSetAction[] actual;
+        IAction[] expected;
+        IAction[] actual;
 
         BitSetState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -55,10 +56,10 @@ public class BitSetStateTest {
 
                 }), Turn.WHITE
         );
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
 
         };
-        actual = current.getAvailablePawnMoves().toArray(new BitSetAction[]{});
+        actual = current.getAvailablePawnMoves().toArray(new IAction[]{});
 
         assertArrayEquals(expected, actual);
     }
@@ -93,8 +94,8 @@ public class BitSetStateTest {
     @org.junit.Test
     public void testCollisionGetAvailablePawnMoves() {
 
-        BitSetAction[] expected;
-        BitSetAction[] actual;
+        IAction[] expected;
+        IAction[] actual;
 
         BitSetState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -108,11 +109,11 @@ public class BitSetStateTest {
 
                 }), Turn.WHITE
         );
-        expected = new BitSetAction[]{
+        expected = new IAction[]{
                 new BitSetAction("G9", "H9", Turn.WHITE),
                 new BitSetAction("I9", "H9", Turn.WHITE),
         };
-        actual = current.getAvailablePawnMoves().toArray(new BitSetAction[]{});
+        actual = current.getAvailablePawnMoves().toArray(new IAction[]{});
 
         assertArrayEquals(expected, actual);
     }
