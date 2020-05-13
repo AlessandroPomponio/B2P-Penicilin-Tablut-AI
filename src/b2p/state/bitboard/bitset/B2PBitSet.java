@@ -8,13 +8,13 @@ public class B2PBitSet extends BitSet {
         super(dimension);
     }
 
-    public B2PBitSet getAndResult(B2PBitSet input) {
+    public B2PBitSet andResult(B2PBitSet input) {
         B2PBitSet result = this.clone();
         result.and(input);
         return result;
     }
 
-    public B2PBitSet getAndNotResult(B2PBitSet input) {
+    public B2PBitSet andNotResult(B2PBitSet input) {
         B2PBitSet result = this.clone();
         result.andNot(input);
         return result;
