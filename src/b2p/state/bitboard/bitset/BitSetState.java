@@ -122,7 +122,7 @@ public class BitSetState implements IState {
 
     }
 
-    public BitSetState simulateMove(IAction action) {
+    public IState simulateMove(IAction action) {
         BitSetState result = (BitSetState) this.clone();
         result.performMove(action);
         return result;
