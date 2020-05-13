@@ -275,53 +275,20 @@ public enum BitSetPosition {
 
         int maxDifference = -1;
         int bestQuadrant = 0;
-        int pieceDifference ;
+        int pieceDifference, whitesInQuadrant, blacksInQuadrant;
 
-        // top left
-        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
-        BitSet whites = BitSetUtils.copy(state.getWhitePawns());
-        blacks.and(BitSetStartingBoard.topLeftQuadrant);
-        whites.and(BitSetStartingBoard.topLeftQuadrant);
-        pieceDifference = whites.cardinality() - blacks.cardinality();
+        for (int i = 0; i < 4; i++) {
 
-        if(pieceDifference > maxDifference) {
-            maxDifference = pieceDifference;
-            bestQuadrant = TOP_LEFT_QUADRANT;
-        }
+            //
+            whitesInQuadrant = state.getWhitePawns().andResult(BitSetStartingBoard.quadrants[i]).cardinality();
+            blacksInQuadrant = state.getBlackPawns().andResult(BitSetStartingBoard.quadrants[i]).cardinality();
 
-        // top left
-        blacks = BitSetUtils.copy(state.getBlackPawns());
-        whites = BitSetUtils.copy(state.getWhitePawns());
-        blacks.and(BitSetStartingBoard.topRightQuadrant);
-        whites.and(BitSetStartingBoard.topRightQuadrant);
-        pieceDifference = whites.cardinality() - blacks.cardinality();
+            pieceDifference = whitesInQuadrant - blacksInQuadrant;
+            if(pieceDifference > maxDifference) {
+                maxDifference = pieceDifference;
+                bestQuadrant = i;
+            }
 
-        if(pieceDifference > maxDifference) {
-            maxDifference = pieceDifference;
-            bestQuadrant = TOP_RIGHT_QUADRANT;
-        }
-
-        // bottom left
-        blacks = BitSetUtils.copy(state.getBlackPawns());
-        whites = BitSetUtils.copy(state.getWhitePawns());
-        blacks.and(BitSetStartingBoard.bottomLeftQuadrant);
-        whites.and(BitSetStartingBoard.bottomRightQuadrant);
-        pieceDifference = whites.cardinality() - blacks.cardinality();
-
-        if(pieceDifference > maxDifference) {
-            maxDifference = pieceDifference;
-            bestQuadrant = BOTTOM_LEFT_QUADRANT;
-        }
-
-        // bottom right
-        blacks = BitSetUtils.copy(state.getBlackPawns());
-        whites = BitSetUtils.copy(state.getWhitePawns());
-        blacks.and(BitSetStartingBoard.bottomRightQuadrant);
-        whites.and(BitSetStartingBoard.bottomRightQuadrant);
-        pieceDifference = whites.cardinality() - blacks.cardinality();
-
-        if(pieceDifference > maxDifference) {
-            bestQuadrant = BOTTOM_RIGHT_QUADRANT;
         }
 
         return bestQuadrant;

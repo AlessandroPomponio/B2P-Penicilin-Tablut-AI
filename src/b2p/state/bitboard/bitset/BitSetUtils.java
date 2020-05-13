@@ -112,8 +112,4 @@ public class BitSetUtils {
 
     }
 
-    public static BitSet copy(BitSet input) {
-        return (BitSet) input.clone();
-    }
-
 }
