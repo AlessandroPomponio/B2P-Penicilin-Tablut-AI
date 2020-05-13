@@ -3,6 +3,7 @@ package b2p.state.bitboard.bitset;
 import b2p.model.IAction;
 import b2p.model.IState;
 import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
+import org.hamcrest.core.Is;
 
 import java.util.ArrayList;
 import java.util.BitSet;
@@ -18,7 +19,7 @@ public class BitSetMove {
         BitSetPosition from = BitSetPosition.values()[pawnPosition];
 
         //
-        BitSet forbiddenCells = BitSetUtils.copy(state.getBoard());
+        B2PBitSet forbiddenCells = state.getBoard().clone();
 
         // The castle cell is forbidden to step on
         forbiddenCells.set(BitSetPosition.E5.ordinal());
@@ -111,14 +112,14 @@ public class BitSetMove {
     private static B2PBitSet getCapturesForBlack(int from, int to, IState state) {
 
         //
-        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+        B2PBitSet blacks = state.getBlackPawns().clone();
         blacks.clear(from);
 
-        BitSet king = BitSetUtils.copy(state.getKing());
-        BitSet whites = BitSetUtils.copy(state.getWhitePawns());
+        B2PBitSet king = state.getKing().clone();
+        B2PBitSet whites = state.getWhitePawns().clone();
 
         //
-        BitSet specialCaptures = new BitSet(IState.boardDimension);
+        B2PBitSet specialCaptures = new B2PBitSet(IState.boardDimension);
         blacks.set(to);
 
         // Check if the king needs a special capture
@@ -130,60 +131,43 @@ public class BitSetMove {
             // surrounded by 4 black soldiers
             if (kingPosition == BitSetPosition.E5.ordinal()) {
 
-                BitSet tempBlacks = BitSetUtils.copy(blacks);
-                tempBlacks.and(BitSetPosition.kingSurrounded);
-                if (tempBlacks.cardinality() == 4)
+                if (blacks.andResult(BitSetPosition.kingSurrounded).cardinality() == 4)
                     specialCaptures.set(BitSetPosition.E5.ordinal());
 
             } else  {
+
+                B2PBitSet result = new B2PBitSet(IState.boardDimension);
 
                 switch (kingPosition) {
 
                     // BitSetPosition.E4.ordinal() = 31
                     case 31:
 
-                        BitSet e4Check = BitSetUtils.copy(blacks);
-                        e4Check.and(BitSetPosition.kingInE4Surrounded);
-
-                        if (e4Check.cardinality() == 3)
-                            specialCaptures.set(king.nextSetBit(0));
-
+                        result = blacks.andResult(BitSetPosition.kingInE4Surrounded);
                         break;
 
                     // BitSetPosition.D5.ordinal() = 39
                     case 39:
 
-                        BitSet d5Check = BitSetUtils.copy(blacks);
-                        d5Check.and(BitSetPosition.kingInD5Surrounded);
-
-                        if (d5Check.cardinality() == 3)
-                            specialCaptures.set(king.nextSetBit(0));
-
+                        result = blacks.andResult(BitSetPosition.kingInD5Surrounded);
                         break;
 
                     // BitSetPosition.E6.ordinal() = 49
                     case 49:
 
-                        BitSet e6Check = BitSetUtils.copy(blacks);
-                        e6Check.and(BitSetPosition.kingInE6Surrounded);
-
-                        if (e6Check.cardinality() == 3)
-                            specialCaptures.set(king.nextSetBit(0));
-
+                        result = blacks.andResult(BitSetPosition.kingInE6Surrounded);
                         break;
 
                     // BitSetPosition.F5.ordinal() = 41
                     case 41:
 
-                        BitSet f5Check = BitSetUtils.copy(blacks);
-                        f5Check.and(BitSetPosition.kingInF5Surrounded);
-
-                        if (f5Check.cardinality() == 3)
-                            specialCaptures.set(king.nextSetBit(0));
-
+                        result = blacks.andResult(BitSetPosition.kingInF5Surrounded);
                         break;
 
                 }
+
+                if (result.cardinality() == 3)
+                    specialCaptures.set(kingPosition);
 
             }
 
@@ -200,8 +184,8 @@ public class BitSetMove {
 
     private static B2PBitSet getCapturesForWhite(int from, int to, IState state) {
 
-        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
-        BitSet whites = BitSetUtils.copy(state.getWhitePawns());
+        B2PBitSet blacks = state.getBlackPawns().clone();
+        B2PBitSet whites = state.getWhitePawns().clone();
         whites.or(state.getKing());
         whites.clear(from);
 
@@ -313,18 +297,16 @@ public class BitSetMove {
 
     public static boolean kingHasMoreThanOneEscapePath(IState state) {
 
-        List<IAction> moves = state.getAvailableKingMoves();
         int escapes;
 
         // Check if one of the escape cells is in our reach
-        for (IAction move : moves) {
+        for (IAction move : state.getAvailableKingMoves()) {
 
-            IState newState = state.clone();
-            newState.performMove(move);
-
-            List<IAction> newMoves = newState.getAvailableKingMoves();
+            //
             escapes = 0;
-            for (IAction newMove : newMoves) {
+
+            //
+            for (IAction newMove : state.simulateMove(move).getAvailableKingMoves()) {
 
                 if (BitSetPosition.escapeHashSet.contains(newMove.getTo()))
                     escapes++;
@@ -346,34 +328,30 @@ public class BitSetMove {
             final int BLACK_PAWNS_MULTIPLIER = 1;
 
             int sumOfWeights = 0;
-            BitSet whiteMask = BitSetUtils.copy(state.getWhitePawns());
-            BitSet blackMask = BitSetUtils.copy(state.getBlackPawns());
+            B2PBitSet whiteMask = state.getWhitePawns().clone();
+            B2PBitSet blackMask = state.getBlackPawns().clone();
 
             for (int i = whiteMask.nextSetBit(0); i >= 0; i = whiteMask.nextSetBit(i + 1)) {
-
                 sumOfWeights += WHITE_PAWNS_MULTIPLIER * (BitSetPosition.whitePawnCellWeight[i] /*+ BitSetPosition.kingBuff[quadrant][i]*/);
             }
 
             for (int i = blackMask.nextSetBit(0); i >= 0; i = blackMask.nextSetBit(i + 1)) {
-
                 sumOfWeights -= BLACK_PAWNS_MULTIPLIER * (BitSetPosition.blackPawnCellWeight[i] /*+ BitSetPosition.kingBuff[quadrant][i]*/);
             }
+
             return sumOfWeights;
 
     }
 
     public static int whiteCellInStrategicPosition(IState state) {
-        //
-        BitSet result = BitSetUtils.copy(state.getWhitePawns());
-        result.and(BitSetPosition.whiteEarlyGameStrategicCells);
-        return result.cardinality();
+        return state.getWhitePawns().andResult(BitSetPosition.whiteEarlyGameStrategicCells).cardinality();
     }
 
     public static int kingStatus(IState state) {
         //
-        BitSet king = BitSetUtils.copy(state.getKing());
-        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
-        BitSet whites = BitSetUtils.copy(state.getWhitePawns());
+        B2PBitSet king = state.getKing().clone();
+        B2PBitSet blacks = state.getBlackPawns().clone();
+        B2PBitSet whites = state.getWhitePawns().clone();
 
         // Special capture needed
         if (king.intersects(BitSetPosition.specialKingCells)) {
@@ -473,22 +451,18 @@ public class BitSetMove {
     }
 
     public static int blackPawnsOutOfCamps(IState state) {
-
-        //
-        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
-        blacks.and(BitSetPosition.camps);
-
-        return 16 - blacks.cardinality();
+        return 16 - state.getBlackPawns().andResult(BitSetPosition.camps).cardinality();
     }
 
     public static int diagonalBlackCouples(IState state) {
 
         //
-        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+        B2PBitSet blacks = state.getBlackPawns().clone();
         int iColumn, iRow;
         int result = 0;
 
         for (int i = blacks.nextSetBit(0); i >= 0; i = blacks.nextSetBit(i + 1)) {
+
             iColumn = i % 9;
             iRow = i / 9;
 
@@ -526,8 +500,8 @@ public class BitSetMove {
     public static int whitePawnsAdjacentKing(IState state) {
 
         //
-        BitSet king = BitSetUtils.copy(state.getKing());
-        BitSet whites = BitSetUtils.copy(state.getWhitePawns());
+        B2PBitSet king = state.getKing().clone();
+        B2PBitSet whites = state.getWhitePawns().clone();
         int kingPosition = king.nextSetBit(0);
         int kingColumn = kingPosition % 9;
         int result = 0;
@@ -572,8 +546,8 @@ public class BitSetMove {
     public static int dangerToKing(IState state) {
 
         //
-        BitSet king = BitSetUtils.copy(state.getKing());
-        BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
+        B2PBitSet king = state.getKing().clone();
+        B2PBitSet blacks = state.getBlackPawns().clone();
 
         // Special capture needed
         if (king.intersects(BitSetPosition.specialKingCells)) {
