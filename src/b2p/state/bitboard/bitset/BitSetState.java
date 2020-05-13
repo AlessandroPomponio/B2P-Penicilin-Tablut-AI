@@ -170,13 +170,7 @@ public class BitSetState implements IState {
     //region Heuristics-related functions
     @Override
     public int getHeuristicValue() {
-
-        if (turn == Turn.BLACK) {
-            return blackHeuristic();
-        }
-
-        return -blackHeuristic();
-
+        return getHeuristicValueForPlayer(turn);
     }
 
     public int getHeuristicValueForPlayer(Turn player) {
@@ -192,7 +186,7 @@ public class BitSetState implements IState {
 
         //
         int pieceDifference =  blackPawns.cardinality() - (whitePawns.cardinality() + king.cardinality());
-        int strategicBlacks = blackPawns.getAndResult(BitSetPosition.blackStrategicCells).cardinality();
+        int strategicBlacks = blackPawns.andResult(BitSetPosition.blackStrategicCells).cardinality();
 
         //
         return strategicBlacks + 2*(pieceDifference-7)+ BitSetMove.dangerToKing(this);
