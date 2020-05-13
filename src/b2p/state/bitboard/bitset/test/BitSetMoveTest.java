@@ -531,8 +531,8 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsSingleCapture() {
 
-        BitSet expected;
-        BitSet actual;
+        B2PBitSet expected;
+        B2PBitSet actual;
 
         IState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -583,8 +583,8 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsDoubleCapture() {
 
-        BitSet expected;
-        BitSet actual;
+        B2PBitSet expected;
+        B2PBitSet actual;
 
         IState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -638,8 +638,8 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsTripleCapture() {
 
-        BitSet expected;
-        BitSet actual;
+        B2PBitSet expected;
+        B2PBitSet actual;
 
         IState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -696,8 +696,8 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsCastleLegalCapture() {
 
-        BitSet expected;
-        BitSet actual;
+        B2PBitSet expected;
+        B2PBitSet actual;
 
         IState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -747,8 +747,8 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsCampLegalCapture() {
 
-        BitSet expected;
-        BitSet actual;
+        B2PBitSet expected;
+        B2PBitSet actual;
 
         IState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -800,8 +800,8 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsCampIllegalCapture() {
 
-        BitSet expected;
-        BitSet actual;
+        B2PBitSet expected;
+        B2PBitSet actual;
 
         IState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -852,8 +852,8 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsOutOfCampCapture() {
 
-        BitSet expected;
-        BitSet actual;
+        B2PBitSet expected;
+        B2PBitSet actual;
 
         IState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -903,8 +903,8 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsKingInCastle() {
 
-        BitSet expected;
-        BitSet actual;
+        B2PBitSet expected;
+        B2PBitSet actual;
 
         IState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere
@@ -957,8 +957,8 @@ public class BitSetMoveTest {
     @org.junit.Test
     public void testGetCapturedPawnsKingOutOfCastle() {
 
-        BitSet expected;
-        BitSet actual;
+        B2PBitSet expected;
+        B2PBitSet actual;
 
         IState current = new BitSetState(
                 BitSetUtils.newFromPositions(new BitSetPosition[]{      // Posizioni delle pedine nere

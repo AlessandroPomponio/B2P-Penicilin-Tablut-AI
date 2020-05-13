@@ -99,7 +99,7 @@ public class BitSetMove {
 
     }
 
-    public static BitSet getCapturedPawns(int from, int to, IState state) {
+    public static B2PBitSet getCapturedPawns(int from, int to, IState state) {
 
         if (state.getTurn() == Turn.BLACK)
             return getCapturesForBlack(from, to, state);
@@ -108,7 +108,7 @@ public class BitSetMove {
 
     }
 
-    private static BitSet getCapturesForBlack(int from, int to, IState state) {
+    private static B2PBitSet getCapturesForBlack(int from, int to, IState state) {
 
         //
         BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
@@ -192,13 +192,13 @@ public class BitSetMove {
         }
 
         // Normal captures
-        BitSet captures = getNormalCaptures(to, blacks, whites);
+        B2PBitSet captures = getNormalCaptures(to, blacks, whites);
         captures.or(specialCaptures);
         return captures;
 
     }
 
-    private static BitSet getCapturesForWhite(int from, int to, IState state) {
+    private static B2PBitSet getCapturesForWhite(int from, int to, IState state) {
 
         BitSet blacks = BitSetUtils.copy(state.getBlackPawns());
         BitSet whites = BitSetUtils.copy(state.getWhitePawns());
@@ -209,9 +209,9 @@ public class BitSetMove {
 
     }
 
-    private static BitSet getNormalCaptures(int position, BitSet attack, BitSet defense) {
+    private static B2PBitSet getNormalCaptures(int position, BitSet attack, BitSet defense) {
 
-        BitSet captured = new BitSet(IState.boardDimension);
+        B2PBitSet captured = new B2PBitSet(IState.boardDimension);
 
         //Check UP
         int oneUpCell = position - 9;

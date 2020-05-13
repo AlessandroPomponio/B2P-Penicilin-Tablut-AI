@@ -225,19 +225,19 @@ public class BitSetState implements IState {
     //
 
     //region Getters and setters
-    public BitSet getBlackPawns() {
+    public B2PBitSet getBlackPawns() {
         return blackPawns;
     }
 
-    public BitSet getWhitePawns() {
+    public B2PBitSet getWhitePawns() {
         return whitePawns;
     }
 
-    public BitSet getKing() {
+    public B2PBitSet getKing() {
         return king;
     }
 
-    public BitSet getBoard() {
+    public B2PBitSet getBoard() {
         return board;
     }
 
