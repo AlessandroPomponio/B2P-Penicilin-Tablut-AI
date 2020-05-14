@@ -3,7 +3,6 @@ package b2p.model;
 import b2p.state.bitboard.bitset.B2PBitSet;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 
-import java.util.BitSet;
 import java.util.List;
 
 public interface IState {
