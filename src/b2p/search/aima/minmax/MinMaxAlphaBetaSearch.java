@@ -10,15 +10,15 @@ import java.util.concurrent.*;
 public class MinMaxAlphaBetaSearch implements Callable<Integer> {
 
     //
-    private IterativeDeepening strategy;
+    private final IterativeDeepening strategy;
 
     //
-    private TablutGame game;
+    private final TablutGame game;
 
     //
-    private IState state;
-    private IAction action;
-    private State.Turn player;
+    private final IState state;
+    private final IAction action;
+    private final State.Turn player;
 
     //
     private final int utilMin, utilMax;
@@ -52,6 +52,10 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     // Maximizer for Minimax with alpha/beta pruning
     public int maxValue(IState state, State.Turn player, int alpha, int beta, int depth) {
 
+        //
+        strategy.getMetrics().updateMetrics(depth);
+
+        //
         if (game.isTerminal(state) || depth >= depthLimit || strategy.getTimer().timeOutOccurred())
             return eval(state, player);
 
@@ -80,6 +84,10 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     // Minimizer for Minimax with alpha/beta pruning
     public int minValue(IState state, State.Turn player, int alpha, int beta, int depth) {
 
+        //
+        strategy.getMetrics().updateMetrics(depth);
+
+        //
         if (game.isTerminal(state) || depth >= depthLimit || strategy.getTimer().timeOutOccurred())
             return eval(state, player);
 
@@ -106,9 +114,7 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     }
 
     private int eval(IState state, State.Turn player) {
-
         return game.getUtility(state, player);
-
     }
 
     @Override

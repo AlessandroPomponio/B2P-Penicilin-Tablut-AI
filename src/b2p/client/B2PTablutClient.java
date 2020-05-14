@@ -68,10 +68,10 @@ public class B2PTablutClient extends TablutClient {
                 System.exit(1);
             }
 
-            System.out.println("TURNO CORRENTE: " + turn);
+            System.out.println("----- TURN " + turn + " -----");
             System.out.println("Current state:");
             serverState = this.getCurrentState();
-            System.out.println(serverState.toString());
+            System.out.println(serverState.toString() + "\n");
 
             state = BitSetUtils.newFromServer((StateTablut) serverState, turn);
             search.setGameState(state);
@@ -79,7 +79,6 @@ public class B2PTablutClient extends TablutClient {
             if (this.getPlayer().equals(State.Turn.WHITE)) {
 
                 if (this.getCurrentState().getTurn().equals(StateTablut.Turn.WHITE)) {
-
                     searchAndSubmitAction(state, search);
                 } else {
                     printTurnComment(state, "YOU WIN!", "YOU LOSE!");
@@ -88,7 +87,6 @@ public class B2PTablutClient extends TablutClient {
             } else {
 
                 if (this.getCurrentState().getTurn().equals(StateTablut.Turn.BLACK)) {
-
                     searchAndSubmitAction(state, search);
                 } else {
                     printTurnComment(state, "YOU LOSE!", "YOU WIN!");
@@ -101,11 +99,8 @@ public class B2PTablutClient extends TablutClient {
         try {
 
             IAction bestMove = search.makeDecision(state);
-
-            System.out.println("Selected move: " + bestMove.toString());
-
+            System.out.println("The move that has been selected is: " + bestMove.toString() + "\n");
             Action a = new Action(bestMove.getFrom(), bestMove.getTo(), StateTablut.Turn.valueOf(bestMove.getTurn().name()));
-
             this.write(a);
 
         } catch (Exception e) {

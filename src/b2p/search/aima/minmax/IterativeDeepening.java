@@ -19,6 +19,7 @@ public class IterativeDeepening implements IAdversarialSearch {
 
     //
     private final TablutGame game;
+    private final ExecutorService executor;
 
     //
     private final int utilMin;
@@ -29,71 +30,50 @@ public class IterativeDeepening implements IAdversarialSearch {
     private int currDepthLimit;
     private Metrics metrics;
 
-    //
-    private final ExecutorService executor;
-
-    /**
-     * Creates a new search object for a given game.
-     *  @param game    The game.
-     * @param utilMin Utility value of worst state for this player. Supports
-     *                evaluation of non-terminal states and early termination in
-     *                situations with a safe winner.
-     * @param utilMax Utility value of best state for this player. Supports
- *                evaluation of non-terminal states and early termination in
- *                situations with a safe winner.
-     * @param time    Maximum Duration of the search algorithm
-     */
     public IterativeDeepening(TablutGame game, int utilMin, int utilMax, int time) {
 
+        //
         this.game = game;
         this.utilMin = utilMin;
         this.utilMax = utilMax;
         this.timer = new IterativeDeepening.Timer(time);
 
-        //
+        // Use the amount of available processors (it includes hyperthreading-like technologies
+        // in order not to have too many threads going around at the same time.
         executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     }
 
-    public void setGameState(IState state) {
-        game.setState(state);
-    }
-
-    /**
-     * Template method controlling the search. It is based on iterative
-     * deepening and tries to make to a good decision in limited time. Credit
-     * goes to Behi Monsio who had the idea of ordering actions by utility in
-     * subsequent depth-limited search runs.
-     */
     @Override
     public IAction makeDecision(IState state) {
 
         //
+        System.out.println("Beginning search for player " + game.getPlayer(state));
+
+        //
         Turn player = game.getPlayer(state);
-        System.out.println("CURRENT PLAYER: " + game.getPlayer(state));
-        metrics = new Metrics();
         List<IAction> availableActions = game.getActions(state);
-
-        //
-        timer.start();
-        currDepthLimit = 0;
-
-        //
+        ArrayList<Future<Integer>> futureResults;
         ActionStore<IAction> heuristicsResults;
+        metrics = new Metrics();
+
+        //
+        currDepthLimit = 0;
+        timer.start();
 
         do {
 
             currDepthLimit++;
-            System.out.println("DEPTH LIMIT:" + currDepthLimit);
+            System.out.println("Currently exploring up to depth: " + currDepthLimit);
             heuristicsResults = new ActionStore<>(availableActions.size());
-            ArrayList<Future<Integer>> futureResults = new ArrayList<>();
+            futureResults = new ArrayList<>(availableActions.size());
 
+            // Start simulating all the possible actions
             for (IAction action : availableActions) {
-
                 futureResults.add(executor.submit(new MinMaxAlphaBetaSearch(this, state, action, player)));
-
             }
 
+            // Get results until we time out
             for (int i = 0; i < availableActions.size(); i++) {
 
                 try {
@@ -115,6 +95,8 @@ public class IterativeDeepening implements IAdversarialSearch {
 
             }
 
+            // The rules state we can't perform computation during the opponent's turn
+            // Cancel the leftover futures.
             for (int i = 0; i < availableActions.size(); i++) {
 
                 if (!futureResults.get(i).isDone()) {
@@ -123,15 +105,26 @@ public class IterativeDeepening implements IAdversarialSearch {
 
             }
 
+            // Prepare for the next round of iterative deepening
             if (heuristicsResults.size() > 0) {
-                availableActions = heuristicsResults.getActions();
-            }
 
+                //
+                availableActions = heuristicsResults.getActions();
+
+                // Print best action for current level
+                System.out.println("The best option at this depth seems to be: " + availableActions.get(0));
+
+            }
 
         } while (!timer.timeOutOccurred());
 
+        System.out.println("\nExplored a total of " + metrics.getNodeExpanded() + " nodes, reaching a depth limit of " + metrics.getCurrDepthLimit());
         return availableActions.get(0);
 
+    }
+
+    public void setGameState(IState state) {
+        game.setState(state);
     }
 
     public int getUtilMin() {
@@ -160,6 +153,7 @@ public class IterativeDeepening implements IAdversarialSearch {
     ///////////////////////////////////////////////////////////////////////////////////////////
 
     protected static class Timer {
+
         private final long duration;
         private long startTime;
 
@@ -174,6 +168,7 @@ public class IterativeDeepening implements IAdversarialSearch {
         boolean timeOutOccurred() {
             return System.currentTimeMillis() > startTime + duration;
         }
+
     }
 
 }
