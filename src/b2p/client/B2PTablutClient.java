@@ -77,7 +77,7 @@ public class B2PTablutClient extends TablutClient {
     }
 
     /**
-     * Method used to start the client
+     * Starts the client
      */
     @Override
     public void run() {
@@ -160,8 +160,8 @@ public class B2PTablutClient extends TablutClient {
     /**
      * Utility method used to print a comment of the current turn
      * @param state {@link BitSetState} representing the current state of the game
-     * @param whiteWins String to print in case of white whin
-     * @param blackWins String to print in case of black whin
+     * @param whiteWins String to print in case of white win
+     * @param blackWins String to print in case of black win
      * @see BitSetState
      */
     private void printTurnComment(BitSetState state, String whiteWins, String blackWins) {
