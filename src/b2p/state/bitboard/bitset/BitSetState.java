@@ -100,7 +100,7 @@ public class BitSetState implements IState {
 
     /**
      * Method to check if the current state is a winning state
-     * @return
+     * @return {@code True} if it is a winning state
      */
     @Override
     public boolean isWinningState() {
@@ -109,7 +109,7 @@ public class BitSetState implements IState {
 
     /**
      * Method to check if the black has won the game
-     * @return
+     * @return {@code True} if black has won
      */
     @Override
     public boolean blackHasWon() {
@@ -118,7 +118,7 @@ public class BitSetState implements IState {
 
     /**
      * Method to check if the white has won the game
-     * @return
+     * @return {@code True} if white has won
      */
     @Override
     public boolean whiteHasWon() {
