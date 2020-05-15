@@ -3,8 +3,6 @@ package b2p.state.bitboard.bitset;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 
-import java.util.BitSet;
-
 public class BitSetUtils {
 
     public static BitSetState newFromServer(StateTablut serverState, int turnAmt) {
@@ -31,17 +29,14 @@ public class BitSetUtils {
         }
 
         return new BitSetState(
-                serverState.getTurn(),
-                BitSetUtils.newFromPositions(blackPawns),
-                BitSetUtils.newFromPositions(whitePawns),
-                BitSetUtils.newFromPositions(kingPawn),
+                BitSetUtils.newFromPositions(blackPawns), BitSetUtils.newFromPositions(whitePawns), BitSetUtils.newFromPositions(kingPawn), serverState.getTurn(),
                 turnAmt
         );
     }
 
-    public static BitSet newFromPositions(int[] positions) {
+    public static B2PBitSet newFromPositions(int[] positions) {
 
-        BitSet bitSet = new BitSet(BitSetState.boardDimension);
+        B2PBitSet bitSet = new B2PBitSet(BitSetState.boardDimension);
         for (int position : positions)
             bitSet.set(position);
 
@@ -49,7 +44,7 @@ public class BitSetUtils {
 
     }
 
-    public static BitSet newFromPositions(BitSetPosition[] positions) {
+    public static B2PBitSet newFromPositions(BitSetPosition[] positions) {
 
         int[] p = new int[positions.length];
         for (int i = 0; i < positions.length; i++) {
@@ -62,14 +57,12 @@ public class BitSetUtils {
 
     public static BitSetState newFromServerString(String serverString, State.Turn turn, int turnAmt) {
 
-        BitSet blacks = new BitSet(BitSetState.boardDimension);
-        BitSet whites = new BitSet(BitSetState.boardDimension);
-        BitSet king = new BitSet(BitSetState.boardDimension);
+        B2PBitSet blacks = new B2PBitSet(BitSetState.boardDimension);
+        B2PBitSet whites = new B2PBitSet(BitSetState.boardDimension);
+        B2PBitSet king = new B2PBitSet(BitSetState.boardDimension);
 
         serverString = serverString.replaceAll("\n", "");
         for (int i = 0; i < serverString.length(); i++) {
-
-            char curr = serverString.charAt(i);
 
             switch (serverString.charAt(i)) {
                 case 'B':
@@ -87,11 +80,11 @@ public class BitSetUtils {
 
         }
 
-        return new BitSetState(turn, blacks, whites, king, turnAmt);
+        return new BitSetState(blacks, whites, king, turn, turnAmt);
 
     }
 
-    public static String toByteString(BitSet bitSet) {
+    public static String toByteString(B2PBitSet bitSet) {
 
         StringBuilder builder = new StringBuilder();
         for (byte b : bitSet.toByteArray())
@@ -101,7 +94,7 @@ public class BitSetUtils {
 
     }
 
-    public static String toBitString(BitSet bitSet) {
+    public static String toBitString(B2PBitSet bitSet) {
 
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < bitSet.length(); i++) {
@@ -115,10 +108,6 @@ public class BitSetUtils {
 
         return builder.toString();
 
-    }
-
-    public static BitSet copy(BitSet input) {
-        return (BitSet) input.clone();
     }
 
 }

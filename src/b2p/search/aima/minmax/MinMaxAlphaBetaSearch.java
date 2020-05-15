@@ -1,8 +1,8 @@
-package b2p.state.bitboard.bitset.aima.adversarial.minmax;
+package b2p.search.aima.minmax;
 
-import b2p.state.bitboard.bitset.BitSetAction;
-import b2p.state.bitboard.bitset.BitSetState;
-import b2p.state.bitboard.bitset.aima.adversarial.TablutGame;
+import b2p.model.IAction;
+import b2p.model.IState;
+import b2p.search.aima.TablutGame;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 
 import java.util.concurrent.*;
@@ -10,24 +10,21 @@ import java.util.concurrent.*;
 public class MinMaxAlphaBetaSearch implements Callable<Integer> {
 
     //
-    private IterativeDeepening strategy;
+    private final IterativeDeepening strategy;
 
     //
-    private TablutGame game;
+    private final TablutGame game;
 
     //
-    private BitSetState state;
-    private BitSetAction action;
-    private State.Turn player;
+    private final IState state;
+    private final IAction action;
+    private final State.Turn player;
 
     //
     private final int utilMin, utilMax;
     private final int depthLimit;
 
-    //
-    private int result;
-
-    protected MinMaxAlphaBetaSearch(IterativeDeepening strategy, BitSetState state, BitSetAction action, State.Turn player) {
+    protected MinMaxAlphaBetaSearch(IterativeDeepening strategy, IState state, IAction action, State.Turn player) {
 
         //
         super();
@@ -53,18 +50,19 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     }
 
     // Maximizer for Minimax with alpha/beta pruning
-    public int maxValue(BitSetState state, State.Turn player, int alpha, int beta, int depth) {
+    public int maxValue(IState state, State.Turn player, int alpha, int beta, int depth) {
 
         //
-//        strategy.updateMetrics(depth);
+        strategy.updateMetrics(depth);
 
+        //
         if (game.isTerminal(state) || depth >= depthLimit || strategy.getTimer().timeOutOccurred())
-            return eval(state, player, depth);
+            return eval(state, player);
 
         // The worst case for the maximizer is the minimum value
         int value = utilMin;
 
-        for (BitSetAction action : game.getActions(state)) {
+        for (IAction action : game.getActions(state)) {
 
             // Min/Max depth-first
             int minimizerValue = minValue(game.getResult(state, action), player, alpha, beta, depth + 1);
@@ -84,18 +82,19 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     }
 
     // Minimizer for Minimax with alpha/beta pruning
-    public int minValue(BitSetState state, State.Turn player, int alpha, int beta, int depth) {
+    public int minValue(IState state, State.Turn player, int alpha, int beta, int depth) {
 
         //
-//        strategy.updateMetrics(depth);
+        strategy.updateMetrics(depth);
 
+        //
         if (game.isTerminal(state) || depth >= depthLimit || strategy.getTimer().timeOutOccurred())
-            return eval(state, player, depth);
+            return eval(state, player);
 
         // The worst case scenario for the minimizer is Maxvalue
         int value = utilMax;
 
-        for (BitSetAction action : game.getActions(state)) {
+        for (IAction action : game.getActions(state)) {
 
             // Min/Max depth-first
             int maximizerValue = maxValue(game.getResult(state, action), player, alpha, beta, depth + 1);
@@ -114,24 +113,12 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
 
     }
 
-    private int eval(BitSetState state, State.Turn player, int depth) {
-
+    private int eval(IState state, State.Turn player) {
         return game.getUtility(state, player);
-//
-//        if ((game.isTerminal(state) || depth >= strategy.getCurrDepthLimit()) && !strategy.getTimer().timeOutOccurred()) {
-//            return game.getUtility(state, player);
-//        }
-//
-//        if (player == strategy.getOurPlayer()) {
-//            return Integer.MIN_VALUE;
-//        }
-//
-//        return Integer.MAX_VALUE;
-
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Integer call() {
         return minValue(game.getResult(state, action), player, utilMin, utilMax, 1);
     }
 

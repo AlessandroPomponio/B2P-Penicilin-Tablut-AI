@@ -12,17 +12,16 @@ using Andrea Galassi's server available in [this repository](https://github.com/
 
  - The game state is implemented via a [BitSet](https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/BitSet.html)
     to minimize memory occupation needed to represent the board.
-    
  - The [Minimax with alpha-beta pruning](https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning) search algorithm is made concurrent through the use of [Futures](https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/concurrent/Future.html)
- 
  - A simple heuristic guarantees a deep exploration of the game tree during the [iterative deepening](https://en.wikipedia.org/wiki/Iterative_deepening_depth-first_search) process.
 
 ## How to run
 
 You can download the latest jar file from the GitHub Actions pipeline [here](https://github.com/AlessandroPomponio/B2P-Penicilin-Tablut-AI/actions?query=workflow%3A%22Java+CI%22).
 
-You will then  simply need to run:
-```bash
+You will then simply need to run:
+
+```powershell
 java -jar B2P-Penicillin.jar <black|white> <timeout-in-seconds> <server-ip>
 ```
 

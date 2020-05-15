@@ -6,49 +6,51 @@ import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.ArrayList;
 import java.util.BitSet;
+import java.util.List;
 
 public class BitSetState implements IState {
-
-    //
-    public static final int boardDimension = 9 * 9;
 
     //
     private Turn turn;
     private int turnAmt = 0;
 
     //
-    private final BitSet blackPawns;
-    private final BitSet whitePawns;
-    private final BitSet king;
-    private final BitSet board;
+    private final B2PBitSet blackPawns;
+    private final B2PBitSet whitePawns;
+    private final B2PBitSet king;
+    private final B2PBitSet board;
 
-    public BitSetState(Turn turn, BitSet blackPawns, BitSet whitePawns, BitSet king) {
+    // region Constructors
+    public BitSetState(B2PBitSet blackPawns, B2PBitSet whitePawns, B2PBitSet king, Turn turn) {
 
+        //
         this.turn = turn;
         this.blackPawns = blackPawns;
         this.whitePawns = whitePawns;
         this.king = king;
-        this.board = new BitSet(boardDimension);
 
+        //
+        this.board = new B2PBitSet(boardDimension);
         board.or(blackPawns);
         board.or(whitePawns);
         board.or(king);
 
     }
 
-    public BitSetState(Turn turn, BitSet blackPawns, BitSet whitePawns, BitSet king, int turnAmt) {
-        this(turn, blackPawns, whitePawns, king);
+    public BitSetState(B2PBitSet blackPawns, B2PBitSet whitePawns, B2PBitSet king, Turn turn, int turnAmt) {
+        this(blackPawns, whitePawns, king, turn);
         this.turnAmt = turnAmt;
     }
 
     public BitSetState() {
         this(
-                Turn.WHITE,
                 BitSetStartingBoard.blackStartingBitSet,
                 BitSetStartingBoard.whiteStartingBitSet,
-                BitSetStartingBoard.kingStartingBitSet
+                BitSetStartingBoard.kingStartingBitSet,
+                Turn.WHITE
         );
     }
+    //endregion
 
     //region Win conditions
     @Override
@@ -120,10 +122,16 @@ public class BitSetState implements IState {
 
     }
 
-    @Override
-    public ArrayList<BitSetAction> getAvailablePawnMoves() {
+    public IState simulateMove(IAction action) {
+        BitSetState result = (BitSetState) this.clone();
+        result.performMove(action);
+        return result;
+    }
 
-        ArrayList<BitSetAction> moves;
+    @Override
+    public List<IAction> getAvailablePawnMoves() {
+
+        List<IAction> moves;
 
         if (turn == Turn.BLACK) {
 
@@ -148,10 +156,8 @@ public class BitSetState implements IState {
     }
 
     @Override
-    public ArrayList<BitSetAction> getAvailableKingMoves() {
+    public List<IAction> getAvailableKingMoves() {
 
-        // We need this for tests but do we need it
-        // in production?
         int kingPosition = king.nextSetBit(0);
         if (kingPosition == -1)
             return new ArrayList<>();
@@ -164,13 +170,7 @@ public class BitSetState implements IState {
     //region Heuristics-related functions
     @Override
     public int getHeuristicValue() {
-
-        if (turn == Turn.BLACK) {
-            return blackHeuristic();
-        }
-
-        return whiteHeuristic();
-
+        return getHeuristicValueForPlayer(turn);
     }
 
     public int getHeuristicValueForPlayer(Turn player) {
@@ -179,65 +179,22 @@ public class BitSetState implements IState {
             return blackHeuristic();
 
         return -blackHeuristic();
-//        return whiteHeuristic();
 
     }
 
     private int blackHeuristic() {
 
-//        if (BitSetMove.kingHasMoreThanOneEscapePath(this))
-//            return Integer.MIN_VALUE;
-
-
-//        if (turnAmt >= 30) {
-//            return - (whitePawns.cardinality() + king.cardinality()) + BitSetMove.dangerToKing(this);
-//        }
-
-
         //
         int pieceDifference =  blackPawns.cardinality() - (whitePawns.cardinality() + king.cardinality());
+        int strategicBlacks = blackPawns.andResult(BitSetPosition.blackStrategicCells).cardinality();
 
         //
-        BitSet blacks = BitSetUtils.copy(blackPawns);
-        blacks.and(BitSetPosition.blackStrategicCells);
-        int strategicBlacks = blacks.cardinality();
-
-        //
-//        int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
-        // I TURNI SONO x2
-//        if (turnAmt < 6) {
-//            return strategicBlacks + (pieceDifference-7);
-//        }
-
-//        if (turnAmt > 15) {
-//            return strategicBlacks + (pieceDifference-7)+ 2*BitSetMove.dangerToKing(this);
-//        }
-
         return strategicBlacks + 2*(pieceDifference-7)+ BitSetMove.dangerToKing(this);
-
-//        return (pieceDifference-7) + strategicBlacks + 5*BitSetMove.dangerToKing(this) -5*getAvailableKingMoves().size();
-
-//
-//        return (pieceDifference-8) + strategicBlacks * 20 - movesToKingEscape + BitSetMove.dangerToKing(this) * 3;
 
     }
 
     private int whiteHeuristic() {
 
-//        if (BitSetMove.kingHasMoreThanOneEscapePath(this))
-//            return Integer.MAX_VALUE;
-
-//        int bestQuadrant = BitSetPosition.findTargetQuadrantForWhites(this);
-//        int kingInBestQuadrantBonus = 0;
-//        if (king.intersects(BitSetStartingBoard.quadrants[bestQuadrant]))
-//            kingInBestQuadrantBonus = 5;
-
-        //
-
-        //
-        int GAME_PROG = 100;
-//        return (GAME_PROG - turnAmt) * 61 * pieceDifference - (turnAmt) * 31 * BitSetMove.dangerToKing(this) + (GAME_PROG - turnAmt)
-//                * 23 * BitSetMove.whitePawnsAdjacentKing(this);
         if(turnAmt < 30) {
             int pieceDifference = 2 * whitePawns.cardinality() - blackPawns.cardinality();
             return 7 * pieceDifference - 5 * BitSetMove.dangerToKing(this)
@@ -246,98 +203,35 @@ public class BitSetState implements IState {
         int pieceDifference = whitePawns.cardinality() + 8 - blackPawns.cardinality();
         return 7 * pieceDifference - 5 * BitSetMove.dangerToKing(this) -
                 - 3 * BitSetMove.diagonalBlackCouples(this) + BitSetMove.blackPawnsOutOfCamps(this);
-                 // + 3 * BitSetMove.positionWeights(this);
-
-////      int movesToKingEscape = BitSetMove.movesNeededForKingEscape(this);
-//        // i turni sono x2
-//        if (turnAmt > 10) {
-//            // whitePawns.cardinality()
-//            // freeColumnsOrRows()
-//            return 15 * pieceDifference - 7 * BitSetMove.dangerToKing(this) + 5 * BitSetMove.whitePawnsAdjacentKing(this); // + 3 * (BitSetMove.kingHasMoreThanOneEscapePath(this) ? 15 : 0);
-//        }
-//        // (5 * whitePawns.cardinality() - 3 * blackPawns.cardinality())
-//        return 5 * whitePawns.cardinality() - 3 * blackPawns.cardinality() - BitSetMove.dangerToKing(this); //  + BitSetMove.whiteCellInStrategicPosition(this)
 
     }
-
-//    @Override
-//    public int getHeuristicValue() {
-//
-//        if (turn == Turn.BLACK) {
-//            return blackHeuristic();
-//        }
-//
-//        return whiteHeuristic();
-//
-//    }
-//
-//    private int blackHeuristic() {
-//
-//        //
-//        int pieceDifference =  blackPawns.cardinality() - (whitePawns.cardinality() + king.cardinality());
-//
-//        //
-////        BitSet blacks = BitSetUtils.copy(blackPawns);
-////        blacks.and(BitSetPosition.blackStrategicCells);
-////        int strategicBlacks = blacks.cardinality() * 50;
-//
-//        int escapeMalus = BitSetMove.kingEscapesInOneMove(this) * -10000;
-//
-//        //
-//        return pieceDifference +  escapeMalus + BitSetMove.dangerToKing(this);
-//
-//    }
-//
-//    private int whiteHeuristic() {
-//
-//        //
-//        int pieceDifference = whitePawns.cardinality() + king.cardinality() - blackPawns.cardinality();
-//
-//        int strategicWhites = 0;
-//        int escapeBonus = BitSetMove.kingEscapesInOneMove(this) * 10000;
-////        if (turnAmt < 3) {
-////            BitSet whites = BitSetUtils.copy(whitePawns);
-////            whites.and(BitSetPosition.blackStrategicCells);
-////            strategicWhites = whites.cardinality() * 50;
-////        } else
-//
-////        if (turnAmt > 4) {
-////            return pieceDifference + 8 + escapeBonus - 2*BitSetMove.dangerToKing(this);
-////        }
-//
-//        return 3*(pieceDifference + 8) + strategicWhites + escapeBonus - BitSetMove.dangerToKing(this);
-//
-//    }
     //endregion
 
     // Utility functions
     @Override
     public IState clone() {
-
-        BitSet blacks = BitSetUtils.copy(this.blackPawns);
-        BitSet whites = BitSetUtils.copy(this.whitePawns);
-        BitSet king = BitSetUtils.copy(this.king);
-        Turn turn = this.turn;
-
-        return new BitSetState(turn, blacks, whites, king, turnAmt);
-
+        return new BitSetState(blackPawns.clone(),
+                whitePawns.clone(),
+                king.clone(),
+                turn,
+                turnAmt);
     }
     //
 
     //region Getters and setters
-    public BitSet getBlackPawns() {
+    public B2PBitSet getBlackPawns() {
         return blackPawns;
     }
 
-    public BitSet getWhitePawns() {
+    public B2PBitSet getWhitePawns() {
         return whitePawns;
     }
 
-    public BitSet getKing() {
+    public B2PBitSet getKing() {
         return king;
     }
 
-    public BitSet getBoard() {
+    public B2PBitSet getBoard() {
         return board;
     }
 
