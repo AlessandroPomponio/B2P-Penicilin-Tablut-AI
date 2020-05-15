@@ -9,8 +9,22 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
+/**
+ * BitSetMove Class provides methods for pieces' moves on the board as well as some functions used in the heuristics
+ *
+ * @author Alessandro Buldini
+ * @author Alessandro Pomponio
+ * @author Federico Zanini
+ */
 public class BitSetMove {
 
+    /**
+     * Method returns a list of possible moves for a given pawn position and a given game state
+     * @param pawnPosition is an Integer data type
+     * @param state is an IState instance
+     * @return A List of possible moves
+     * @see IState
+     */
     public static List<IAction> getMovesForPawn(int pawnPosition, IState state) {
 
         // 16 is the maximum amount of moves we can possibly have:
@@ -100,6 +114,14 @@ public class BitSetMove {
 
     }
 
+    /**
+     * Method returns a {@code B2PBitSet} which has set at 1 all captured pawns
+     * @param from Integer representing the position of the pawn starting cell
+     * @param to Integer representing the position of the pawn final cell
+     * @param state is the current state of the game
+     * @return a {@code B2PBitSet} which has set at 1 all captured pawns
+     * @see B2PBitSet
+     */
     public static B2PBitSet getCapturedPawns(int from, int to, IState state) {
 
         if (state.getTurn() == Turn.BLACK)
@@ -109,6 +131,15 @@ public class BitSetMove {
 
     }
 
+    /**
+     * Method returns a {@code B2PBitSet} containing all the captured pawns for the black player
+     * @param from Integer representing the position of the pawn starting cell
+     * @param to Integer representing the position of the pawn final cell
+     * @param state is the current state of the game
+     * @return a {@code B2PBitSet} containing all the captured pawns for the black player
+     * @see B2PBitSet
+     * @see BitSetMove getCapturesForWhite
+     */
     private static B2PBitSet getCapturesForBlack(int from, int to, IState state) {
 
         //
@@ -182,6 +213,15 @@ public class BitSetMove {
 
     }
 
+    /**
+     * Method returns a {@code B2PBitSet} containing all the captured pawns for the white player
+     * @param from Integer representing the position of the pawn starting cell
+     * @param to Integer representing the position of the pawn final cell
+     * @param state is the current state of the game
+     * @return a {@code B2PBitSet} containing all the captured pawns for the white player
+     * @see B2PBitSet
+     * @see BitSetMove getCapturesForBlack
+     */
     private static B2PBitSet getCapturesForWhite(int from, int to, IState state) {
 
         B2PBitSet blacks = state.getBlackPawns().clone();
@@ -193,6 +233,14 @@ public class BitSetMove {
 
     }
 
+    /**
+     * Method returns a {@code B2PBitSet} containing all the non-special captures for a given position
+     * @param position Integer representing the position to be evaluated
+     * @param attack BitSet representing the attacking pawns
+     * @param defense BitSet representing the defending pawns
+     * @return a {@code B2PBitSet} containing all the non-special captures for a given position
+     * @see B2PBitSet
+     */
     private static B2PBitSet getNormalCaptures(int position, BitSet attack, BitSet defense) {
 
         B2PBitSet captured = new B2PBitSet(IState.boardDimension);
@@ -280,6 +328,13 @@ public class BitSetMove {
         return captured;
     }
 
+    /**
+     * Method evaluating an heuristic value for the king. Returns a value depending on how many escapes the king has in a
+     * given state of the game
+     * @param state IState representing the current state of the game
+     * @return an Integer representing an heuristic value
+     * @see BitSetPosition
+     */
     public static int kingEscapesInOneMove(IState state) {
 
         List<IAction> moves = getMovesForPawn(state.getKing().nextSetBit(0), state);
@@ -295,6 +350,12 @@ public class BitSetMove {
 
     }
 
+    /**
+     * Method evaluating a Boolean value depending on whether the king has more than one escape path in a given state of the game
+     * @param state IState representing the current state of the game
+     * @return A Boolean value
+     * @see BitSetPosition
+     */
     public static boolean kingHasMoreThanOneEscapePath(IState state) {
 
         int escapes;
@@ -322,6 +383,12 @@ public class BitSetMove {
 
     }
 
+    /**
+     * Method evaluating an heuristic value considering the weight of every position in the board
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see B2PBitSet
+     */
     public static int positionWeights(IState state) {
 
             final int WHITE_PAWNS_MULTIPLIER = 1;
@@ -343,10 +410,23 @@ public class BitSetMove {
 
     }
 
+    /**
+     * Method evaluating an heuristic value depending on how many white pawns are in a strategic position
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see BitSetPosition whiteEarlyGameStrategicCells
+     */
     public static int whiteCellInStrategicPosition(IState state) {
         return state.getWhitePawns().andResult(BitSetPosition.whiteEarlyGameStrategicCells).cardinality();
     }
 
+    /**
+     * Method evaluating an heuristic value depending on how many white and black pawns are near the king whether the king
+     * is in the throne, outside the throne or near the throne
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see B2PBitSet
+     */
     public static int kingStatus(IState state) {
         //
         B2PBitSet king = state.getKing().clone();
@@ -446,14 +526,34 @@ public class BitSetMove {
 
     }
 
+    /**
+     * Method evaluating an heuristic value depending on how many moves does the king have
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see IState getAvailableKingMoves
+     */
     public static int kingMoves(IState state) {
         return state.getAvailableKingMoves().size();
     }
 
+    /**
+     * Method evaluating an heuristic value depending on how many black pawns are out of camps
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see IState
+     * @see BitSetPosition camps
+     */
     public static int blackPawnsOutOfCamps(IState state) {
         return 16 - state.getBlackPawns().andResult(BitSetPosition.camps).cardinality();
     }
 
+    /**
+     * Method evaluating an heuristic value depending on how many black pawns are in a diagonal position near to each other
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see IState
+     * @see B2PBitSet
+     */
     public static int diagonalBlackCouples(IState state) {
 
         //
@@ -497,6 +597,13 @@ public class BitSetMove {
         return result >> 1;
     }
 
+    /**
+     * Method evaluating an heuristic value depending on how many white pawns are adjacent to king
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see IState
+     * @see B2PBitSet
+     */
     public static int whitePawnsAdjacentKing(IState state) {
 
         //
@@ -543,6 +650,15 @@ public class BitSetMove {
         return 0;
     }
 
+    /**
+     * Method evaluating an heuristic value depending on how many black pawns endangering the king
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see IState
+     * @see B2PBitSet
+     * @see BitSetPosition castle
+     * @see BitSetPosition specialKingCells
+     */
     public static int dangerToKing(IState state) {
 
         //
@@ -600,10 +716,24 @@ public class BitSetMove {
         }
     }
 
+    /**
+     * Method evaluating an heuristic value depending on how many moves the king needs to perform in order to escape
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see IState
+     * @see BitSetMove movesNeededForKingEscape_rec
+     */
     public static int movesNeededForKingEscape(IState state) {
         return movesNeededForKingEscape_rec(state, 1);
     }
 
+    /**
+     * Recursive method evaluating an heuristic value depending on how many black pawns endangering the king called by {@code movesNeededForKingEscape}
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see IState
+     * @see BitSetMove movesNeededForKingEscape_rec
+     */
     private static int movesNeededForKingEscape_rec(IState state, int step) {
 
         // Cutoff if we've searched already enough
@@ -645,5 +775,35 @@ public class BitSetMove {
 
     }
 
+    /**
+     * Method evaluating an heuristic value depending on which is the best quadrant to target for the white player
+     * @param state IState representing the current state of the game
+     * @return Integer representing an heuristic value
+     * @see BitSetState
+     * @see BitSetStartingBoard
+     */
+    public static int findTargetQuadrantForWhites(BitSetState state) {
+
+        int maxDifference = -1;
+        int bestQuadrant = 0;
+        int pieceDifference, whitesInQuadrant, blacksInQuadrant;
+
+        for (int i = 0; i < 4; i++) {
+
+            //
+            whitesInQuadrant = state.getWhitePawns().andResult(BitSetStartingBoard.quadrants[i]).cardinality();
+            blacksInQuadrant = state.getBlackPawns().andResult(BitSetStartingBoard.quadrants[i]).cardinality();
+
+            pieceDifference = whitesInQuadrant - blacksInQuadrant;
+            if(pieceDifference > maxDifference) {
+                maxDifference = pieceDifference;
+                bestQuadrant = i;
+            }
+
+        }
+
+        return bestQuadrant;
+
+    }
 
 }

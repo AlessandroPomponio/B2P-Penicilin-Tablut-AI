@@ -3,8 +3,23 @@ package b2p.state.bitboard.bitset;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 
+/**
+ * This Class contains useful {@link B2PBitSet} methods
+ *
+ * @author Alessandro Buldini
+ * @author Alessandro Pomponio
+ * @author Federico Zanini
+ */
 public class BitSetUtils {
 
+    /**
+     * Method to create a {@link BitSetState} instance by a given server state and a turn number
+     * @param serverState {@link StateTablut} representing a server state
+     * @param turnAmt Integer representing the turn amount
+     * @return a {@link BitSetState} instance
+     * @see BitSetState
+     * @see StateTablut
+     */
     public static BitSetState newFromServer(StateTablut serverState, int turnAmt) {
 
         int[] blackPawns = new int[serverState.getNumberOf(State.Pawn.BLACK)];
@@ -34,6 +49,11 @@ public class BitSetUtils {
         );
     }
 
+    /**
+     * Method to create a {@link BitSetState} instance by a given integer array representing the positions of the pieces on the board
+     * @param positions integer array representing the positions of the pieces on the board
+     * @return a {@link BitSetState} instance
+     */
     public static B2PBitSet newFromPositions(int[] positions) {
 
         B2PBitSet bitSet = new B2PBitSet(BitSetState.boardDimension);
@@ -44,6 +64,11 @@ public class BitSetUtils {
 
     }
 
+    /**
+     * Method to create a {@link BitSetState} instance by a given {@link BitSetPosition} array representing the positions of the pieces on the board
+     * @param positions integer array representing the positions of the pieces on the board
+     * @return a {@link BitSetState} instance
+     */
     public static B2PBitSet newFromPositions(BitSetPosition[] positions) {
 
         int[] p = new int[positions.length];
@@ -55,6 +80,13 @@ public class BitSetUtils {
 
     }
 
+    /**
+     * Method to create a {@link BitSetState} from String representing the state of the game in a specified player and turn number
+     * @param serverString String representing a server state
+     * @param turn Turn representing the current player
+     * @param turnAmt Integer representing the turn number
+     * @return a {@link BitSetState} representing the state of the game
+     */
     public static BitSetState newFromServerString(String serverString, State.Turn turn, int turnAmt) {
 
         B2PBitSet blacks = new B2PBitSet(BitSetState.boardDimension);
@@ -84,6 +116,12 @@ public class BitSetUtils {
 
     }
 
+    /**
+     * Method used to convert a {@link B2PBitSet} into a printable byte string
+     * @param bitSet {@link B2PBitSet}
+     * @return a printable byte string
+     * @see B2PBitSet
+     */
     public static String toByteString(B2PBitSet bitSet) {
 
         StringBuilder builder = new StringBuilder();
@@ -94,6 +132,12 @@ public class BitSetUtils {
 
     }
 
+    /**
+     * Method used to convert a {@link B2PBitSet} into a printable bit string
+     * @param bitSet {@link B2PBitSet}
+     * @return a printable bit string
+     * @see B2PBitSet
+     */
     public static String toBitString(B2PBitSet bitSet) {
 
         StringBuilder builder = new StringBuilder();

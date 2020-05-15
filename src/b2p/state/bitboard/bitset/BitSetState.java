@@ -8,19 +8,52 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
+/**
+ * This Class wraps the game state into a {@link B2PBitSet} object
+ *
+ * @author Alessandro Buldini
+ * @author Alessandro Pomponio
+ * @author Federico Zanini
+ */
 public class BitSetState implements IState {
 
     //
+    /**
+     * Represents the turn
+     */
     private Turn turn;
+    /**
+     * Integer representing the turn number
+     */
     private int turnAmt = 0;
 
     //
+    /**
+     * {@link B2PBitSet} representing the black pawns
+     */
     private final B2PBitSet blackPawns;
+    /**
+     * {@link B2PBitSet} representing the white pawns
+     */
     private final B2PBitSet whitePawns;
+    /**
+     * {@link B2PBitSet} representing the king
+     */
     private final B2PBitSet king;
+    /**
+     * {@link B2PBitSet} representing the board
+     */
     private final B2PBitSet board;
 
     // region Constructors
+
+    /**
+     * Constructor method to create an instance of BitSetState from the given arguments
+     * @param blackPawns {@link B2PBitSet} representing the black pawns
+     * @param whitePawns {@link B2PBitSet} representing the white pawns
+     * @param king {@link B2PBitSet} representing the king
+     * @param turn {@link B2PBitSet} representing the board
+     */
     public BitSetState(B2PBitSet blackPawns, B2PBitSet whitePawns, B2PBitSet king, Turn turn) {
 
         //
@@ -37,11 +70,22 @@ public class BitSetState implements IState {
 
     }
 
+    /**
+     * Constructor method to create an instance of BitSetState from the given arguments
+     * @param blackPawns {@link B2PBitSet} representing the black pawns
+     * @param whitePawns {@link B2PBitSet} representing the white pawns
+     * @param king {@link B2PBitSet} representing the king
+     * @param turn {@link B2PBitSet} representing the board
+     * @param turnAmt Integer representing the turn number
+     */
     public BitSetState(B2PBitSet blackPawns, B2PBitSet whitePawns, B2PBitSet king, Turn turn, int turnAmt) {
         this(blackPawns, whitePawns, king, turn);
         this.turnAmt = turnAmt;
     }
 
+    /**
+     * Default constructor method. White player plays first.
+     */
     public BitSetState() {
         this(
                 BitSetStartingBoard.blackStartingBitSet,
@@ -53,16 +97,29 @@ public class BitSetState implements IState {
     //endregion
 
     //region Win conditions
+
+    /**
+     * Method to check if the current state is a winning state
+     * @return
+     */
     @Override
     public boolean isWinningState() {
         return blackHasWon() || whiteHasWon();
     }
 
+    /**
+     * Method to check if the black has won the game
+     * @return
+     */
     @Override
     public boolean blackHasWon() {
         return king.isEmpty();
     }
 
+    /**
+     * Method to check if the white has won the game
+     * @return
+     */
     @Override
     public boolean whiteHasWon() {
         return king.intersects(BitSetPosition.escape);
@@ -70,6 +127,13 @@ public class BitSetState implements IState {
     //endregion
 
     //region Move-related functions
+
+    /**
+     * Method to perform a given action using {@link BitSetPosition} from and {@link BitSetPosition} to
+     * @param action IAction representing the action to perform
+     * @see IAction
+     * @see BitSetPosition
+     */
     @Override
     public void performMove(IAction action) {
         BitSetPosition from = BitSetPosition.valueOf(action.getFrom());
@@ -77,6 +141,12 @@ public class BitSetState implements IState {
         performMove(from.ordinal(), to.ordinal());
     }
 
+    /**
+     * Method to perform a given action using a specified {@link BitSetPosition} from and a specified {@link BitSetPosition} to
+     * @param from String representing the starting position
+     * @param to String representing the final position
+     * @see BitSetPosition
+     */
     @Override
     public void performMove(String from, String to) {
         BitSetPosition pFrom = BitSetPosition.valueOf(from);
@@ -84,6 +154,11 @@ public class BitSetState implements IState {
         performMove(pFrom.ordinal(), pTo.ordinal());
     }
 
+    /**
+     * Method to perform a given action using a specified from and a specified to
+     * @param from Integer representing the starting position
+     * @param to Integer representing the final position
+     */
     @Override
     public void performMove(int from, int to) {
 
@@ -122,12 +197,23 @@ public class BitSetState implements IState {
 
     }
 
+    /**
+     * Method used to simulate a specified move from a given {@code IAction}
+     * @param action IAction representing the action to simulate
+     * @return A copy of the {@link BitSetState} after the move is performed
+     * @see IAction
+     */
     public IState simulateMove(IAction action) {
         BitSetState result = (BitSetState) this.clone();
         result.performMove(action);
         return result;
     }
 
+    /**
+     * Method to get all the available moves for the pawns
+     * @return A {@link List} of possible actions
+     * @see IAction
+     */
     @Override
     public List<IAction> getAvailablePawnMoves() {
 
@@ -155,6 +241,11 @@ public class BitSetState implements IState {
 
     }
 
+    /**
+     * Method to get all the available moves for the king
+     * @return A {@link List} of possible actions
+     * @see IAction
+     */
     @Override
     public List<IAction> getAvailableKingMoves() {
 
@@ -168,11 +259,23 @@ public class BitSetState implements IState {
     //endregion
 
     //region Heuristics-related functions
+
+    /**
+     * Method returning the heuristic value for a player in the current turn
+     * @return the heuristic value for a player in the current turn
+     * @see Turn
+     */
     @Override
     public int getHeuristicValue() {
         return getHeuristicValueForPlayer(turn);
     }
 
+    /**
+     * Method returning the heuristic value for a given player in the current turn
+     * @param player is a Turn object
+     * @return the heuristic value for a given player in the current turn
+     * @see Turn
+     */
     public int getHeuristicValueForPlayer(Turn player) {
 
         if (player == Turn.BLACK)
@@ -182,6 +285,10 @@ public class BitSetState implements IState {
 
     }
 
+    /**
+     * Method that calculates the heuristic value for the black player
+     * @return the heuristic value for the black player
+     */
     private int blackHeuristic() {
 
         //
@@ -193,6 +300,10 @@ public class BitSetState implements IState {
 
     }
 
+    /**
+     * Method that calculates the heuristic value for the white player
+     * @return the heuristic value for the white player
+     */
     private int whiteHeuristic() {
 
         if(turnAmt < 30) {
@@ -219,27 +330,58 @@ public class BitSetState implements IState {
     //
 
     //region Getters and setters
+
+    /**
+     * Method to access the private field black pawns
+     * @return B2PBitSet containing black pawns
+     * @see B2PBitSet
+     */
     public B2PBitSet getBlackPawns() {
         return blackPawns;
     }
 
+    /**
+     * Method to access the private field white pawns
+     * @return B2PBitSet containing white pawns
+     * @see B2PBitSet
+     */
     public B2PBitSet getWhitePawns() {
         return whitePawns;
     }
 
+    /**
+     * Method to access the private field king
+     * @return B2PBitSet containing the king
+     * @see B2PBitSet
+     */
     public B2PBitSet getKing() {
         return king;
     }
 
+    /**
+     * Method to access the private field board
+     * @return B2PBitSet containing the board
+     * @see B2PBitSet
+     */
     public B2PBitSet getBoard() {
         return board;
     }
 
+    /**
+     * Method to access the private field turn
+     * @return the current turn
+     * @see Turn
+     */
     @Override
     public Turn getTurn() {
         return this.turn;
     }
 
+    /**
+     * Method to set the private field turn value
+     * @param turn is a Turn data type
+     * @see Turn
+     */
     @Override
     public void setTurn(Turn turn) {
         this.turn = turn;

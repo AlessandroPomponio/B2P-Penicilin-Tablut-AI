@@ -6,13 +6,38 @@ import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
 
 import java.util.Objects;
 
+/**
+ * This Class represents an action from a starting cell to another implementing {@link IAction}
+ * @author Alessandro Buldini
+ * @author Alessandro Pomponio
+ * @author Federico Zanini
+ */
 public class BitSetAction implements IAction {
 
+    /**
+     * Represents a String for the cell from which the pawn moves
+     */
     private final String from;
+    /**
+     * Represents a String for the final cell to which the pawn moves
+     */
     private final String to;
+    /**
+     * Represents the current turn of the game
+     */
     private final Turn turn;
+    /**
+     * Represents the heuristic value of the final state
+     */
     private int value;
 
+    /**
+     * Constructor for BitSetAction Class
+     * @param from is a String for the starting position
+     * @param to is a String for the final position
+     * @param turn is the current turn
+     * @see Turn
+     */
     public BitSetAction(String from, String to, Turn turn) {
         this.from = from;
         this.to = to;
@@ -20,6 +45,14 @@ public class BitSetAction implements IAction {
         this.value = -1;
     }
 
+    /**
+     * Constructor for BitSetAction Class
+     * @param from is a String for the starting position
+     * @param to is a String for the final position
+     * @param turn is the current turn
+     * @param value is an Integer for the heuristic value
+     * @see Turn
+     */
     public BitSetAction(String from, String to, Turn turn, int value) {
         this.from = from;
         this.to = to;
@@ -27,26 +60,46 @@ public class BitSetAction implements IAction {
         this.value = value;
     }
 
+    /**
+     * Method to access the private field from
+     * @return Value of from
+     */
     @Override
     public String getFrom() {
         return this.from;
     }
 
+    /**
+     * Method to access the private field to
+     * @return Value of to
+     */
     @Override
     public String getTo() {
         return this.to;
     }
 
+    /**
+     * Method to access the private field turn
+     * @return Value of turn
+     */
     @Override
     public Turn getTurn() {
         return this.turn;
     }
 
+    /**
+     * Method to access the private field value
+     * @return Value of value
+     */
     @Override
     public int getValue() {
         return this.value;
     }
 
+    /**
+     * Method to set the value of the private field value
+     * @param value is an Integer data type
+     */
     @Override
     public void setValue(int value) {
         this.value = value;
