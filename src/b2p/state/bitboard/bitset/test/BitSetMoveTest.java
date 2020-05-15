@@ -12,11 +12,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class BitSetMoveTest {
 
     //region getMovesForPawn
-    /**
+    /*
      * funzione : testGetMovesForWhitePawnsAtStart
      * testa la funzione getMovesForPawn per tutte le pedine bianche allo stato iniziale della partita
      * L'ordine di testing comincia dalla pedina in alto a sinitra, finisce con quella in basso a destra
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | N | N | N |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -149,11 +149,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testGetMovesForBlackPawnsAtStart
      * testa la funzione getMovesForPawn per le pedine nere dell'accampameno in alto
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | N | N | N |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -227,12 +226,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testCampCollision
      * testa la funzione getMovesForPawn per verificare la collisione con gli accampamenti
-     * <p>
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   | N |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -282,11 +279,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testCastleCollision
      * testa la funzione getMovesForPawn per verificare la collisione con il castello
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -335,11 +331,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testBorderCollision
      * testa la funzione getMovesForPawn per verificare la collisione con i bordi
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   | B |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -388,11 +383,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testKingCollision
      * testa la funzione getMovesForPawn per verificare la collisione del re con castello e bordi
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -449,11 +443,10 @@ public class BitSetMoveTest {
 
     //region testGetCapturedPawns
 
-    /**
+    /*
      * funzione : testGetCapturedPawnsNoCaptures
      * testa che la funzione getCapturedPawns restituisca una bitmap vuota se non ci sono condizioni di accerchiamento
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -500,11 +493,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testGetCapturedPawnsSingleCapture
      * testa la singola cattura di una pedina nera nella funzione getCapturedPawns.
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -552,11 +544,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testGetCapturedPawnsDoubleCapture
      * testa che la funzione getCapturedPawns catturi correttamente due pedine alla volta
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -607,11 +598,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testGetCapturedPawnsTripleCapture
      * testa che la funzione getCapturedPawns catturi correttamente tre pedine alla volta
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -665,11 +655,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testGetCapturedPawnsCastleLegalCapture
      * testa che la funzione getCapturedPawns catturi correttamente una pedina nera fra una pedina bianca e il castello
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -715,12 +704,11 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testGetCapturedPawnsCampLegalCapture
      * testa che la funzione getCapturedPawns catturi una pedina nera che si trovi dentro l'accampamento quando
      * la condizione di cattura è valida
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -768,12 +756,11 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testGetCapturedPawnsCampIllegalCapture
      * testa che la funzione getCapturedPawns non catturi la pedina che si trova nell'accampamento sul bordo, considerando
      * la cella centrale dell'accampamento come collisione
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -820,12 +807,11 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testGetCapturedPawnsOutOfCampCapture
      * testa che la funzione getCapturedPawns catturi una pedina nera che si trovi fuori dall'accampamento quando
      * la condizione di cattura è valida
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -872,11 +858,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testGetCapturedPawnsKingInCastle
      * testa che la funzione getCapturedPawns catturi correttamente la pedina re quando si trova nel castello
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -926,11 +911,10 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testGetCapturedPawnsKingInCastle
      * testa che la funzione getCapturedPawns catturi correttamente la pedina re quando si trova nel castello
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -982,12 +966,11 @@ public class BitSetMoveTest {
 
     //region movesNeededForKingEscape
 
-    /**
+    /*
      * funzione : testMovesNeededForKingEscapeNoMoves
      * testa che la funzione movesNeededForKingEscape valuti correttamente il numero di mosse quando non ci sono mosse
      * che conducono al goal
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -1029,12 +1012,11 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testMovesNeededForKingEscapeOneMove
      * testa che la funzione movesNeededForKingEscape valuti correttamente il numero di mosse quando il re è ad una
      * mossa dalla vittoria
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -1073,12 +1055,11 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testMovesNeededForKingEscapeTwoMoves
      * testa che la funzione movesNeededForKingEscape valuti correttamente il numero di mosse quando il re è a due
      * mosse dalla vittoria
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -1117,12 +1098,11 @@ public class BitSetMoveTest {
     }
 
 
-    /**
+    /*
      * funzione : testMovesNeededForKingEscapeThreeMoves
      * testa che la funzione movesNeededForKingEscape valuti correttamente il numero di mosse quando il re è a tre
      * mosse dalla vittoria
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   | R3|   |  1
      * +---+---+---+---+---+---+---+---+---+

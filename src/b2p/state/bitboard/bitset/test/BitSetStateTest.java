@@ -14,11 +14,10 @@ public class BitSetStateTest {
 
     //region getAvailablePawnMoves
 
-    /**
+    /*
      * funzione : testGetAvailablePawnMovesEmpty
      * testa la funzione getAvailablePawnMoves per verificare che non restituisca mosse quando non deve restituirle
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -65,11 +64,10 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testCollisionGetAvailablePawnMoves
      * testa la funzione getAvailablePawnMoves per verificare che valuti le collisioni correttamente
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -121,11 +119,10 @@ public class BitSetStateTest {
 
     //region performMoveAction
 
-    /**
+    /*
      * funzione : testPerformMoveAction
      * testa la funzione performMove(IAction) per verificare che esegua correttamente la mossa
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -177,11 +174,10 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testPerformMoveString
      * testa la funzione performMove(String, String) per verificare che esegua correttamente la mossa
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -233,11 +229,10 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testPerformMoveStandard
      * testa la funzione performMove(int, int) per verificare che esegua correttamente la mossa
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -288,12 +283,12 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testPerformMoveFromMatch
      * testa la funzione performMove(int, int) per verificare che gli stati siano coerenti, in seguito ad un errore
      * nel match.
      * (da completare)
-     * <p>
+     *
      * Stato 1, turno Nero
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | N | N | N |   |   |   |  1
@@ -440,12 +435,11 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testPerformMoveNoCaptureBetweenPawns
      * testa la funzione performMove(int, int) per verificare che la pedina mossa, quando si sposti tra due pedine del
      * colore opposto, non venga catturata
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -498,12 +492,10 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testPerformMoveNoCaptureBetweenPawnAndCamp
      * testa la funzione performMove(int, int) per verificare che la pedina mossa, quando si sposti tra una pedina del
      * colore opposto ed un accampamento, non venga catturata
-     * <p>
-     * <p>
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -554,12 +546,11 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testPerformMoveNoCaptureBetweenPawnAndCastle
      * testa la funzione performMove(int, int) per verificare che la pedina mossa, quando si sposti tra una pedina del
      * colore opposto ed il castello, non venga catturata, ma che catturi l'altra.
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -610,13 +601,12 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testKingInCastleIllegalCapture
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
      * si trova nel castello
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -669,13 +659,12 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testKingInCastleIllegalSpecialCapture
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
      * si trova nel castello
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -732,11 +721,11 @@ public class BitSetStateTest {
 
     //region hasWhiteWon
 
-    /**
+    /*
      * funzione : testWhiteWinningCondition
      * testa la funzione whiteHasWon per verificare le condizioni di vittoria del giocatore bianco,
      * simulando la mossa tramite performeMove, per testare anch'essa sul re
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -791,13 +780,12 @@ public class BitSetStateTest {
 
     //region hasBlackWon
 
-    /**
+    /*
      * funzione : testBlackStandardWinningCondition
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura standard del re circondato da due pedine nere quando il re
      * non si trova nè in una posizione adiacente al castello, nè dentro di esso
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -850,13 +838,12 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testKingNearCastleBlackWinningCondition
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
      * si trova in una posizione adiacente al castello
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
@@ -911,13 +898,12 @@ public class BitSetStateTest {
     }
 
 
-    /**
+    /*
      * funzione : testKingInCastleBlackWinningCondition
      * testa la funzione blackHasWon per verificare le condizioni di vittoria del giocatore nero, simulando la mossa
      * con la performMove per verificare anche la cattura speciale del re circondato da tre pedine nere quando il re
      * si trova nel castello
-     * <p>
-     * <p>
+     *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
      * +---+---+---+---+---+---+---+---+---+
