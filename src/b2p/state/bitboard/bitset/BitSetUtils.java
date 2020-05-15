@@ -3,8 +3,6 @@ package b2p.state.bitboard.bitset;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 
-import java.util.BitSet;
-
 public class BitSetUtils {
 
     public static BitSetState newFromServer(StateTablut serverState, int turnAmt) {

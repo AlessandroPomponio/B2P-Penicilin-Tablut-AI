@@ -1,7 +1,6 @@
 package b2p.state.bitboard.bitset;
 
 import java.util.Arrays;
-import java.util.BitSet;
 import java.util.HashSet;
 
 public enum BitSetPosition {

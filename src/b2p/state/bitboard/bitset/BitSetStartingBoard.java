@@ -1,7 +1,5 @@
 package b2p.state.bitboard.bitset;
 
-import java.util.BitSet;
-
 import static b2p.state.bitboard.bitset.BitSetPosition.*;
 
 public class BitSetStartingBoard {

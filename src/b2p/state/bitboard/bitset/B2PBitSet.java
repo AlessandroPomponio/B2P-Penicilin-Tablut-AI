@@ -14,12 +14,6 @@ public class B2PBitSet extends BitSet {
         return result;
     }
 
-    public B2PBitSet andNotResult(B2PBitSet input) {
-        B2PBitSet result = this.clone();
-        result.andNot(input);
-        return result;
-    }
-
     @Override
     public B2PBitSet clone() {
         return (B2PBitSet) super.clone();

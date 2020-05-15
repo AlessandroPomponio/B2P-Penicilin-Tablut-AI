@@ -3,7 +3,6 @@ package b2p.client;
 import b2p.model.IAction;
 import b2p.search.aima.TablutGame;
 import b2p.search.aima.minmax.IterativeDeepening;
-import b2p.state.bitboard.bitset.BitSetAction;
 import b2p.state.bitboard.bitset.BitSetState;
 import b2p.state.bitboard.bitset.BitSetUtils;
 import it.unibo.ai.didattica.competition.tablut.client.TablutClient;
