@@ -17,7 +17,7 @@ public class B2PBitSet extends BitSet {
      * represent bits with indices in the range {@code 0} through
      * {@code nbits-1}. All bits are initially {@code false}.
      *
-     * @param  nbits the initial size of the bit set
+     * @param  dimension the initial size of the bit set
      */
     public B2PBitSet(int dimension) {
         super(dimension);
