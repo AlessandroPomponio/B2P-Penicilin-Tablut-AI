@@ -23,13 +23,13 @@ public enum BitSetPosition {
     A9("A9"), B9("B9"), C9("C9"), D9("D9"), E9("E9"), F9("F9"), G9("G9"), H9("H9"), I9("I9");
 
     /**
-     * String representing the cell name
+     * Represents the cell name
      */
     private final String name;
 
     /**
      * Contructor method with given name argument
-     * @param name String that represents the cell name
+     * @param name represents the cell name
      */
     BitSetPosition(String name) {
         this.name = name;
@@ -37,14 +37,14 @@ public enum BitSetPosition {
 
     /**
      * Accessor method to retrieve the value of the private field name
-     * @return A String containing the name value
+     * @return the name value
      */
     public String getName() {
         return this.name;
     }
 
     /**
-     * Array of Integer representing all the camp cells on the board
+     * Array of ints representing all the camp cells on the board
      */
     //region Special boards
     private static final int[] campCells = {
@@ -60,7 +60,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing all the escape cells on the board
+     * Array of ints representing all the escape cells on the board
      */
     private static final int[] escapeCells = {
                             B1.ordinal(),   C1.ordinal(),                                                   G1.ordinal(),   H1.ordinal(),
@@ -75,7 +75,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the throne/castle cell on the board
+     * Array of ints representing the throne/castle cell on the board
      */
     private static final int[] castleCells = {
 
@@ -90,7 +90,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing all the obstacles cells on the board
+     * Array of ints representing all the obstacles cells on the board
      */
     private static final int[] obstacleCells = {
                                                             D1.ordinal(),                   F1.ordinal(),
@@ -105,7 +105,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing all the king's special cells on the board
+     * Array of ints representing all the king's special cells on the board
      */
     private static final int[] kingSpecialCells = {
 
@@ -119,7 +119,7 @@ public enum BitSetPosition {
 
     };
     /**
-     * Array of Integer representing all the cells adjacent to the throne/castle
+     * Array of ints representing all the cells adjacent to the throne/castle
      */
     private static final int[] kingSurroundedCells = {
 
@@ -134,7 +134,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the E4 special capture
+     * Array of ints representing the E4 special capture
      */
     private static final int[] kingInE4SurroundedCells = {
 
@@ -149,7 +149,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the D5 special capture
+     * Array of ints representing the D5 special capture
      */
     private static final int[] kingInD5SurroundedCells = {
 
@@ -164,7 +164,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the E6 special capture
+     * Array of ints representing the E6 special capture
      */
     private static final int[] kingInE6SurroundedCells = {
 
@@ -179,7 +179,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the F5 special capture
+     * Array of ints representing the F5 special capture
      */
     private static final int[] kingInF5SurroundedCells = {
 
@@ -194,7 +194,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the strategic cells for the black player (inner diagonal)
+     * Array of ints representing the strategic cells for the black player (inner diagonal)
      */
     private static final int[] strategicBlackCells = {
 
@@ -206,7 +206,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the strategic cells for the white player
+     * Array of ints representing the strategic cells for the white player
      */
     private static final int[] earlyGameStrategicWhiteCells = {
 
@@ -220,7 +220,7 @@ public enum BitSetPosition {
     //endregion
 
     /**
-     * Array of Integer representing the static weights of every cell for a generic white pawn
+     * Array of ints representing the static weights of every cell for a generic white pawn
      */
     public static final int[] whitePawnCellWeight = {
             5,  5,  5,  0,  0,  0,  5,  5,  5,
@@ -235,7 +235,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the static weights of every cell for a generic black pawn
+     * Array of ints representing the static weights of every cell for a generic black pawn
      */
     public static final int[] blackPawnCellWeight = {
             1,  3,  2,  3,  3,  3,  2,  3,  1,
@@ -250,7 +250,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the dynamic changes to cells weights depending on king position
+     * Array of ints representing the dynamic changes to cells weights depending on king position
      */
     public static final int[] kingTopLeftWeight = {
             1,  1,  1,  1,  1,  0,  0,  0,  0,
@@ -265,7 +265,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the dynamic changes to cells weights depending on king position
+     * Array of ints representing the dynamic changes to cells weights depending on king position
      */
     public static final int[] kingTopRightWeight = {
              0,  0,  0,  0,  1,  1,  1,  1,  1,
@@ -280,7 +280,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the dynamic changes to cells weights depending on king position
+     * Array of ints representing the dynamic changes to cells weights depending on king position
      */
     public static final int[] kingBottomLeftWeight = {
             0,  0,  0,  0, -1, -1, -1, -1, -1,
@@ -295,7 +295,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Array of Integer representing the dynamic changes to cells weights depending on king position
+     * Array of ints representing the dynamic changes to cells weights depending on king position
      */
     public static final int[] kingBottomRightWeight = {
             -1, -1, -1, -1, -1,  0,  0,  0,  0,
@@ -310,7 +310,7 @@ public enum BitSetPosition {
     };
 
     /**
-     * Matrix of Integer containing the possible dynamic changes to cell weights depending on king position
+     * Matrix of ints containing the possible dynamic changes to cell weights depending on king position
      */
     public static final int[][] kingBuff = { kingTopLeftWeight, kingTopRightWeight, kingBottomLeftWeight, kingBottomRightWeight };
 
