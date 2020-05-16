@@ -9,7 +9,7 @@ import it.unibo.ai.didattica.competition.tablut.domain.State;
 import java.util.concurrent.*;
 
 /**
- * This class implements {@link Callable<Integer>} in order to run each possible initial move and detect the best one
+ * This class implements {@link Callable} in order to run each possible initial move and detect the best one
  * according to the Iterative Deepening Minimax algorithm with alpha-beta pruning.
  *
  * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
