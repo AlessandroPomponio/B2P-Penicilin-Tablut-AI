@@ -12,7 +12,7 @@ public class BitSetStartingBoard {
 
     //region Starting boards
     /**
-     * Array of Integer representing the starting position of black pawns
+     * Array of ints representing the starting position of black pawns
      */
     private static final int[] blackStartingBoard = {
 
@@ -29,7 +29,7 @@ public class BitSetStartingBoard {
     };
 
     /**
-     * Array of Integer representing the starting position of white pawns
+     * Array of ints representing the starting position of white pawns
      */
     private static final int[] whiteStartingBoard = {
 
@@ -46,7 +46,7 @@ public class BitSetStartingBoard {
     };
 
     /**
-     * Array of Integer representing the starting position of the king
+     * Array of ints representing the starting position of the king
      */
     private static final int[] kingStartingBoard = {
 
@@ -65,7 +65,7 @@ public class BitSetStartingBoard {
     
     //region quadrants
     /**
-     * Array of Integer representing all the cells in the top left quadrant
+     * Array of ints representing all the cells in the top left quadrant
      */
     private static final int[] topLeftQuadrantMask = {
             A1.ordinal(), B1.ordinal(), C1.ordinal(), D1.ordinal(), E1.ordinal(),
@@ -76,7 +76,7 @@ public class BitSetStartingBoard {
     };
 
     /**
-     * Array of Integer representing all the cells in the top right quadrant
+     * Array of ints representing all the cells in the top right quadrant
      */
     private static final int[] topRightQuadrantMask = {
             E1.ordinal(), F1.ordinal(), G1.ordinal(), H1.ordinal(), I1.ordinal(),
@@ -87,7 +87,7 @@ public class BitSetStartingBoard {
     };
 
     /**
-     * Array of Integer representing all the cells in the bottom left quadrant
+     * Array of ints representing all the cells in the bottom left quadrant
      */
     private static final int[] bottomLeftQuadrantMask = {
             A5.ordinal(), B5.ordinal(), C5.ordinal(), D5.ordinal(), E5.ordinal(),
@@ -98,7 +98,7 @@ public class BitSetStartingBoard {
     };
 
     /**
-     * Array of Integer representing all the cells in the bottom right quadrant
+     * Array of ints representing all the cells in the bottom right quadrant
      */
     private static final int[] bottomRightQuadrantMask = {
             E5.ordinal(), F5.ordinal(), G5.ordinal(), H5.ordinal(), I5.ordinal(),

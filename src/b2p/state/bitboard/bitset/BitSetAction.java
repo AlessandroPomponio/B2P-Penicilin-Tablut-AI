@@ -15,11 +15,11 @@ import java.util.Objects;
 public class BitSetAction implements IAction {
 
     /**
-     * Represents a String for the cell from which the pawn moves
+     * Represents the cell from which the pawn moves
      */
     private final String from;
     /**
-     * Represents a String for the final cell to which the pawn moves
+     * Represents the final cell to which the pawn moves
      */
     private final String to;
     /**
@@ -61,7 +61,7 @@ public class BitSetAction implements IAction {
     }
 
     /**
-     * Method to access the private field from
+     * Accesses the private field from
      * @return Value of from
      */
     @Override
@@ -70,7 +70,7 @@ public class BitSetAction implements IAction {
     }
 
     /**
-     * Method to access the private field to
+     * Accesses the private field to
      * @return Value of to
      */
     @Override
@@ -79,7 +79,7 @@ public class BitSetAction implements IAction {
     }
 
     /**
-     * Method to access the private field turn
+     * Accesses the private field turn
      * @return Value of turn
      */
     @Override
@@ -88,7 +88,7 @@ public class BitSetAction implements IAction {
     }
 
     /**
-     * Method to access the private field value
+     * Accesses the private field value
      * @return Value of value
      */
     @Override
@@ -97,7 +97,7 @@ public class BitSetAction implements IAction {
     }
 
     /**
-     * Method to set the value of the private field value
+     * Sets the value of the private field value
      * @param value is an Integer data type
      */
     @Override

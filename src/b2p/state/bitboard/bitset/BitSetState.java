@@ -23,7 +23,7 @@ public class BitSetState implements IState {
      */
     private Turn turn;
     /**
-     * Integer representing the turn number
+     * Represents the turn number
      */
     private int turnAmt = 0;
 
@@ -49,10 +49,11 @@ public class BitSetState implements IState {
 
     /**
      * Constructor method to create an instance of BitSetState from the given arguments
-     * @param blackPawns {@link B2PBitSet} representing the black pawns
-     * @param whitePawns {@link B2PBitSet} representing the white pawns
-     * @param king {@link B2PBitSet} representing the king
-     * @param turn {@link B2PBitSet} representing the board
+     * @param blackPawns the black pawns
+     * @param whitePawns the white pawns
+     * @param king the king
+     * @param turn the board
+     * @see B2PBitSet
      */
     public BitSetState(B2PBitSet blackPawns, B2PBitSet whitePawns, B2PBitSet king, Turn turn) {
 
@@ -72,11 +73,12 @@ public class BitSetState implements IState {
 
     /**
      * Constructor method to create an instance of BitSetState from the given arguments
-     * @param blackPawns {@link B2PBitSet} representing the black pawns
-     * @param whitePawns {@link B2PBitSet} representing the white pawns
-     * @param king {@link B2PBitSet} representing the king
-     * @param turn {@link B2PBitSet} representing the board
-     * @param turnAmt Integer representing the turn number
+     * @param blackPawns the black pawns
+     * @param whitePawns the white pawns
+     * @param king the king
+     * @param turn the board
+     * @param turnAmt the turn number
+     * @see B2PBitSet
      */
     public BitSetState(B2PBitSet blackPawns, B2PBitSet whitePawns, B2PBitSet king, Turn turn, int turnAmt) {
         this(blackPawns, whitePawns, king, turn);

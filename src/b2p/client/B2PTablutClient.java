@@ -23,19 +23,19 @@ import java.io.IOException;
 public class B2PTablutClient extends TablutClient {
 
     /**
-     * String containing the player name
+     * The player name
      */
     private static final String PLAYER_NAME = "B2P";
     /**
-     * Integer representing the timeout of every turn
+     * The timeout of every turn
      */
     private final int timeout;
 
     /**
      * Constructor method to create an instance of {@link B2PTablutClient} with given arguments
-     * @param player String containing the player name
-     * @param timeout Integer representing the timeout of every turn
-     * @param ipAddress String representing IP address of the server
+     * @param player the player name
+     * @param timeout the timeout of every turn
+     * @param ipAddress the server IP address
      * @throws IOException
      */
     public B2PTablutClient(String player, int timeout, String ipAddress) throws IOException {
@@ -45,8 +45,8 @@ public class B2PTablutClient extends TablutClient {
 
     /**
      * Constructor method to create an instance of {@link B2PTablutClient} with given arguments and default timeout set to 60000 milliseconds
-     * @param player String containing the player name
-     * @param ipAddress String representing IP address of the server
+     * @param player the player name
+     * @param ipAddress the server IP address
      * @throws IOException
      */
     public B2PTablutClient(String player, String ipAddress) throws IOException {
@@ -57,7 +57,7 @@ public class B2PTablutClient extends TablutClient {
     /**
      * Constructor method to create an instance of {@link B2PTablutClient} with a given player name and default
      * timeout (set to 60000 milliseconds) and ipAddress
-     * @param player String containing the player name
+     * @param player the player name
      * @throws IOException
      */
     public B2PTablutClient(String player) throws IOException {
@@ -67,8 +67,8 @@ public class B2PTablutClient extends TablutClient {
 
     /**
      * Constructor method to create an instance of {@link B2PTablutClient} with given arguments and default timeout set to 60000 milliseconds
-     * @param player String containing the player name
-     * @param timeout Integer representing the timeout of every turn
+     * @param player the player name
+     * @param timeout the timeout of every turn
      * @throws IOException
      */
     public B2PTablutClient(String player, int timeout) throws IOException {
@@ -137,9 +137,9 @@ public class B2PTablutClient extends TablutClient {
     }
 
     /**
-     * Method used to search the best move for a given state
-     * @param state {@link BitSetState} representing the current state of the game
-     * @param search {@link IterativeDeepening} instance representing the search algorithm
+     * Looks for the best move for a given state
+     * @param state the current state of the game
+     * @param search the search algorithm
      * @see BitSetState
      * @see IterativeDeepening
      */
@@ -158,8 +158,8 @@ public class B2PTablutClient extends TablutClient {
     }
 
     /**
-     * Utility method used to print a comment of the current turn
-     * @param state {@link BitSetState} representing the current state of the game
+     * Prints a comment of the current turn
+     * @param state the current state of the game
      * @param whiteWins String to print in case of white win
      * @param blackWins String to print in case of black win
      * @see BitSetState
