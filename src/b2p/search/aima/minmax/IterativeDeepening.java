@@ -87,6 +87,7 @@ public class IterativeDeepening implements IAdversarialSearch {
      * Returns the action which appears to be the best at the given state
      * @param state current state of the game, based on which the decision should be made
      * @return the best action to perform for the given heuristic function
+     *@see IState
      */
     @Override
     public IAction makeDecision(IState state) {
@@ -170,6 +171,7 @@ public class IterativeDeepening implements IAdversarialSearch {
     /**
      * Sets the game state to the value passed as input
      * @param state state to be set within the {@link IterativeDeepening} class
+     *@see IState
      */
     public void setGameState(IState state) {
         game.setState(state);

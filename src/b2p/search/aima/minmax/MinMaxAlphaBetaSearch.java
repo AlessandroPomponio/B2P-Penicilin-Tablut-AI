@@ -63,10 +63,11 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
     /**
      * Builds a MinMaxAlphaBetaSearch object given the strategy, the current state of the game, the initial action and
      * the player for whom the best decision has to be made
-     * @param strategy instance of Iterative Deepening strategy
+     * @param strategy instance of {@code Iterative Deepening} strategy
      * @param state current state of the game
      * @param action initial action performed for this thread based on which the function's decision tree is created
      * @param player player for whom the best decision has to be made
+     * @see IterativeDeepening
      */
     protected MinMaxAlphaBetaSearch(IterativeDeepening strategy, IState state, IAction action, State.Turn player) {
 
@@ -102,6 +103,7 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
      * @param beta beta value
      * @param depth current depth
      * @return maximum heuristic value between two states within the decision tree
+     * @see IState
      */
     // Maximizer for Minimax with alpha/beta pruning
     public int maxValue(IState state, State.Turn player, int alpha, int beta, int depth) {
@@ -144,6 +146,7 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
      * @param beta beta value
      * @param depth current depth
      * @return minimum heuristic value between two states within the decision tree
+     * @see IState
      */
     // Minimizer for Minimax with alpha/beta pruning
     public int minValue(IState state, State.Turn player, int alpha, int beta, int depth) {
