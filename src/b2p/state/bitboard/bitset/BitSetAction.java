@@ -33,9 +33,9 @@ public class BitSetAction implements IAction {
 
     /**
      * Constructor for BitSetAction Class
-     * @param from is a String for the starting position
-     * @param to is a String for the final position
-     * @param turn is the current turn
+     * @param from the starting position
+     * @param to the final position
+     * @param turn the current turn
      * @see Turn
      */
     public BitSetAction(String from, String to, Turn turn) {
@@ -47,10 +47,10 @@ public class BitSetAction implements IAction {
 
     /**
      * Constructor for BitSetAction Class
-     * @param from is a String for the starting position
-     * @param to is a String for the final position
-     * @param turn is the current turn
-     * @param value is an Integer for the heuristic value
+     * @param from the starting position
+     * @param to the final position
+     * @param turn the current turn
+     * @param value the heuristic value
      * @see Turn
      */
     public BitSetAction(String from, String to, Turn turn, int value) {

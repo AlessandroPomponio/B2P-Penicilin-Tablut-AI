@@ -1,8 +1,5 @@
 package b2p.state.bitboard.bitset;
 
-import b2p.model.IAction;
-import b2p.model.IState;
-
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -319,62 +316,62 @@ public enum BitSetPosition {
 
     //region Special BitSets
     /**
-     * {@link B2PBitSet} containing integer array for the camps
+     {@link B2PBitSet} representing the camps cells
      * @see B2PBitSet
      */
     public static final B2PBitSet camps = BitSetUtils.newFromPositions(campCells);
     /**
-     * {@link B2PBitSet} containing integer array for the escapes
+     * {@link B2PBitSet} representing the escapes cells
      * @see B2PBitSet
      */
     public static final B2PBitSet escape = BitSetUtils.newFromPositions(escapeCells);
     /**
-     * {@link B2PBitSet} containing integer array for the castle
+     * {@link B2PBitSet} representing the castle cell
      * @see B2PBitSet
      */
     public static final B2PBitSet castle = BitSetUtils.newFromPositions(castleCells);
     /**
-     * {@link B2PBitSet} containing integer array for the obstacles
+     * {@link B2PBitSet} representing the obstacles cells
      * @see B2PBitSet
      */
     public static final B2PBitSet obstacles = BitSetUtils.newFromPositions(obstacleCells);
     /**
-     * {@link B2PBitSet} containing integer array for the special king cells
+     * {@link B2PBitSet} representing the special king cells
      * @see B2PBitSet
      */
     public static final B2PBitSet specialKingCells = BitSetUtils.newFromPositions(kingSpecialCells);
     /**
-     * {@link B2PBitSet} containing integer array for the king surrounding
+     * {@link B2PBitSet} representing the surrounding cells for the king
      * @see B2PBitSet
      */
     public static final B2PBitSet kingSurrounded = BitSetUtils.newFromPositions(kingSurroundedCells);
     /**
-     * {@link B2PBitSet} containing integer array for the E4 capture
+     * {@link B2PBitSet} representing the E4 capture
      * @see B2PBitSet
      */
     public static final B2PBitSet kingInE4Surrounded = BitSetUtils.newFromPositions(kingInE4SurroundedCells);
     /**
-     * {@link B2PBitSet} containing integer array for the D5 capture
+     * {@link B2PBitSet} representing the D5 capture
      * @see B2PBitSet
      */
     public static final B2PBitSet kingInD5Surrounded = BitSetUtils.newFromPositions(kingInD5SurroundedCells);
     /**
-     * {@link B2PBitSet} containing integer array for the E6 capture
+     * {@link B2PBitSet} representing the E6 capture
      * @see B2PBitSet
      */
     public static final B2PBitSet kingInE6Surrounded = BitSetUtils.newFromPositions(kingInE6SurroundedCells);
     /**
-     * {@link B2PBitSet} containing integer array for the F5 capture
+     * {@link B2PBitSet} representing the F5 capture
      * @see B2PBitSet
      */
     public static final B2PBitSet kingInF5Surrounded = BitSetUtils.newFromPositions(kingInF5SurroundedCells);
     /**
-     * {@link B2PBitSet} containing integer array with the strategic cells for the black player
+     * {@link B2PBitSet} representing the strategic cells for the black player
      * @see B2PBitSet
      */
     public static final B2PBitSet blackStrategicCells = BitSetUtils.newFromPositions(strategicBlackCells);
     /**
-     * {@link B2PBitSet} containing integer array with the strategic cells for the white player
+     * {@link B2PBitSet} representing the strategic cells for the white player
      * @see B2PBitSet
      */
     public static final B2PBitSet whiteEarlyGameStrategicCells = BitSetUtils.newFromPositions(earlyGameStrategicWhiteCells);

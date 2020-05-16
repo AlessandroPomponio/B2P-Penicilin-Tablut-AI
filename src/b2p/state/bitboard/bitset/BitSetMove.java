@@ -19,9 +19,9 @@ import java.util.List;
 public class BitSetMove {
 
     /**
-     * Method returns a list of possible moves for a given pawn position and a given game state
-     * @param pawnPosition is an Integer data type
-     * @param state is an IState instance
+     * Returns a list of possible moves for a given pawn position and a given game state
+     * @param pawnPosition position of the pawn
+     * @param state current state of the game
      * @return A List of possible moves
      * @see IState
      */
@@ -115,10 +115,10 @@ public class BitSetMove {
     }
 
     /**
-     * Method returns a {@code B2PBitSet} which has set at 1 all captured pawns
-     * @param from Integer representing the position of the pawn starting cell
-     * @param to Integer representing the position of the pawn final cell
-     * @param state is the current state of the game
+     * Returns a {@code B2PBitSet} which has set at 1 all captured pawns
+     * @param from the position of the pawn starting cell
+     * @param to the position of the pawn final cell
+     * @param state the current state of the game
      * @return a {@code B2PBitSet} which has set at 1 all captured pawns
      * @see B2PBitSet
      */
@@ -132,10 +132,10 @@ public class BitSetMove {
     }
 
     /**
-     * Method returns a {@code B2PBitSet} containing all the captured pawns for the black player
-     * @param from Integer representing the position of the pawn starting cell
-     * @param to Integer representing the position of the pawn final cell
-     * @param state is the current state of the game
+     * Returns a {@code B2PBitSet} containing all the captured pawns for the black player
+     * @param from the position of the pawn starting cell
+     * @param to the position of the pawn final cell
+     * @param state the current state of the game
      * @return a {@code B2PBitSet} containing all the captured pawns for the black player
      * @see B2PBitSet
      * @see BitSetMove getCapturesForWhite
@@ -214,10 +214,10 @@ public class BitSetMove {
     }
 
     /**
-     * Method returns a {@code B2PBitSet} containing all the captured pawns for the white player
-     * @param from Integer representing the position of the pawn starting cell
-     * @param to Integer representing the position of the pawn final cell
-     * @param state is the current state of the game
+     * Returns a {@code B2PBitSet} containing all the captured pawns for the white player
+     * @param from the position of the pawn starting cell
+     * @param to the position of the pawn final cell
+     * @param state the current state of the game
      * @return a {@code B2PBitSet} containing all the captured pawns for the white player
      * @see B2PBitSet
      * @see BitSetMove getCapturesForBlack
@@ -234,10 +234,10 @@ public class BitSetMove {
     }
 
     /**
-     * Method returns a {@code B2PBitSet} containing all the non-special captures for a given position
-     * @param position Integer representing the position to be evaluated
-     * @param attack BitSet representing the attacking pawns
-     * @param defense BitSet representing the defending pawns
+     * Returns a {@code B2PBitSet} containing all the non-special captures for a given position
+     * @param position the position to be evaluated
+     * @param attack {@link BitSet} representing the attacking pawns
+     * @param defense {@link BitSet} representing the defending pawns
      * @return a {@code B2PBitSet} containing all the non-special captures for a given position
      * @see B2PBitSet
      */
@@ -329,9 +329,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value for the king. Returns a value depending on how many escapes the king has in a
+     * Returns a value depending on how many escapes the king has in a
      * given state of the game
-     * @param state IState representing the current state of the game
+     * @param state the current state of the game
      * @return an Integer representing an heuristic value
      * @see BitSetPosition
      */
@@ -351,9 +351,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating a Boolean value depending on whether the king has more than one escape path in a given state of the game
-     * @param state IState representing the current state of the game
-     * @return A Boolean value
+     * Returns a Boolean value depending on whether the king has more than one escape path in a given state of the game
+     * @param state the current state of the game
+     * @return {@code true} if the king has more than one escape path
      * @see BitSetPosition
      */
     public static boolean kingHasMoreThanOneEscapePath(IState state) {
@@ -384,9 +384,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value considering the weight of every position in the board
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * Returns an heuristic value considering the weight of every position in the board
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see B2PBitSet
      */
     public static int positionWeights(IState state) {
@@ -411,9 +411,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value depending on how many white pawns are in a strategic position
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * Returns an heuristic value depending on how many white pawns are in a strategic position
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see BitSetPosition whiteEarlyGameStrategicCells
      */
     public static int whiteCellInStrategicPosition(IState state) {
@@ -421,10 +421,10 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value depending on how many white and black pawns are near the king whether the king
+     * Returns an heuristic value depending on how many white and black pawns are near the king whether the king
      * is in the throne, outside the throne or near the throne
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see B2PBitSet
      */
     public static int kingStatus(IState state) {
@@ -527,9 +527,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value depending on how many moves does the king have
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * Returns an heuristic value depending on how many moves does the king have
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see IState getAvailableKingMoves
      */
     public static int kingMoves(IState state) {
@@ -537,9 +537,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value depending on how many black pawns are out of camps
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * Returns an heuristic value depending on how many black pawns are out of camps
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see IState
      * @see BitSetPosition camps
      */
@@ -548,9 +548,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value depending on how many black pawns are in a diagonal position near to each other
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * Returns an heuristic value depending on how many black pawns are in a diagonal position near to each other
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see IState
      * @see B2PBitSet
      */
@@ -598,9 +598,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value depending on how many white pawns are adjacent to king
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * Returns an heuristic value depending on how many white pawns are adjacent to king
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see IState
      * @see B2PBitSet
      */
@@ -651,9 +651,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value depending on how many black pawns endangering the king
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * Returns an heuristic value depending on how many black pawns endangering the king
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see IState
      * @see B2PBitSet
      * @see BitSetPosition castle
@@ -717,9 +717,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value depending on how many moves the king needs to perform in order to escape
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * Returns an heuristic value depending on how many moves the king needs to perform in order to escape
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see IState
      * @see BitSetMove movesNeededForKingEscape_rec
      */
@@ -728,9 +728,9 @@ public class BitSetMove {
     }
 
     /**
-     * Recursive method evaluating an heuristic value depending on how many black pawns endangering the king called by {@code movesNeededForKingEscape}
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * Recursive method that returns an heuristic value depending on how many black pawns endangering the king called by {@code movesNeededForKingEscape}
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see IState
      * @see BitSetMove movesNeededForKingEscape_rec
      */
@@ -776,9 +776,9 @@ public class BitSetMove {
     }
 
     /**
-     * Method evaluating an heuristic value depending on which is the best quadrant to target for the white player
-     * @param state IState representing the current state of the game
-     * @return Integer representing an heuristic value
+     * Returns an heuristic value depending on which is the best quadrant to target for the white player
+     * @param state the current state of the game
+     * @return an heuristic value
      * @see BitSetState
      * @see BitSetStartingBoard
      */
