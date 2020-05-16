@@ -1,3 +1,5 @@
+package b2p;
+
 import b2p.client.B2PTablutClient;
 
 public class Main {
@@ -9,7 +11,7 @@ public class Main {
         String player = "white";
 
         // timeout in seconds (the client constructor wants it in millis)
-        int timeout = 60000;
+        int timeout = 15000;
 
         // server IP
         String serverIP = "localhost";
