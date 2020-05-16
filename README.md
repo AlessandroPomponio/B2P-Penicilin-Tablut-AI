@@ -21,7 +21,7 @@ You can download the latest jar file from the GitHub Actions pipeline [here](htt
 
 You will then simply need to run:
 
-```powershell
+```
 java -jar B2P-Penicillin.jar <black|white> <timeout-in-seconds> <server-ip>
 ```
 
