@@ -145,5 +145,5 @@ public class BitSetAction implements IAction {
     public int compareTo(IAction o) {
         return this.value - o.getValue();
     }
-    
+
 }
