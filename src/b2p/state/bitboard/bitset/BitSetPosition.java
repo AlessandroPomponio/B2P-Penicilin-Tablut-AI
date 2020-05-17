@@ -11,7 +11,7 @@ import java.util.HashSet;
  * @author Federico Zanini
  */
 public enum BitSetPosition {
-    
+
     A1("A1"), B1("B1"), C1("C1"), D1("D1"), E1("E1"), F1("F1"), G1("G1"), H1("H1"), I1("I1"),
     A2("A2"), B2("B2"), C2("C2"), D2("D2"), E2("E2"), F2("F2"), G2("G2"), H2("H2"), I2("I2"),
     A3("A3"), B3("B3"), C3("C3"), D3("D3"), E3("E3"), F3("F3"), G3("G3"), H3("H3"), I3("I3"),
@@ -28,7 +28,7 @@ public enum BitSetPosition {
     private final String name;
 
     /**
-     * Contructor method with given name argument
+     * Constructor method with given name argument
      * @param name represents the cell name
      */
     BitSetPosition(String name) {

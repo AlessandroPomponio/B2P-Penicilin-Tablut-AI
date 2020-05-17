@@ -15,7 +15,7 @@ public class BitSetMoveTest {
     /*
      * funzione : testGetMovesForWhitePawnsAtStart
      * testa la funzione getMovesForPawn per tutte le pedine bianche allo stato iniziale della partita
-     * L'ordine di testing comincia dalla pedina in alto a sinitra, finisce con quella in basso a destra
+     * L'ordine di testing comincia dalla pedina in alto a sinistra, finisce con quella in basso a destra
      *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | N | N | N |   |   |   |  1

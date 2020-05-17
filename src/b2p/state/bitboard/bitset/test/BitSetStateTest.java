@@ -724,7 +724,7 @@ public class BitSetStateTest {
     /*
      * funzione : testWhiteWinningCondition
      * testa la funzione whiteHasWon per verificare le condizioni di vittoria del giocatore bianco,
-     * simulando la mossa tramite performeMove, per testare anch'essa sul re
+     * simulando la mossa tramite performMove, per testare anch'essa sul re
      *
      * +---+---+---+---+---+---+---+---+---+
      * |   |   |   | A | A | A |   |   |   |  1
