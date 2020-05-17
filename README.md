@@ -19,6 +19,8 @@ using Andrea Galassi's server available in [this repository](https://github.com/
 
 You can download the latest jar file from the GitHub Actions pipeline [here](https://github.com/AlessandroPomponio/B2P-Penicilin-Tablut-AI/actions?query=workflow%3A%22Java+CI%22).
 
+You can download the latest stable release from the Releases section [here](https://github.com/AlessandroPomponio/B2P-Penicilin-Tablut-AI/releases)
+
 You will then simply need to run:
 
 ```
