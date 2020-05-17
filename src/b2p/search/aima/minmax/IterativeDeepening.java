@@ -22,7 +22,7 @@ import java.util.concurrent.Future;
  * @author Alessandro Buldini
  * @author Alessandro Pomponio
  * @author Federico Zanini
- * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
+ * @see <a href="https://github.com/aimacode/aima-java">AIMA Java</a>
  */
 public class IterativeDeepening implements IAdversarialSearch {
 
@@ -245,7 +245,7 @@ public class IterativeDeepening implements IAdversarialSearch {
      * @author Alessandro Buldini
      * @author Alessandro Pomponio
      * @author Federico Zanini
-     * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
+     * @see <a href="https://github.com/aimacode/aima-java">AIMA Java</a>
      */
     protected static class Timer {
 

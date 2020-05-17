@@ -14,7 +14,7 @@ import java.util.concurrent.Callable;
  * @author Alessandro Buldini
  * @author Alessandro Pomponio
  * @author Federico Zanini
- * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
+ * @see <a href="https://github.com/aimacode/aima-java">AIMA Java</a>
  */
 public class MinMaxAlphaBetaSearch implements Callable<Integer> {
 
