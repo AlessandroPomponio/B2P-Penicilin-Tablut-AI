@@ -17,7 +17,7 @@ public class B2PBitSet extends BitSet {
      * represent bits with indices in the range {@code 0} through
      * {@code nbits-1}. All bits are initially {@code false}.
      *
-     * @param  dimension the initial size of the bit set
+     * @param dimension the initial size of the bit set
      */
     public B2PBitSet(int dimension) {
         super(dimension);
@@ -26,6 +26,7 @@ public class B2PBitSet extends BitSet {
     /**
      * Returns the results of a bitwise AND operation of this target with the argument B2PBitSet.
      * The value of this target is not modified any way.
+     *
      * @param input is a B2PBitSet object
      * @return the results of a bitwise AND operation of this target with the argument B2PBitSet.
      * @see BitSet
