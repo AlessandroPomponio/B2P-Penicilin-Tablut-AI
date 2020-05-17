@@ -12,35 +12,84 @@ import it.unibo.ai.didattica.competition.tablut.domain.StateTablut;
 
 import java.io.IOException;
 
+/**
+ * This Class extends the {@link TablutClient} class to represent a B2P player
+ *
+ * @author Alessandro Buldini
+ * @author Alessandro Pomponio
+ * @author Federico Zanini
+ * @see TablutClient
+ */
 public class B2PTablutClient extends TablutClient {
 
+    /**
+     * The player name
+     */
     private static final String PLAYER_NAME = "B2P";
+
+    /**
+     * The timeout of every turn
+     */
     private final int timeout;
 
+    /**
+     * Creates an instance of {@link B2PTablutClient} with the given arguments
+     *
+     * @param player    the player name
+     * @param timeout   the timeout of every turn
+     * @param ipAddress the server IP address
+     * @throws IOException
+     */
     public B2PTablutClient(String player, int timeout, String ipAddress) throws IOException {
         super(player, PLAYER_NAME, timeout, ipAddress);
         this.timeout = timeout;
     }
 
+    /**
+     * Creates an instance of {@link B2PTablutClient} with the given arguments and a default
+     * timeout set to 60000 milliseconds
+     *
+     * @param player    the player name
+     * @param ipAddress the server IP address
+     * @throws IOException
+     */
     public B2PTablutClient(String player, String ipAddress) throws IOException {
         super(player, PLAYER_NAME, 60000, ipAddress);
         this.timeout = 60000;
     }
 
+    /**
+     * Creates an instance of {@link B2PTablutClient} with a given player role,
+     * defaults the timeout to 60000 milliseconds and the server IP address to localhost
+     *
+     * @param player the player name
+     * @throws IOException
+     */
     public B2PTablutClient(String player) throws IOException {
         super(player, PLAYER_NAME, 60000);
         this.timeout = 60000;
     }
 
+    /**
+     * Creates an instance of {@link B2PTablutClient} with a given player role and timeout.
+     * Defaults the server IP address to localhost.
+     *
+     * @param player  the player name
+     * @param timeout the timeout of every turn
+     * @throws IOException
+     */
     public B2PTablutClient(String player, int timeout) throws IOException {
         super(player, PLAYER_NAME, timeout);
         this.timeout = timeout;
     }
 
+    /**
+     * Starts the client
+     */
     @Override
     public void run() {
 
-        // Declare the name first thing
+        // Declare the name first
         try {
             this.declareName();
         } catch (Exception e) {
@@ -94,6 +143,14 @@ public class B2PTablutClient extends TablutClient {
         }
     }
 
+    /**
+     * Looks for the best move for a given state
+     *
+     * @param state  the current state of the game
+     * @param search the search algorithm
+     * @see BitSetState
+     * @see IterativeDeepening
+     */
     private void searchAndSubmitAction(BitSetState state, IterativeDeepening search) {
         try {
 
@@ -108,6 +165,14 @@ public class B2PTablutClient extends TablutClient {
         }
     }
 
+    /**
+     * Prints a comment for the current turn
+     *
+     * @param state     the current state of the game
+     * @param whiteWins String to print in case of white win
+     * @param blackWins String to print in case of black win
+     * @see BitSetState
+     */
     private void printTurnComment(BitSetState state, String whiteWins, String blackWins) {
         if (state.getTurn().equals(StateTablut.Turn.WHITE)) {
             System.out.println("Waiting for your opponent move... ");
@@ -122,7 +187,6 @@ public class B2PTablutClient extends TablutClient {
             System.exit(0);
         }
     }
-
 
 }
 

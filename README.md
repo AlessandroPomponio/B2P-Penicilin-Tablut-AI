@@ -17,11 +17,12 @@ using Andrea Galassi's server available in [this repository](https://github.com/
 
 ## How to run
 
-You can download the latest jar file from the GitHub Actions pipeline [here](https://github.com/AlessandroPomponio/B2P-Penicilin-Tablut-AI/actions?query=workflow%3A%22Java+CI%22).
+You can download the latest jar file from the GitHub Actions pipeline [here](https://github.com/AlessandroPomponio/B2P-Penicilin-Tablut-AI/actions?query=workflow%3A%22Java+CI%22).  
+You can download the latest **stable release** from the Releases section [here](https://github.com/AlessandroPomponio/B2P-Penicilin-Tablut-AI/releases).
 
 You will then simply need to run:
 
-```powershell
+```
 java -jar B2P-Penicillin.jar <black|white> <timeout-in-seconds> <server-ip>
 ```
 
@@ -30,3 +31,8 @@ java -jar B2P-Penicillin.jar <black|white> <timeout-in-seconds> <server-ip>
 - [Alessandro Buldini](https://github.com/occhialidaleso) 
 - [Alessandro Pomponio](https://github.com/AlessandroPomponio)
 - [Federico Zanini](https://github.com/federicozanini)
+
+## Credits
+
+Icons by [Flat Icons](https://www.flaticon.com/authors/flat-icons) from [Flaticon](https://www.flaticon.com/)  
+Font Pixeboy by [Abas Creative](https://www.fontspace.com/abascreative) from [Fontspace](https://www.fontspace.com/)

@@ -1,0 +1,7 @@
+b2p
+b2p.client
+b2p.model
+b2p.search.aima
+b2p.search.aima.minmax
+b2p.state.bitboard.bitset
+b2p.state.bitboard.bitset.test

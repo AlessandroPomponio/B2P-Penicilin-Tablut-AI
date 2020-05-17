@@ -1,5 +1,15 @@
+package b2p;
+
 import b2p.client.B2PTablutClient;
 
+/**
+ * Main class: it supports 3 input parameters:
+ * <ol>
+ *     <li>A player type (black/white)</li>
+ *     <li>A timeout in seconds</li>
+ *     <li>A server IP</li>
+ * </ol>
+ */
 public class Main {
 
     public static void main(String[] args) {

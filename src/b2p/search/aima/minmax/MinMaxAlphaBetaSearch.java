@@ -5,25 +5,69 @@ import b2p.model.IState;
 import b2p.search.aima.TablutGame;
 import it.unibo.ai.didattica.competition.tablut.domain.State;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
 
+/**
+ * This class represents a Minimax search with alpha-beta pruning to be ran on a game state.
+ * It implements {@link Callable} in order to allow for asynchronous execution.
+ *
+ * @author Alessandro Buldini
+ * @author Alessandro Pomponio
+ * @author Federico Zanini
+ * @see <a href="https://github.com/aimacode/aima-java">AIMA Java</a>
+ */
 public class MinMaxAlphaBetaSearch implements Callable<Integer> {
 
-    //
+    /**
+     * Object that represents the Iterative Deepening strategy
+     */
     private final IterativeDeepening strategy;
 
-    //
+    /**
+     * Instance of the game that needs to be evaluated
+     */
     private final TablutGame game;
 
-    //
+    /**
+     * Current state of the game that needs to be evaluated
+     */
     private final IState state;
+
+    /**
+     * Initial action based on which the function's decision tree is created
+     */
     private final IAction action;
+
+    /**
+     * Player for which the decision needs to be made
+     */
     private final State.Turn player;
 
-    //
-    private final int utilMin, utilMax;
+    /**
+     * Minimum value the heuristic function can assume
+     */
+    private final int utilMin;
+
+    /**
+     * Maximum value the heuristic function can assume
+     */
+    private final int utilMax;
+
+    /**
+     * Depth limit set by the Iterative Deepening strategy
+     */
     private final int depthLimit;
 
+    /**
+     * Builds a MinMaxAlphaBetaSearch object given the strategy, the current state of the game, the initial action and
+     * the player for whom the best decision has to be made
+     *
+     * @param strategy instance of {@code Iterative Deepening} strategy
+     * @param state    current state of the game
+     * @param action   initial action performed for this thread based on which the function's decision tree is created
+     * @param player   player for whom the best decision has to be made
+     * @see IterativeDeepening
+     */
     protected MinMaxAlphaBetaSearch(IterativeDeepening strategy, IState state, IAction action, State.Turn player) {
 
         //
@@ -49,7 +93,18 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
 
     }
 
-    // Maximizer for Minimax with alpha/beta pruning
+    /**
+     * function needed to implement correctly the alpha-beta pruning: detects the maximum value between two possible states
+     * and prunes all the sub-trees that won't be explored according to the current heuristic function
+     *
+     * @param state  current state of the game
+     * @param player player that performs the move
+     * @param alpha  alpha value
+     * @param beta   beta value
+     * @param depth  current depth
+     * @return maximum heuristic value between two states within the decision tree
+     * @see IState
+     */
     public int maxValue(IState state, State.Turn player, int alpha, int beta, int depth) {
 
         //
@@ -81,7 +136,18 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
 
     }
 
-    // Minimizer for Minimax with alpha/beta pruning
+    /**
+     * function needed to implement correctly the alpha-beta pruning: detects the minimum value between two possible states
+     * and prunes all the sub-trees that won't be explored according to the current heuristic function
+     *
+     * @param state  current state of the game
+     * @param player player that performs the move
+     * @param alpha  alpha value
+     * @param beta   beta value
+     * @param depth  current depth
+     * @return minimum heuristic value between two states within the decision tree
+     * @see IState
+     */
     public int minValue(IState state, State.Turn player, int alpha, int beta, int depth) {
 
         //
@@ -113,10 +179,24 @@ public class MinMaxAlphaBetaSearch implements Callable<Integer> {
 
     }
 
+    /**
+     * Evaluates a state according to {@link TablutGame}'s heuristic function
+     *
+     * @param state  current state of the game
+     * @param player player for whom the heuristic value has to be calculated
+     * @return an heuristic integer value
+     * @see TablutGame
+     */
     private int eval(IState state, State.Turn player) {
         return game.getUtility(state, player);
     }
 
+    /**
+     * Starts searching for the best decision to be made given an initial action
+     *
+     * @return an integer containing the best heuristic value according to Iterative Deepening MiniMax search with
+     * alpha-beta pruning
+     */
     @Override
     public Integer call() {
         return minValue(game.getResult(state, action), player, utilMin, utilMax, 1);

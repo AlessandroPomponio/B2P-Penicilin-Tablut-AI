@@ -1,21 +1,68 @@
 package b2p.search.aima;
 
+import b2p.model.IAction;
+import b2p.model.IState;
+import it.unibo.ai.didattica.competition.tablut.domain.State.Turn;
+
 import java.util.List;
 
 /**
- * @param <BitSetState>  Type which is used for states in the game.
- * @param <BitSetAction> Type which is used for actions in the game.
- * @param <Turn>         Type which is used for players in the game.
+ * Defines a standard interface for a game.
+ *
+ * @author Alessandro Buldini
+ * @author Alessandro Pomponio
+ * @author Federico Zanini
+ * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
  */
-public interface IGame<BitSetState, BitSetAction, Turn> {
+public interface IGame {
 
-    Turn getPlayer(BitSetState state);
+    /**
+     * Returns the player who has to play at this stage of the game
+     *
+     * @param state represents the current state of the game
+     * @return the player who has to move
+     * @see IState
+     */
+    Turn getPlayer(IState state);
 
-    List<BitSetAction> getActions(BitSetState state);
+    /**
+     * Returns all the possible actions a player can do at this stage of the game
+     *
+     * @param state represents the current state of the game
+     * @return a list containing all possible actions
+     * @see IState
+     */
+    List<IAction> getActions(IState state);
 
-    BitSetState getResult(BitSetState state, BitSetAction action);
+    /**
+     * Returns the state of the game after performing the input action
+     *
+     * @param state  current state of the game
+     * @param action action to perform
+     * @return IState after the move has been performed
+     * @see IState
+     * @see IAction
+     */
+    IState getResult(IState state, IAction action);
 
-    boolean isTerminal(BitSetState state);
+    /**
+     * Returns a boolean whether the current state is a terminal one
+     *
+     * @param state IState to be evaluated
+     * @return {@code true} if the current state is a terminal one
+     * @see IState
+     */
+    boolean isTerminal(IState state);
 
-    int getUtility(BitSetState state, Turn player);
+    /**
+     * Returns the heuristic value for the given state and player
+     *
+     * @param state  state of the game that needs to be evaluated
+     * @param player player for which the heuristic function should be evaluated
+     * @return the heuristic value of the input state
+     * @see IState
+     * @see Turn
+     */
+    int getUtility(IState state, Turn player);
+
 }

@@ -3,8 +3,15 @@ package b2p.state.bitboard.bitset;
 import java.util.Arrays;
 import java.util.HashSet;
 
+/**
+ * This Enumerative represents all the positions on the board
+ *
+ * @author Alessandro Buldini
+ * @author Alessandro Pomponio
+ * @author Federico Zanini
+ */
 public enum BitSetPosition {
-    
+
     A1("A1"), B1("B1"), C1("C1"), D1("D1"), E1("E1"), F1("F1"), G1("G1"), H1("H1"), I1("I1"),
     A2("A2"), B2("B2"), C2("C2"), D2("D2"), E2("E2"), F2("F2"), G2("G2"), H2("H2"), I2("I2"),
     A3("A3"), B3("B3"), C3("C3"), D3("D3"), E3("E3"), F3("F3"), G3("G3"), H3("H3"), I3("I3"),
@@ -15,16 +22,30 @@ public enum BitSetPosition {
     A8("A8"), B8("B8"), C8("C8"), D8("D8"), E8("E8"), F8("F8"), G8("G8"), H8("H8"), I8("I8"),
     A9("A9"), B9("B9"), C9("C9"), D9("D9"), E9("E9"), F9("F9"), G9("G9"), H9("H9"), I9("I9");
 
+    /**
+     * Represents the cell name
+     */
     private final String name;
 
+    /**
+     * Constructor method with given name argument
+     * @param name represents the cell name
+     */
     BitSetPosition(String name) {
         this.name = name;
     }
 
+    /**
+     * Accessor method to retrieve the value of the private field name
+     * @return the name value
+     */
     public String getName() {
         return this.name;
     }
 
+    /**
+     * Array of ints representing all the camp cells on the board
+     */
     //region Special boards
     private static final int[] campCells = {
                                                             D1.ordinal(),   E1.ordinal(),   F1.ordinal(),
@@ -38,6 +59,9 @@ public enum BitSetPosition {
                                                             D9.ordinal(),   E9.ordinal(),   F9.ordinal()
     };
 
+    /**
+     * Array of ints representing all the escape cells on the board
+     */
     private static final int[] escapeCells = {
                             B1.ordinal(),   C1.ordinal(),                                                   G1.ordinal(),   H1.ordinal(),
             A2.ordinal(),                                                                                                                   I2.ordinal(),
@@ -50,6 +74,9 @@ public enum BitSetPosition {
                             B9.ordinal(),   C9.ordinal(),                                                   G9.ordinal(),   H9.ordinal()
     };
 
+    /**
+     * Array of ints representing the throne/castle cell on the board
+     */
     private static final int[] castleCells = {
 
 
@@ -62,6 +89,9 @@ public enum BitSetPosition {
 
     };
 
+    /**
+     * Array of ints representing all the obstacles cells on the board
+     */
     private static final int[] obstacleCells = {
                                                             D1.ordinal(),                   F1.ordinal(),
                                                                             E2.ordinal(),
@@ -74,6 +104,9 @@ public enum BitSetPosition {
                                                             D9.ordinal(),                   F9.ordinal()
     };
 
+    /**
+     * Array of ints representing all the king's special cells on the board
+     */
     private static final int[] kingSpecialCells = {
 
 
@@ -85,7 +118,9 @@ public enum BitSetPosition {
 
 
     };
-
+    /**
+     * Array of ints representing all the cells adjacent to the throne/castle
+     */
     private static final int[] kingSurroundedCells = {
 
 
@@ -98,6 +133,9 @@ public enum BitSetPosition {
 
     };
 
+    /**
+     * Array of ints representing the E4 special capture
+     */
     private static final int[] kingInE4SurroundedCells = {
 
 
@@ -110,6 +148,9 @@ public enum BitSetPosition {
 
     };
 
+    /**
+     * Array of ints representing the D5 special capture
+     */
     private static final int[] kingInD5SurroundedCells = {
 
 
@@ -122,6 +163,9 @@ public enum BitSetPosition {
 
     };
 
+    /**
+     * Array of ints representing the E6 special capture
+     */
     private static final int[] kingInE6SurroundedCells = {
 
 
@@ -134,6 +178,9 @@ public enum BitSetPosition {
 
     };
 
+    /**
+     * Array of ints representing the F5 special capture
+     */
     private static final int[] kingInF5SurroundedCells = {
 
 
@@ -146,6 +193,9 @@ public enum BitSetPosition {
 
     };
 
+    /**
+     * Array of ints representing the strategic cells for the black player (inner diagonal)
+     */
     private static final int[] strategicBlackCells = {
 
                                                                 D3.ordinal(),           F3.ordinal(),
@@ -155,6 +205,9 @@ public enum BitSetPosition {
                                                                 D7.ordinal(),           F7.ordinal()
     };
 
+    /**
+     * Array of ints representing the strategic cells for the white player
+     */
     private static final int[] earlyGameStrategicWhiteCells = {
 
                                                 C3.ordinal(),                                           G3.ordinal(),
@@ -166,6 +219,9 @@ public enum BitSetPosition {
     };
     //endregion
 
+    /**
+     * Array of ints representing the static weights of every cell for a generic white pawn
+     */
     public static final int[] whitePawnCellWeight = {
             5,  5,  5,  0,  0,  0,  5,  5,  5,
             5,  1,  1,  4,  0,  4,  1,  1,  5,
@@ -178,6 +234,9 @@ public enum BitSetPosition {
             5,  5,  5,  0,  0,  0,  5,  5,  5,
     };
 
+    /**
+     * Array of ints representing the static weights of every cell for a generic black pawn
+     */
     public static final int[] blackPawnCellWeight = {
             1,  3,  2,  3,  3,  3,  2,  3,  1,
             3,  2,  5,  1,  3,  1,  5,  2,  3,
@@ -190,6 +249,9 @@ public enum BitSetPosition {
             1,  3,  2,  3,  3,  3,  2,  3,  1,
     };
 
+    /**
+     * Array of ints representing the dynamic changes to cells weights depending on king position
+     */
     public static final int[] kingTopLeftWeight = {
             1,  1,  1,  1,  1,  0,  0,  0,  0,
             1,  1,  1,  1,  1,  0,  0,  0,  0,
@@ -202,6 +264,9 @@ public enum BitSetPosition {
             0,  0,  0,  0, -1, -1, -1, -1, -1,
     };
 
+    /**
+     * Array of ints representing the dynamic changes to cells weights depending on king position
+     */
     public static final int[] kingTopRightWeight = {
              0,  0,  0,  0,  1,  1,  1,  1,  1,
              0,  0,  0,  0,  1,  1,  1,  1,  1,
@@ -214,6 +279,9 @@ public enum BitSetPosition {
             -1, -1, -1, -1, -1,  0,  0,  0,  0,
     };
 
+    /**
+     * Array of ints representing the dynamic changes to cells weights depending on king position
+     */
     public static final int[] kingBottomLeftWeight = {
             0,  0,  0,  0, -1, -1, -1, -1, -1,
             0,  0,  0,  0, -1, -1, -1, -1, -1,
@@ -226,6 +294,9 @@ public enum BitSetPosition {
             1,  1,  1,  1,  1,  0,  0,  0,  0,
     };
 
+    /**
+     * Array of ints representing the dynamic changes to cells weights depending on king position
+     */
     public static final int[] kingBottomRightWeight = {
             -1, -1, -1, -1, -1,  0,  0,  0,  0,
             -1, -1, -1, -1, -1,  0,  0,  0,  0,
@@ -238,60 +309,105 @@ public enum BitSetPosition {
              0,  0,  0,  0,  1,  1,  1,  1,  1,
     };
 
+    /**
+     * Matrix of ints containing the possible dynamic changes to cell weights depending on king position
+     */
     public static final int[][] kingBuff = { kingTopLeftWeight, kingTopRightWeight, kingBottomLeftWeight, kingBottomRightWeight };
 
     //region Special BitSets
+    /**
+     {@link B2PBitSet} representing the camps cells
+     * @see B2PBitSet
+     */
     public static final B2PBitSet camps = BitSetUtils.newFromPositions(campCells);
+    /**
+     * {@link B2PBitSet} representing the escapes cells
+     * @see B2PBitSet
+     */
     public static final B2PBitSet escape = BitSetUtils.newFromPositions(escapeCells);
+    /**
+     * {@link B2PBitSet} representing the castle cell
+     * @see B2PBitSet
+     */
     public static final B2PBitSet castle = BitSetUtils.newFromPositions(castleCells);
+    /**
+     * {@link B2PBitSet} representing the obstacles cells
+     * @see B2PBitSet
+     */
     public static final B2PBitSet obstacles = BitSetUtils.newFromPositions(obstacleCells);
+    /**
+     * {@link B2PBitSet} representing the special king cells
+     * @see B2PBitSet
+     */
     public static final B2PBitSet specialKingCells = BitSetUtils.newFromPositions(kingSpecialCells);
+    /**
+     * {@link B2PBitSet} representing the surrounding cells for the king
+     * @see B2PBitSet
+     */
     public static final B2PBitSet kingSurrounded = BitSetUtils.newFromPositions(kingSurroundedCells);
+    /**
+     * {@link B2PBitSet} representing the E4 capture
+     * @see B2PBitSet
+     */
     public static final B2PBitSet kingInE4Surrounded = BitSetUtils.newFromPositions(kingInE4SurroundedCells);
+    /**
+     * {@link B2PBitSet} representing the D5 capture
+     * @see B2PBitSet
+     */
     public static final B2PBitSet kingInD5Surrounded = BitSetUtils.newFromPositions(kingInD5SurroundedCells);
+    /**
+     * {@link B2PBitSet} representing the E6 capture
+     * @see B2PBitSet
+     */
     public static final B2PBitSet kingInE6Surrounded = BitSetUtils.newFromPositions(kingInE6SurroundedCells);
+    /**
+     * {@link B2PBitSet} representing the F5 capture
+     * @see B2PBitSet
+     */
     public static final B2PBitSet kingInF5Surrounded = BitSetUtils.newFromPositions(kingInF5SurroundedCells);
+    /**
+     * {@link B2PBitSet} representing the strategic cells for the black player
+     * @see B2PBitSet
+     */
     public static final B2PBitSet blackStrategicCells = BitSetUtils.newFromPositions(strategicBlackCells);
+    /**
+     * {@link B2PBitSet} representing the strategic cells for the white player
+     * @see B2PBitSet
+     */
     public static final B2PBitSet whiteEarlyGameStrategicCells = BitSetUtils.newFromPositions(earlyGameStrategicWhiteCells);
     //endregion
-    
+
+    /**
+     * Set containing the king's escapes
+     * @see HashSet
+     */
     public static final HashSet<String> escapeHashSet = new HashSet<>(Arrays.asList(
-            "B1", "C1", "G1", "H1",
-            "A2", "I2",
-            "A3", "I3",
+                "B1", "C1",             "G1", "H1",
+            "A2",                                   "I2",
+            "A3",                                   "I3",
 
 
-            "A7", "I7",
-            "A8", "I8",
-            "B9", "C9", "G9", "H9"));
+            "A7",                                   "I7",
+            "A8",                                   "I8",
+                "B9", "C9",             "G9", "H9"
+    ));
 
+    /**
+     * Integer representing the top left quadrant
+     */
     public static final int TOP_LEFT_QUADRANT = 0;
+    /**
+     * Integer representing the top right quadrant
+     */
     public static final int TOP_RIGHT_QUADRANT = 1;
+    /**
+     * Integer representing the bottom left quadrant
+     */
     public static final int BOTTOM_LEFT_QUADRANT = 2;
+    /**
+     * Integer representing the bottom right quadrant
+     */
     public static final int BOTTOM_RIGHT_QUADRANT = 3;
 
-    public static int findTargetQuadrantForWhites(BitSetState state) {
-
-        int maxDifference = -1;
-        int bestQuadrant = 0;
-        int pieceDifference, whitesInQuadrant, blacksInQuadrant;
-
-        for (int i = 0; i < 4; i++) {
-
-            //
-            whitesInQuadrant = state.getWhitePawns().andResult(BitSetStartingBoard.quadrants[i]).cardinality();
-            blacksInQuadrant = state.getBlackPawns().andResult(BitSetStartingBoard.quadrants[i]).cardinality();
-
-            pieceDifference = whitesInQuadrant - blacksInQuadrant;
-            if(pieceDifference > maxDifference) {
-                maxDifference = pieceDifference;
-                bestQuadrant = i;
-            }
-
-        }
-
-        return bestQuadrant;
-
-    }
 
 }
