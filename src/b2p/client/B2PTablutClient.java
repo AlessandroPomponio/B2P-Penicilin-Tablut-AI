@@ -32,7 +32,7 @@ public class B2PTablutClient extends TablutClient {
     private final int timeout;
 
     /**
-     * Constructor method to create an instance of {@link B2PTablutClient} with given arguments
+     * Creates an instance of {@link B2PTablutClient} with the given arguments
      * @param player the player name
      * @param timeout the timeout of every turn
      * @param ipAddress the server IP address
@@ -44,7 +44,8 @@ public class B2PTablutClient extends TablutClient {
     }
 
     /**
-     * Constructor method to create an instance of {@link B2PTablutClient} with given arguments and default timeout set to 60000 milliseconds
+     * Creates an instance of {@link B2PTablutClient} with the given arguments and a default
+     * timeout set to 60000 milliseconds
      * @param player the player name
      * @param ipAddress the server IP address
      * @throws IOException
@@ -55,8 +56,8 @@ public class B2PTablutClient extends TablutClient {
     }
 
     /**
-     * Constructor method to create an instance of {@link B2PTablutClient} with a given player name and default
-     * timeout (set to 60000 milliseconds) and ipAddress
+     * Creates an instance of {@link B2PTablutClient} with a given player role,
+     * defaults the timeout to 60000 milliseconds and the server IP address to localhost
      * @param player the player name
      * @throws IOException
      */
@@ -66,7 +67,8 @@ public class B2PTablutClient extends TablutClient {
     }
 
     /**
-     * Constructor method to create an instance of {@link B2PTablutClient} with given arguments and default timeout set to 60000 milliseconds
+     * Creates an instance of {@link B2PTablutClient} with a given player role and timeout.
+     * Defaults the server IP address to localhost.
      * @param player the player name
      * @param timeout the timeout of every turn
      * @throws IOException
@@ -82,7 +84,7 @@ public class B2PTablutClient extends TablutClient {
     @Override
     public void run() {
 
-        // Declare the name first thing
+        // Declare the name first
         try {
             this.declareName();
         } catch (Exception e) {
@@ -158,7 +160,7 @@ public class B2PTablutClient extends TablutClient {
     }
 
     /**
-     * Prints a comment of the current turn
+     * Prints a comment for the current turn
      * @param state the current state of the game
      * @param whiteWins String to print in case of white win
      * @param blackWins String to print in case of black win
