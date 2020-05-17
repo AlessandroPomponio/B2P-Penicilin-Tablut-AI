@@ -45,5 +45,5 @@ public interface IAction extends Comparable<IAction> {
      * @param value is an Integer data type
      */
     void setValue(int value);
-    
+
 }
