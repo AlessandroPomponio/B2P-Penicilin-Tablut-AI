@@ -2,6 +2,14 @@ package b2p;
 
 import b2p.client.B2PTablutClient;
 
+/**
+ * Main class: it supports 3 input parameters:
+ * <ol>
+ *     <li>A player type (black/white)</li>
+ *     <li>A timeout in seconds</li>
+ *     <li>A server IP</li>
+ * </ol>
+ */
 public class Main {
 
     public static void main(String[] args) {
@@ -11,7 +19,7 @@ public class Main {
         String player = "white";
 
         // timeout in seconds (the client constructor wants it in millis)
-        int timeout = 15000;
+        int timeout = 60000;
 
         // server IP
         String serverIP = "localhost";
