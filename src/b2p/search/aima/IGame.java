@@ -64,5 +64,5 @@ public interface IGame {
      * @see Turn
      */
     int getUtility(IState state, Turn player);
-    
+
 }
