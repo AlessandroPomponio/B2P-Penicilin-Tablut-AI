@@ -41,7 +41,7 @@ public class BitSetState implements IState {
      * Represents the turn
      */
     private Turn turn;
-    
+
     /**
      * Represents the turn number
      */

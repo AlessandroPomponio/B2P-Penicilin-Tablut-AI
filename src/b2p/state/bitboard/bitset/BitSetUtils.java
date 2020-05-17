@@ -17,8 +17,9 @@ public class BitSetUtils {
     /**
      * Returns a {@link BitSetState} instance representing the argument state and
      * turn number.
+     *
      * @param serverState a server state representation
-     * @param turnAmt the turn in which the state takes place
+     * @param turnAmt     the turn in which the state takes place
      * @return a {@link BitSetState} instance representing the state and turn
      * @see BitSetState
      * @see StateTablut
@@ -35,13 +36,13 @@ public class BitSetUtils {
             for (int j = 0; j < 9; j++) {
                 switch (serverState.getBoard()[i][j]) {
                     case BLACK:
-                        blackPawns[blackIdx++] = (9*i)+j;
+                        blackPawns[blackIdx++] = (9 * i) + j;
                         break;
                     case WHITE:
-                        whitePawns[whiteIdx++] = (9*i)+j;
+                        whitePawns[whiteIdx++] = (9 * i) + j;
                         break;
                     case KING:
-                        kingPawn[0] = (9*i)+j;
+                        kingPawn[0] = (9 * i) + j;
                 }
             }
         }
@@ -55,6 +56,7 @@ public class BitSetUtils {
 
     /**
      * Creates a {@link B2PBitSet} with bits in the input indexes set to {@code true}.
+     *
      * @param positions the indexes of the bits to be set to true
      * @return a {@link B2PBitSet} instance with bits in the input indexes set to {@code true}
      */
@@ -70,6 +72,7 @@ public class BitSetUtils {
 
     /**
      * Creates a {@link B2PBitSet} with bits in the input indexes set to {@code true}.
+     *
      * @param positions a {@link BitSetPosition} array representing the indexes of the bits to be set to true
      * @return a {@link B2PBitSet} instance with bits in the input indexes set to {@code true}
      */
@@ -87,9 +90,10 @@ public class BitSetUtils {
     /**
      * Creates a {@link BitSetState} from a string representation of the game board and
      * the corresponding player turn and turn number.
+     *
      * @param serverString a string representation of the server state
-     * @param turn the current player
-     * @param turnAmt the turn number
+     * @param turn         the current player
+     * @param turnAmt      the turn number
      * @return a {@link BitSetState} representing the state of the game
      */
     public static BitSetState newFromServerString(String serverString, State.Turn turn, int turnAmt) {
@@ -123,6 +127,7 @@ public class BitSetUtils {
 
     /**
      * Converts a {@link B2PBitSet} into a printable byte string
+     *
      * @param bitSet the bit set to stringify
      * @return a printable byte string
      * @see B2PBitSet
@@ -139,6 +144,7 @@ public class BitSetUtils {
 
     /**
      * Converts a {@link B2PBitSet} into a printable bit string
+     *
      * @param bitSet the bit set to stringify
      * @return a printable bit string
      * @see B2PBitSet
