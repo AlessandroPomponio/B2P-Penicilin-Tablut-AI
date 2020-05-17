@@ -26,6 +26,7 @@ public class B2PTablutClient extends TablutClient {
      * The player name
      */
     private static final String PLAYER_NAME = "B2P";
+
     /**
      * The timeout of every turn
      */
@@ -33,8 +34,9 @@ public class B2PTablutClient extends TablutClient {
 
     /**
      * Creates an instance of {@link B2PTablutClient} with the given arguments
-     * @param player the player name
-     * @param timeout the timeout of every turn
+     *
+     * @param player    the player name
+     * @param timeout   the timeout of every turn
      * @param ipAddress the server IP address
      * @throws IOException
      */
@@ -46,7 +48,8 @@ public class B2PTablutClient extends TablutClient {
     /**
      * Creates an instance of {@link B2PTablutClient} with the given arguments and a default
      * timeout set to 60000 milliseconds
-     * @param player the player name
+     *
+     * @param player    the player name
      * @param ipAddress the server IP address
      * @throws IOException
      */
@@ -58,6 +61,7 @@ public class B2PTablutClient extends TablutClient {
     /**
      * Creates an instance of {@link B2PTablutClient} with a given player role,
      * defaults the timeout to 60000 milliseconds and the server IP address to localhost
+     *
      * @param player the player name
      * @throws IOException
      */
@@ -69,7 +73,8 @@ public class B2PTablutClient extends TablutClient {
     /**
      * Creates an instance of {@link B2PTablutClient} with a given player role and timeout.
      * Defaults the server IP address to localhost.
-     * @param player the player name
+     *
+     * @param player  the player name
      * @param timeout the timeout of every turn
      * @throws IOException
      */
@@ -140,7 +145,8 @@ public class B2PTablutClient extends TablutClient {
 
     /**
      * Looks for the best move for a given state
-     * @param state the current state of the game
+     *
+     * @param state  the current state of the game
      * @param search the search algorithm
      * @see BitSetState
      * @see IterativeDeepening
@@ -161,7 +167,8 @@ public class B2PTablutClient extends TablutClient {
 
     /**
      * Prints a comment for the current turn
-     * @param state the current state of the game
+     *
+     * @param state     the current state of the game
      * @param whiteWins String to print in case of white win
      * @param blackWins String to print in case of black win
      * @see BitSetState
@@ -180,7 +187,6 @@ public class B2PTablutClient extends TablutClient {
             System.exit(0);
         }
     }
-
 
 }
 
