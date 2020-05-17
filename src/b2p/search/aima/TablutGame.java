@@ -117,5 +117,5 @@ public class TablutGame implements IGame {
         }
         return state.getHeuristicValueForPlayer(turn);
     }
-    
+
 }
