@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"b2p"},{"l":"b2p.client"},{"l":"b2p.model"},{"l":"b2p.search.aima"},{"l":"b2p.search.aima.minmax"},{"l":"b2p.state.bitboard.bitset"},{"l":"b2p.state.bitboard.bitset.test"}]
