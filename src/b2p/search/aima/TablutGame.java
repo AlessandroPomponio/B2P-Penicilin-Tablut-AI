@@ -8,11 +8,11 @@ import java.util.List;
 
 /**
  * This class implements {@link IGame} for Tablut
- * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
  *
  * @author Alessandro Buldini
  * @author Alessandro Pomponio
  * @author Federico Zanini
+ * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
  */
 public class TablutGame implements IGame {
 
@@ -23,6 +23,7 @@ public class TablutGame implements IGame {
 
     /**
      * Creates a TablutGame given an {@link IState}
+     *
      * @param state state of the game
      */
     public TablutGame(IState state) {
@@ -31,6 +32,7 @@ public class TablutGame implements IGame {
 
     /**
      * Sets the private variable state to the given value
+     *
      * @param state value that needs to be set
      */
     public void setState(IState state) {
@@ -39,6 +41,7 @@ public class TablutGame implements IGame {
 
     /**
      * Defines which player has to play at this stage of the game
+     *
      * @param state represents the current state of the game
      * @return the player who has to move
      * @see IState
@@ -50,6 +53,7 @@ public class TablutGame implements IGame {
 
     /**
      * Returns all the possible actions a player can do at this stage of the game
+     *
      * @param state represents the current state of the game
      * @return a list containing all possible actions
      * @see IState
@@ -61,7 +65,8 @@ public class TablutGame implements IGame {
 
     /**
      * Returns the state of the game after performing the input action
-     * @param state current state of the game
+     *
+     * @param state  current state of the game
      * @param action action to perform
      * @return IState after the move has been performed
      * @see IState
@@ -76,6 +81,7 @@ public class TablutGame implements IGame {
 
     /**
      * Returns a boolean whether the current state is a terminal one
+     *
      * @param state IState to be evaluated
      * @return {@code true} if the current state is a terminal one
      * @see IState
@@ -87,8 +93,9 @@ public class TablutGame implements IGame {
 
     /**
      * Returns the heuristic value for the given state and player
+     *
      * @param state state of the game that needs to be evaluated
-     * @param turn player for which the heuristic function should be evaluated
+     * @param turn  player for which the heuristic function should be evaluated
      * @return the heuristic value of the input state
      * @see IState
      * @see Turn
@@ -110,4 +117,5 @@ public class TablutGame implements IGame {
         }
         return state.getHeuristicValueForPlayer(turn);
     }
+    
 }

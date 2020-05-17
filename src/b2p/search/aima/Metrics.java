@@ -14,7 +14,7 @@ public class Metrics {
      * Contains all the nodes expanded during the current search
      */
     private int nodesExpanded;
-    
+
     /**
      * Contains the current depth limit for Iterative Deepening algorithms
      */
