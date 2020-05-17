@@ -16,34 +16,33 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- * This class implements {@link IAdversarialSearch} in order to define the Iterative Deepening Minimax algorithm with
- * alpha-beta pruning.
- *
- * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
+ * This class implements {@link IAdversarialSearch} and defines the
+ * Iterative Deepening Minimax algorithm with alpha-beta pruning.
  *
  * @author Alessandro Buldini
  * @author Alessandro Pomponio
  * @author Federico Zanini
+ * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
  */
 public class IterativeDeepening implements IAdversarialSearch {
 
-    //
     /**
      * Instance of the current game
      */
     private final TablutGame game;
+
     /**
      * Executes a set of given asynchronous tasks
      */
     private final ExecutorService executor;
 
-    //
     /**
-     * Minimum value that the heuristic value can assume
+     * Minimum value that the heuristic value can reach
      */
     private final int utilMin;
+
     /**
-     * Maximum value that the heuristic value can assume
+     * Maximum value that the heuristic value can reach
      */
     private final int utilMax;
 
@@ -56,18 +55,20 @@ public class IterativeDeepening implements IAdversarialSearch {
      * Current depth limit for the Iterative Deepening Minimax algorithm
      */
     private int currDepthLimit;
+
     /**
      * Metrics including all the parameters needed to evaluate the search performance
      */
     private Metrics metrics;
 
     /**
-     * Creates an instance of the object IterativeDeepening that manages the service executors to make a decision on
-     * what decision should be made
-     * @param game instance of the TablutGame class
-     * @param utilMin minimum value that the heuristic function can assume
-     * @param utilMax maximum value that the heuristic function can assume
-     * @param time timeout for the search strategy
+     * Creates an {@link IterativeDeepening} instance for a {@link TablutGame} with
+     * a given timeout and utility values.
+     *
+     * @param game    instance of the TablutGame class
+     * @param utilMin minimum value the heuristic function can reach
+     * @param utilMax maximum value the heuristic function can reach
+     * @param time    timeout for the search strategy
      */
     public IterativeDeepening(TablutGame game, int utilMin, int utilMax, int time) {
 
@@ -85,9 +86,10 @@ public class IterativeDeepening implements IAdversarialSearch {
 
     /**
      * Returns the action which appears to be the best at the given state
-     * @param state current state of the game, based on which the decision should be made
-     * @return the best action to perform for the given heuristic function
-     *@see IState
+     *
+     * @param state state of the game on which the decision should be made
+     * @return the best action to perform for the input state
+     * @see IState
      */
     @Override
     public IAction makeDecision(IState state) {
@@ -170,32 +172,36 @@ public class IterativeDeepening implements IAdversarialSearch {
 
     /**
      * Sets the game state to the value passed as input
+     *
      * @param state state to be set within the {@link IterativeDeepening} class
-     *@see IState
+     * @see IState
      */
     public void setGameState(IState state) {
         game.setState(state);
     }
 
     /**
-     * Returns the minimum value the heuristic function can assume set within the class
-     * @return the minimum value the heuristic function can assume set within the class
+     * Returns the minimum value the heuristic function can reach
+     *
+     * @return the minimum value the heuristic function can reach
      */
     public int getUtilMin() {
         return utilMin;
     }
 
     /**
-     * Returns the maximum value the heuristic function can assume set within the class
-     * @return the maximum value the heuristic function can assume set within the class
+     * Returns the maximum value the heuristic function can reach
+     *
+     * @return the maximum value the heuristic function can reach
      */
     public int getUtilMax() {
         return utilMax;
     }
 
     /**
-     * Returns the object timer set within the class
-     * @return the object timer set within the class
+     * Returns the timer in the current {@link IterativeDeepening} instance
+     *
+     * @return the timer in the current {@link IterativeDeepening} instance
      */
     public Timer getTimer() {
         return timer;
@@ -203,6 +209,7 @@ public class IterativeDeepening implements IAdversarialSearch {
 
     /**
      * Returns the current depth limit reached by the search
+     *
      * @return the current depth limit reached by the search
      */
     public int getCurrDepthLimit() {
@@ -211,6 +218,7 @@ public class IterativeDeepening implements IAdversarialSearch {
 
     /**
      * Returns the metrics object set within the class
+     *
      * @return the metrics object set within the class
      */
     @Override
@@ -220,6 +228,7 @@ public class IterativeDeepening implements IAdversarialSearch {
 
     /**
      * Given a depth value, updates the metrics object set within the class
+     *
      * @param depth depth reached at the current state of the search
      */
     public synchronized void updateMetrics(int depth) {
@@ -229,14 +238,14 @@ public class IterativeDeepening implements IAdversarialSearch {
     ///////////////////////////////////////////////////////////////////////////////////////////
     // nested helper classes
     ///////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * Utility class representing an in-game timer
-     *
-     * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
      *
      * @author Alessandro Buldini
      * @author Alessandro Pomponio
      * @author Federico Zanini
+     * @see <a href="https://github.com/aimacode/aima-java">Aima Java</a>
      */
     protected static class Timer {
 
@@ -244,14 +253,16 @@ public class IterativeDeepening implements IAdversarialSearch {
          * Duration of the timer
          */
         private final long duration;
+
         /**
-         * Time value when the timer should start
+         * Start time for the timer
          */
         private long startTime;
 
         /**
-         * Builds an object timer whose duration is set to the maxSeconds input value
-         * @param maxSeconds input value that sets the duration of the timer
+         * Creates a timer with a timeout of {@code maxSeconds}
+         *
+         * @param maxSeconds timeout for the timer
          */
         Timer(int maxSeconds) {
             this.duration = 1000L * maxSeconds;
@@ -265,7 +276,8 @@ public class IterativeDeepening implements IAdversarialSearch {
         }
 
         /**
-         * Returns a boolean value based on whether the timeout has occurred or not
+         * Returns {@code true} if the timeout has occurred
+         *
          * @return {@code true} if the timeout has occurred
          */
         boolean timeOutOccurred() {
