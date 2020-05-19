@@ -3,6 +3,10 @@
 ![Java CI](https://github.com/AlessandroPomponio/B2P-Penicilin-Tablut-AI/workflows/Java%20CI/badge.svg?branch=master)
 ![Javadoc](https://img.shields.io/badge/Javadoc-available-brightgreen)
 
+<p align="center"> 
+   <img src="logo/logo.png">
+</p>
+
 Penicillin (PCN) is a Java-based intelligent agent built to take part in the 2020 students' challenge
 of the Fundamentals of AI course held at the University of Bologna by prof. Paola Mello and prof. Federico Chesani. 
  
