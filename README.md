@@ -13,6 +13,11 @@ of the Fundamentals of AI course held at the University of Bologna by prof. Paol
 The agent is designed to play Tablut with the Ashton rules ([learn more here](https://www.heroicage.org/issues/13/ashton.php))
 using Andrea Galassi's server available in [this repository](https://github.com/AGalassi/TablutCompetition).
 
+## Challenge results
+
+Penicillin placed 2nd out of 11 teams in the challenge. Congratulations to [Team Fritto Misto](https://github.com/virtualms/Tablut2020_FrittoMisto) for winning!  
+Penicillin also became the "Reaper" record holder, for the highest average captures: 6.31 (the previous record was 5.75).
+
 ## A brief description
 
  - The game state is implemented via a [BitSet](https://docs.oracle.com/en/java/javase/14/docs/api/java.base/java/util/BitSet.html)
